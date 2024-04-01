@@ -1,0 +1,90 @@
+datasource db {
+    url      = env("POSTGRE_CONNECTION_STRING")
+    provider = "postgresql"
+}
+
+generator client {
+    provider = "prisma-client-js"
+}
+
+model Shooter {
+    id       Int       @unique @default(autoincrement())
+    createAt DateTime? @default(now())
+    name     String
+    division Division
+    Stage    Stage[]
+    Score    Score[]
+}
+
+model Stage {
+    id           Int         @id @unique @default(autoincrement())
+    createAt     DateTime?   @default(now())
+    name         String
+    description  String?
+    papers       Int
+    poppers      Int
+    noshoots     Int
+    gunCondition Int
+    designer     Shooter     @relation(fields: [shooterId], references: [id])
+    shooterId    Int
+    Scorelist    Scorelist[]
+}
+
+model Scoreboard {
+    id         Int         @id @unique @default(autoincrement())
+    createAt   DateTime    @default(now())
+    lastUpdate DateTime    @default(now()) @updatedAt
+    name       String
+    scorelists Scorelist[]
+}
+
+model Scorelist {
+    id           String      @id @unique @default(cuid())
+    createAt     DateTime    @default(now())
+    lastUpdate   DateTime    @default(now()) @updatedAt
+    stage        Stage?      @relation(fields: [stageId], references: [id])
+    scores       Score[]
+    Scoreboard   Scoreboard? @relation(fields: [scoreboardId], references: [id])
+    scoreboardId Int?
+    stageId      Int?
+}
+
+model Score {
+    id          Int              @id @unique
+    shooter     Shooter          @relation(fields: [shooterId], references: [id])
+    alphas      Int
+    charlies    Int
+    deltas      Int
+    misses      Int
+    noshoots    Int
+    poppers     Int?
+    time        Float
+    proErrors   ProErrorsStore[]
+    Scorelist   Scorelist?       @relation(fields: [scorelistId], references: [id])
+    scorelistId String?
+    shooterId   Int
+}
+
+model ProErrorObjects {
+    id             Int              @id @unique
+    index          String           @unique
+    title          String
+    description    String
+    ProErrorsStore ProErrorsStore[]
+}
+
+model ProErrorsStore {
+    id                Int             @id @unique
+    count             Int
+    proError          ProErrorObjects @relation(fields: [proErrorObjectsId], references: [id])
+    Score             Score?          @relation(fields: [scoreId], references: [id])
+    scoreId           Int?
+    proErrorObjectsId Int
+}
+
+enum Division {
+    Standard
+    Open
+    Production
+    ProductionOptics
+}
