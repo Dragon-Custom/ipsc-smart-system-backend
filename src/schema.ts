@@ -1,9 +1,13 @@
 import { makeSchema } from "nexus";
 import { join } from "path";
 import * as types from "./graphql"; // 1
+import { paljs } from "@paljs/nexus";
 
 export const schema = makeSchema({
 	types: types, // 1
+	plugins: [
+		paljs(),
+	],
 	outputs: {
 		//The first output file that Nexus will generate for you is a GraphQL
 		//schema file of type .graphql. This is the GraphQL Schema Definition

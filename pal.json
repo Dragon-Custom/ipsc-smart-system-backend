@@ -1,0 +1,8 @@
+{
+    "backend": { 
+		"generator": "nexus",
+		"onDelete": true,
+		"output": "build"
+	},
+    "frontend": { "admin": true }
+}
