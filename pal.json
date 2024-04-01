@@ -2,7 +2,7 @@
     "backend": { 
 		"generator": "nexus",
 		"onDelete": true,
-		"output": "build"
+		"output": "src/graphql"
 	},
     "frontend": { "admin": true }
 }
