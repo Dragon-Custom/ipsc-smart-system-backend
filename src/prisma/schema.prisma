@@ -7,8 +7,12 @@ generator client {
     provider = "prisma-client-js"
 }
 
+generator nexusPrisma {
+    provider = "nexus-prisma"
+}
+
 model Shooter {
-    id       Int       @unique @default(autoincrement())
+    id       Int       @id @unique @default(autoincrement())
     createAt DateTime? @default(now())
     name     String
     division Division

@@ -1,10 +1,15 @@
 import { extendType, objectType } from "nexus";
+import { Shooter as ShooterObject } from "nexus-prisma";
 
 export const Shooter = objectType({
-	name: "Shooter",
+	name: ShooterObject.$name,
 	definition(t) {
-		t.nonNull.int("id");
-		t.nonNull.string("name");
+		t.field(ShooterObject.id);
+		t.field(ShooterObject.name);
+		t.field(ShooterObject.division);
+		t.field(ShooterObject.createAt);
+		// t.field(ShooterObject.Stage);
+		// t.field(ShooterObject.Score);
 	},
 });
 
