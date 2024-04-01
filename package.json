@@ -7,7 +7,8 @@
         "test": "echo \"Error: no test specified\" && exit 1",
         "dev": "ts-node-dev --transpile-only --no-notify --exit-child src/main.ts",
         "prisma:gen": "prisma generate",
-        "gql:gen": "npx ts-node --transpile-only src/schema.ts"
+        "gql:gen": "npx ts-node --transpile-only src/schema.ts",
+        "gen": "npm run prisma:gen && npm run gql:gen"
     },
     "prisma": {
         "schema": "src/prisma/schema.prisma"
