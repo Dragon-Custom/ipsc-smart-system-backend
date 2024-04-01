@@ -8,8 +8,8 @@ export const Shooter = objectType({
 		t.field(ShooterObject.name);
 		t.field(ShooterObject.division);
 		t.field(ShooterObject.createAt);
-		t.field(ShooterObject.Stage);
-		// t.field(ShooterObject.Score);
+		t.field(ShooterObject.stage);
+		t.field(ShooterObject.score);
 	},
 });
 
