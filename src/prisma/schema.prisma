@@ -67,6 +67,7 @@ model Score {
     scorelist   Scorelist?       @relation(fields: [scorelistId], references: [id])
     scorelistId String?
     shooterId   Int
+    round       Int
 }
 
 model ProErrorObjects {

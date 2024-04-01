@@ -53,6 +53,7 @@ export const ScoreScalarFieldEnum = enumType({
 		"time",
 		"scorelistId",
 		"shooterId",
+		"round",
 	],
 });
 
@@ -475,6 +476,7 @@ export const ScoreWhereInput = inputObjectType({
 		t.field("time", { type: "FloatFilter" });
 		t.field("scorelistId", { type: "StringNullableFilter" });
 		t.field("shooterId", { type: "IntFilter" });
+		t.field("round", { type: "IntFilter" });
 		t.field("shooter", { type: "ShooterRelationFilter" });
 		t.field("proErrors", { type: "ProErrorsStoreListRelationFilter" });
 		t.field("scorelist", { type: "ScorelistNullableRelationFilter" });
@@ -497,6 +499,7 @@ export const ScoreOrderByWithRelationInput = inputObjectType({
 		t.field("time", { type: "SortOrder" });
 		t.field("scorelistId", { type: "SortOrderInput" });
 		t.field("shooterId", { type: "SortOrder" });
+		t.field("round", { type: "SortOrder" });
 		t.field("shooter", { type: "ShooterOrderByWithRelationInput" });
 		t.field("proErrors", {
 			type: "ProErrorsStoreOrderByRelationAggregateInput",
@@ -524,6 +527,7 @@ export const ScoreWhereUniqueInput = inputObjectType({
 		t.field("time", { type: "FloatFilter" });
 		t.field("scorelistId", { type: "StringNullableFilter" });
 		t.field("shooterId", { type: "IntFilter" });
+		t.field("round", { type: "IntFilter" });
 		t.field("shooter", { type: "ShooterRelationFilter" });
 		t.field("proErrors", { type: "ProErrorsStoreListRelationFilter" });
 		t.field("scorelist", { type: "ScorelistNullableRelationFilter" });
@@ -546,6 +550,7 @@ export const ScoreOrderByWithAggregationInput = inputObjectType({
 		t.field("time", { type: "SortOrder" });
 		t.field("scorelistId", { type: "SortOrderInput" });
 		t.field("shooterId", { type: "SortOrder" });
+		t.field("round", { type: "SortOrder" });
 		t.field("_count", { type: "ScoreCountOrderByAggregateInput" });
 		t.field("_avg", { type: "ScoreAvgOrderByAggregateInput" });
 		t.field("_max", { type: "ScoreMaxOrderByAggregateInput" });
@@ -573,6 +578,7 @@ export const ScoreScalarWhereWithAggregatesInput = inputObjectType({
 		t.field("time", { type: "FloatWithAggregatesFilter" });
 		t.field("scorelistId", { type: "StringNullableWithAggregatesFilter" });
 		t.field("shooterId", { type: "IntWithAggregatesFilter" });
+		t.field("round", { type: "IntWithAggregatesFilter" });
 	},
 });
 
@@ -1215,6 +1221,7 @@ export const ScoreCreateInput = inputObjectType({
 		t.nonNull.field("noshoots", { type: "Int" });
 		t.field("poppers", { type: "Int" });
 		t.nonNull.field("time", { type: "Float" });
+		t.nonNull.field("round", { type: "Int" });
 		t.nonNull.field("shooter", {
 			type: "ShooterCreateNestedOneWithoutScoreInput",
 		});
@@ -1241,6 +1248,7 @@ export const ScoreUncheckedCreateInput = inputObjectType({
 		t.nonNull.field("time", { type: "Float" });
 		t.field("scorelistId", { type: "String" });
 		t.nonNull.field("shooterId", { type: "Int" });
+		t.nonNull.field("round", { type: "Int" });
 		t.field("proErrors", {
 			type: "ProErrorsStoreUncheckedCreateNestedManyWithoutScoreInput",
 		});
@@ -1261,6 +1269,7 @@ export const ScoreUpdateInput = inputObjectType({
 		t.field("noshoots", { type: "IntFieldUpdateOperationsInput" });
 		t.field("poppers", { type: "NullableIntFieldUpdateOperationsInput" });
 		t.field("time", { type: "FloatFieldUpdateOperationsInput" });
+		t.field("round", { type: "IntFieldUpdateOperationsInput" });
 		t.field("shooter", {
 			type: "ShooterUpdateOneRequiredWithoutScoreNestedInput",
 		});
@@ -1287,6 +1296,7 @@ export const ScoreUncheckedUpdateInput = inputObjectType({
 		t.field("time", { type: "FloatFieldUpdateOperationsInput" });
 		t.field("scorelistId", { type: "NullableStringFieldUpdateOperationsInput" });
 		t.field("shooterId", { type: "IntFieldUpdateOperationsInput" });
+		t.field("round", { type: "IntFieldUpdateOperationsInput" });
 		t.field("proErrors", {
 			type: "ProErrorsStoreUncheckedUpdateManyWithoutScoreNestedInput",
 		});
@@ -1309,6 +1319,7 @@ export const ScoreCreateManyInput = inputObjectType({
 		t.nonNull.field("time", { type: "Float" });
 		t.field("scorelistId", { type: "String" });
 		t.nonNull.field("shooterId", { type: "Int" });
+		t.nonNull.field("round", { type: "Int" });
 	},
 });
 
@@ -1326,6 +1337,7 @@ export const ScoreUpdateManyMutationInput = inputObjectType({
 		t.field("noshoots", { type: "IntFieldUpdateOperationsInput" });
 		t.field("poppers", { type: "NullableIntFieldUpdateOperationsInput" });
 		t.field("time", { type: "FloatFieldUpdateOperationsInput" });
+		t.field("round", { type: "IntFieldUpdateOperationsInput" });
 	},
 });
 
@@ -1345,6 +1357,7 @@ export const ScoreUncheckedUpdateManyInput = inputObjectType({
 		t.field("time", { type: "FloatFieldUpdateOperationsInput" });
 		t.field("scorelistId", { type: "NullableStringFieldUpdateOperationsInput" });
 		t.field("shooterId", { type: "IntFieldUpdateOperationsInput" });
+		t.field("round", { type: "IntFieldUpdateOperationsInput" });
 	},
 });
 
@@ -2257,6 +2270,7 @@ export const ScoreCountOrderByAggregateInput = inputObjectType({
 		t.field("time", { type: "SortOrder" });
 		t.field("scorelistId", { type: "SortOrder" });
 		t.field("shooterId", { type: "SortOrder" });
+		t.field("round", { type: "SortOrder" });
 	},
 });
 
@@ -2275,6 +2289,7 @@ export const ScoreAvgOrderByAggregateInput = inputObjectType({
 		t.field("poppers", { type: "SortOrder" });
 		t.field("time", { type: "SortOrder" });
 		t.field("shooterId", { type: "SortOrder" });
+		t.field("round", { type: "SortOrder" });
 	},
 });
 
@@ -2294,6 +2309,7 @@ export const ScoreMaxOrderByAggregateInput = inputObjectType({
 		t.field("time", { type: "SortOrder" });
 		t.field("scorelistId", { type: "SortOrder" });
 		t.field("shooterId", { type: "SortOrder" });
+		t.field("round", { type: "SortOrder" });
 	},
 });
 
@@ -2313,6 +2329,7 @@ export const ScoreMinOrderByAggregateInput = inputObjectType({
 		t.field("time", { type: "SortOrder" });
 		t.field("scorelistId", { type: "SortOrder" });
 		t.field("shooterId", { type: "SortOrder" });
+		t.field("round", { type: "SortOrder" });
 	},
 });
 
@@ -2331,6 +2348,7 @@ export const ScoreSumOrderByAggregateInput = inputObjectType({
 		t.field("poppers", { type: "SortOrder" });
 		t.field("time", { type: "SortOrder" });
 		t.field("shooterId", { type: "SortOrder" });
+		t.field("round", { type: "SortOrder" });
 	},
 });
 
@@ -3876,6 +3894,7 @@ export const ScoreCreateWithoutShooterInput = inputObjectType({
 		t.nonNull.field("noshoots", { type: "Int" });
 		t.field("poppers", { type: "Int" });
 		t.nonNull.field("time", { type: "Float" });
+		t.nonNull.field("round", { type: "Int" });
 		t.field("proErrors", {
 			type: "ProErrorsStoreCreateNestedManyWithoutScoreInput",
 		});
@@ -3898,6 +3917,7 @@ export const ScoreUncheckedCreateWithoutShooterInput = inputObjectType({
 		t.field("poppers", { type: "Int" });
 		t.nonNull.field("time", { type: "Float" });
 		t.field("scorelistId", { type: "String" });
+		t.nonNull.field("round", { type: "Int" });
 		t.field("proErrors", {
 			type: "ProErrorsStoreUncheckedCreateNestedManyWithoutScoreInput",
 		});
@@ -4034,6 +4054,7 @@ export const ScoreScalarWhereInput = inputObjectType({
 		t.field("time", { type: "FloatFilter" });
 		t.field("scorelistId", { type: "StringNullableFilter" });
 		t.field("shooterId", { type: "IntFilter" });
+		t.field("round", { type: "IntFilter" });
 	},
 });
 
@@ -4389,6 +4410,7 @@ export const ScoreCreateWithoutScorelistInput = inputObjectType({
 		t.nonNull.field("noshoots", { type: "Int" });
 		t.field("poppers", { type: "Int" });
 		t.nonNull.field("time", { type: "Float" });
+		t.nonNull.field("round", { type: "Int" });
 		t.nonNull.field("shooter", {
 			type: "ShooterCreateNestedOneWithoutScoreInput",
 		});
@@ -4413,6 +4435,7 @@ export const ScoreUncheckedCreateWithoutScorelistInput = inputObjectType({
 		t.field("poppers", { type: "Int" });
 		t.nonNull.field("time", { type: "Float" });
 		t.nonNull.field("shooterId", { type: "Int" });
+		t.nonNull.field("round", { type: "Int" });
 		t.field("proErrors", {
 			type: "ProErrorsStoreUncheckedCreateNestedManyWithoutScoreInput",
 		});
@@ -5067,6 +5090,7 @@ export const ScoreCreateWithoutProErrorsInput = inputObjectType({
 		t.nonNull.field("noshoots", { type: "Int" });
 		t.field("poppers", { type: "Int" });
 		t.nonNull.field("time", { type: "Float" });
+		t.nonNull.field("round", { type: "Int" });
 		t.nonNull.field("shooter", {
 			type: "ShooterCreateNestedOneWithoutScoreInput",
 		});
@@ -5090,6 +5114,7 @@ export const ScoreUncheckedCreateWithoutProErrorsInput = inputObjectType({
 		t.nonNull.field("time", { type: "Float" });
 		t.field("scorelistId", { type: "String" });
 		t.nonNull.field("shooterId", { type: "Int" });
+		t.nonNull.field("round", { type: "Int" });
 	},
 });
 
@@ -5198,6 +5223,7 @@ export const ScoreUpdateWithoutProErrorsInput = inputObjectType({
 		t.field("noshoots", { type: "IntFieldUpdateOperationsInput" });
 		t.field("poppers", { type: "NullableIntFieldUpdateOperationsInput" });
 		t.field("time", { type: "FloatFieldUpdateOperationsInput" });
+		t.field("round", { type: "IntFieldUpdateOperationsInput" });
 		t.field("shooter", {
 			type: "ShooterUpdateOneRequiredWithoutScoreNestedInput",
 		});
@@ -5221,6 +5247,7 @@ export const ScoreUncheckedUpdateWithoutProErrorsInput = inputObjectType({
 		t.field("time", { type: "FloatFieldUpdateOperationsInput" });
 		t.field("scorelistId", { type: "NullableStringFieldUpdateOperationsInput" });
 		t.field("shooterId", { type: "IntFieldUpdateOperationsInput" });
+		t.field("round", { type: "IntFieldUpdateOperationsInput" });
 	},
 });
 
@@ -5256,6 +5283,7 @@ export const ScoreCreateManyShooterInput = inputObjectType({
 		t.field("poppers", { type: "Int" });
 		t.nonNull.field("time", { type: "Float" });
 		t.field("scorelistId", { type: "String" });
+		t.nonNull.field("round", { type: "Int" });
 	},
 });
 
@@ -5327,6 +5355,7 @@ export const ScoreUpdateWithoutShooterInput = inputObjectType({
 		t.field("noshoots", { type: "IntFieldUpdateOperationsInput" });
 		t.field("poppers", { type: "NullableIntFieldUpdateOperationsInput" });
 		t.field("time", { type: "FloatFieldUpdateOperationsInput" });
+		t.field("round", { type: "IntFieldUpdateOperationsInput" });
 		t.field("proErrors", {
 			type: "ProErrorsStoreUpdateManyWithoutScoreNestedInput",
 		});
@@ -5349,6 +5378,7 @@ export const ScoreUncheckedUpdateWithoutShooterInput = inputObjectType({
 		t.field("poppers", { type: "NullableIntFieldUpdateOperationsInput" });
 		t.field("time", { type: "FloatFieldUpdateOperationsInput" });
 		t.field("scorelistId", { type: "NullableStringFieldUpdateOperationsInput" });
+		t.field("round", { type: "IntFieldUpdateOperationsInput" });
 		t.field("proErrors", {
 			type: "ProErrorsStoreUncheckedUpdateManyWithoutScoreNestedInput",
 		});
@@ -5370,6 +5400,7 @@ export const ScoreUncheckedUpdateManyWithoutShooterInput = inputObjectType({
 		t.field("poppers", { type: "NullableIntFieldUpdateOperationsInput" });
 		t.field("time", { type: "FloatFieldUpdateOperationsInput" });
 		t.field("scorelistId", { type: "NullableStringFieldUpdateOperationsInput" });
+		t.field("round", { type: "IntFieldUpdateOperationsInput" });
 	},
 });
 
@@ -5503,6 +5534,7 @@ export const ScoreCreateManyScorelistInput = inputObjectType({
 		t.field("poppers", { type: "Int" });
 		t.nonNull.field("time", { type: "Float" });
 		t.nonNull.field("shooterId", { type: "Int" });
+		t.nonNull.field("round", { type: "Int" });
 	},
 });
 
@@ -5520,6 +5552,7 @@ export const ScoreUpdateWithoutScorelistInput = inputObjectType({
 		t.field("noshoots", { type: "IntFieldUpdateOperationsInput" });
 		t.field("poppers", { type: "NullableIntFieldUpdateOperationsInput" });
 		t.field("time", { type: "FloatFieldUpdateOperationsInput" });
+		t.field("round", { type: "IntFieldUpdateOperationsInput" });
 		t.field("shooter", {
 			type: "ShooterUpdateOneRequiredWithoutScoreNestedInput",
 		});
@@ -5544,6 +5577,7 @@ export const ScoreUncheckedUpdateWithoutScorelistInput = inputObjectType({
 		t.field("poppers", { type: "NullableIntFieldUpdateOperationsInput" });
 		t.field("time", { type: "FloatFieldUpdateOperationsInput" });
 		t.field("shooterId", { type: "IntFieldUpdateOperationsInput" });
+		t.field("round", { type: "IntFieldUpdateOperationsInput" });
 		t.field("proErrors", {
 			type: "ProErrorsStoreUncheckedUpdateManyWithoutScoreNestedInput",
 		});
@@ -5565,6 +5599,7 @@ export const ScoreUncheckedUpdateManyWithoutScorelistInput = inputObjectType({
 		t.field("poppers", { type: "NullableIntFieldUpdateOperationsInput" });
 		t.field("time", { type: "FloatFieldUpdateOperationsInput" });
 		t.field("shooterId", { type: "IntFieldUpdateOperationsInput" });
+		t.field("round", { type: "IntFieldUpdateOperationsInput" });
 	},
 });
 
@@ -6108,6 +6143,7 @@ export const ScoreCountAggregateOutputType = objectType({
 		t.field("time", { type: "Int" });
 		t.field("scorelistId", { type: "Int" });
 		t.field("shooterId", { type: "Int" });
+		t.field("round", { type: "Int" });
 		t.field("_all", { type: "Int" });
 	},
 });
@@ -6127,6 +6163,7 @@ export const ScoreAvgAggregateOutputType = objectType({
 		t.nullable.field("poppers", { type: "Float" });
 		t.nullable.field("time", { type: "Float" });
 		t.nullable.field("shooterId", { type: "Float" });
+		t.nullable.field("round", { type: "Float" });
 	},
 });
 
@@ -6145,6 +6182,7 @@ export const ScoreSumAggregateOutputType = objectType({
 		t.nullable.field("poppers", { type: "Int" });
 		t.nullable.field("time", { type: "Float" });
 		t.nullable.field("shooterId", { type: "Int" });
+		t.nullable.field("round", { type: "Int" });
 	},
 });
 
@@ -6164,6 +6202,7 @@ export const ScoreMinAggregateOutputType = objectType({
 		t.nullable.field("time", { type: "Float" });
 		t.nullable.field("scorelistId", { type: "String" });
 		t.nullable.field("shooterId", { type: "Int" });
+		t.nullable.field("round", { type: "Int" });
 	},
 });
 
@@ -6183,6 +6222,7 @@ export const ScoreMaxAggregateOutputType = objectType({
 		t.nullable.field("time", { type: "Float" });
 		t.nullable.field("scorelistId", { type: "String" });
 		t.nullable.field("shooterId", { type: "Int" });
+		t.nullable.field("round", { type: "Int" });
 	},
 });
 

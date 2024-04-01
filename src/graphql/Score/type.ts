@@ -17,6 +17,7 @@ export const Score = objectType({
 		t.float("time");
 		t.nullable.string("scorelistId");
 		t.int("shooterId");
+		t.int("round");
 		t.field("shooter", {
 			type: "Shooter",
 			resolve(root: any) {
