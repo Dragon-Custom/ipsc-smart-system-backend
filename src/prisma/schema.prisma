@@ -16,8 +16,8 @@ model Shooter {
     createAt DateTime? @default(now())
     name     String
     division Division
-    Stage    Stage[]
-    Score    Score[]
+    stage    Stage[]
+    score    Score[]
 }
 
 model Stage {
