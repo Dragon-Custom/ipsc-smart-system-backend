@@ -48,7 +48,7 @@ model Scorelist {
     lastUpdate   DateTime    @default(now()) @updatedAt
     stage        Stage?      @relation(fields: [stageId], references: [id])
     scores       Score[]
-    Scoreboard   Scoreboard? @relation(fields: [scoreboardId], references: [id])
+    scoreboard   Scoreboard? @relation(fields: [scoreboardId], references: [id])
     scoreboardId Int?
     stageId      Int?
 }
@@ -64,7 +64,7 @@ model Score {
     poppers     Int?
     time        Float
     proErrors   ProErrorsStore[]
-    Scorelist   Scorelist?       @relation(fields: [scorelistId], references: [id])
+    scorelist   Scorelist?       @relation(fields: [scorelistId], references: [id])
     scorelistId String?
     shooterId   Int
 }
@@ -74,14 +74,14 @@ model ProErrorObjects {
     index          String           @unique
     title          String
     description    String
-    ProErrorsStore ProErrorsStore[]
+    proErrorsStore ProErrorsStore[]
 }
 
 model ProErrorsStore {
     id                Int             @id @unique
     count             Int
     proError          ProErrorObjects @relation(fields: [proErrorObjectsId], references: [id])
-    Score             Score?          @relation(fields: [scoreId], references: [id])
+    score             Score?          @relation(fields: [scoreId], references: [id])
     scoreId           Int?
     proErrorObjectsId Int
 }
