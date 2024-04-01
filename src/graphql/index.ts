@@ -1,1 +1,1 @@
-export * from "./Shooter"
+export * from "./Shooter";

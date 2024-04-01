@@ -3,40 +3,40 @@ import { Prisma, PrismaClient } from "@prisma/client";
 export const prisma = new PrismaClient();
 
 interface SubscribeList {
-    cb: Function;
+	cb: () => void;
     model: Prisma.ModelName;
     action: Prisma.PrismaAction[];
 }
-var subscribeList: SubscribeList[] = [];
+const subscribeList: SubscribeList[] = [];
 
 prisma.$use(async (params, next) => {
-    // Manipulate params here
-    const result = await next(params);
-    console.log(result, params);
+	// Manipulate params here
+	const result = await next(params);
+	console.log(result, params);
 
-    subscribeList.forEach((sub_info) => {
-        if (
-            sub_info.action.includes(params.action) &&
-            sub_info.model == params.model
-        ) {
-            sub_info.cb();
-        }
-    });
-    // See results here
-    return result;
+	subscribeList.forEach((subInfo) => {
+		if (
+			subInfo.action.includes(params.action) &&
+            subInfo.model == params.model
+		) {
+			subInfo.cb();
+		}
+	});
+	// See results here
+	return result;
 });
 
 function subscribe(
-    model: Prisma.ModelName,
-    action: Prisma.PrismaAction[],
-    cb: Function
+	model: Prisma.ModelName,
+	action: Prisma.PrismaAction[],
+	cb: () => void,
 ): number {
-    let index = subscribeList.length;
-    subscribeList[subscribeList.length] = { cb, model, action };
-    return index;
+	const index = subscribeList.length;
+	subscribeList[subscribeList.length] = { cb, model, action };
+	return index;
 }
 function unsubscribe(index: number) {
-    delete subscribeList[index];
+	delete subscribeList[index];
 }
 
 export interface Context {
@@ -46,10 +46,10 @@ export interface Context {
     userId?: number; // 1
 }
 
-export const context = ({ req }: { req: Request }): Context => {
-    return {
-        prisma,
-        subscribe,
-        unsubscribe,
-    };
+export const context = (/* { req }: { req: Request } */): Context => {
+	return {
+		prisma,
+		subscribe,
+		unsubscribe,
+	};
 };
