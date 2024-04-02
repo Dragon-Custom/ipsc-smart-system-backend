@@ -1,7 +1,9 @@
-import { createServer } from "node:http";
+import { createServer } from "node:https";
 import { createYoga } from "graphql-yoga";
 import { schema } from "./schema";
 import { context } from "./context";
+import { readFileSync } from "node:fs";
+import { join } from "node:path";
 
 // Create a Yoga instance with a GraphQL schema.
 const yoga = createYoga({
@@ -10,7 +12,14 @@ const yoga = createYoga({
 });
 
 // Pass it into a server to hook into request handlers.
-const server = createServer(yoga);
+const server = createServer(
+	{
+		cert: readFileSync(join(__dirname, "../", process.env.CERT_PATH ?? "")),
+		key: readFileSync(join(__dirname, "../", process.env.KEY_PATH ?? "")),
+		ca: readFileSync(join(__dirname, "../", process.env.CA_CERT_PATH ?? "")),
+	},
+	yoga,
+);
 
 // Start the server and you're done!
 server.listen(process.env.PORT, () => {
