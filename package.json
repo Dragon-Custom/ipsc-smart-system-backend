@@ -9,6 +9,7 @@
         "prisma:gen": "prisma generate",
         "gql:gen": "npx ts-node --transpile-only src/schema.ts",
         "sdk:gen": "genql --schema build/schema.graphql --output build/sdk",
+        "pal:gen": "pal g -c=pal.json",
         "gen": "npm run prisma:gen && npm run gql:gen && npm run sdk:gen"
     },
     "prisma": {
