@@ -27,6 +27,7 @@ export const StageScalarFieldEnum = enumType({
     'noshoots',
     'gunCondition',
     'shooterId',
+    'walkthroughTime',
   ],
 })
 
@@ -195,6 +196,7 @@ export const StageWhereInput = inputObjectType({
     t.field('noshoots', { type: 'IntFilter' })
     t.field('gunCondition', { type: 'IntFilter' })
     t.field('shooterId', { type: 'IntFilter' })
+    t.field('walkthroughTime', { type: 'DecimalFilter' })
     t.field('designer', { type: 'ShooterRelationFilter' })
     t.field('Scorelist', { type: 'ScorelistListRelationFilter' })
   },
@@ -215,6 +217,7 @@ export const StageOrderByWithRelationInput = inputObjectType({
     t.field('noshoots', { type: 'SortOrder' })
     t.field('gunCondition', { type: 'SortOrder' })
     t.field('shooterId', { type: 'SortOrder' })
+    t.field('walkthroughTime', { type: 'SortOrder' })
     t.field('designer', { type: 'ShooterOrderByWithRelationInput' })
     t.field('Scorelist', { type: 'ScorelistOrderByRelationAggregateInput' })
   },
@@ -238,6 +241,7 @@ export const StageWhereUniqueInput = inputObjectType({
     t.field('noshoots', { type: 'IntFilter' })
     t.field('gunCondition', { type: 'IntFilter' })
     t.field('shooterId', { type: 'IntFilter' })
+    t.field('walkthroughTime', { type: 'DecimalFilter' })
     t.field('designer', { type: 'ShooterRelationFilter' })
     t.field('Scorelist', { type: 'ScorelistListRelationFilter' })
   },
@@ -258,6 +262,7 @@ export const StageOrderByWithAggregationInput = inputObjectType({
     t.field('noshoots', { type: 'SortOrder' })
     t.field('gunCondition', { type: 'SortOrder' })
     t.field('shooterId', { type: 'SortOrder' })
+    t.field('walkthroughTime', { type: 'SortOrder' })
     t.field('_count', { type: 'StageCountOrderByAggregateInput' })
     t.field('_avg', { type: 'StageAvgOrderByAggregateInput' })
     t.field('_max', { type: 'StageMaxOrderByAggregateInput' })
@@ -284,6 +289,7 @@ export const StageScalarWhereWithAggregatesInput = inputObjectType({
     t.field('noshoots', { type: 'IntWithAggregatesFilter' })
     t.field('gunCondition', { type: 'IntWithAggregatesFilter' })
     t.field('shooterId', { type: 'IntWithAggregatesFilter' })
+    t.field('walkthroughTime', { type: 'DecimalWithAggregatesFilter' })
   },
 })
 
@@ -890,6 +896,7 @@ export const StageCreateInput = inputObjectType({
     t.nonNull.field('poppers', { type: 'Int' })
     t.nonNull.field('noshoots', { type: 'Int' })
     t.nonNull.field('gunCondition', { type: 'Int' })
+    t.nonNull.field('walkthroughTime', { type: 'Decimal' })
     t.nonNull.field('designer', {
       type: 'ShooterCreateNestedOneWithoutStageInput',
     })
@@ -912,6 +919,7 @@ export const StageUncheckedCreateInput = inputObjectType({
     t.nonNull.field('noshoots', { type: 'Int' })
     t.nonNull.field('gunCondition', { type: 'Int' })
     t.nonNull.field('shooterId', { type: 'Int' })
+    t.nonNull.field('walkthroughTime', { type: 'Decimal' })
     t.field('Scorelist', {
       type: 'ScorelistUncheckedCreateNestedManyWithoutStageInput',
     })
@@ -931,6 +939,7 @@ export const StageUpdateInput = inputObjectType({
     t.field('poppers', { type: 'IntFieldUpdateOperationsInput' })
     t.field('noshoots', { type: 'IntFieldUpdateOperationsInput' })
     t.field('gunCondition', { type: 'IntFieldUpdateOperationsInput' })
+    t.field('walkthroughTime', { type: 'DecimalFieldUpdateOperationsInput' })
     t.field('designer', {
       type: 'ShooterUpdateOneRequiredWithoutStageNestedInput',
     })
@@ -953,6 +962,7 @@ export const StageUncheckedUpdateInput = inputObjectType({
     t.field('noshoots', { type: 'IntFieldUpdateOperationsInput' })
     t.field('gunCondition', { type: 'IntFieldUpdateOperationsInput' })
     t.field('shooterId', { type: 'IntFieldUpdateOperationsInput' })
+    t.field('walkthroughTime', { type: 'DecimalFieldUpdateOperationsInput' })
     t.field('Scorelist', {
       type: 'ScorelistUncheckedUpdateManyWithoutStageNestedInput',
     })
@@ -974,6 +984,7 @@ export const StageCreateManyInput = inputObjectType({
     t.nonNull.field('noshoots', { type: 'Int' })
     t.nonNull.field('gunCondition', { type: 'Int' })
     t.nonNull.field('shooterId', { type: 'Int' })
+    t.nonNull.field('walkthroughTime', { type: 'Decimal' })
   },
 })
 
@@ -990,6 +1001,7 @@ export const StageUpdateManyMutationInput = inputObjectType({
     t.field('poppers', { type: 'IntFieldUpdateOperationsInput' })
     t.field('noshoots', { type: 'IntFieldUpdateOperationsInput' })
     t.field('gunCondition', { type: 'IntFieldUpdateOperationsInput' })
+    t.field('walkthroughTime', { type: 'DecimalFieldUpdateOperationsInput' })
   },
 })
 
@@ -1008,6 +1020,7 @@ export const StageUncheckedUpdateManyInput = inputObjectType({
     t.field('noshoots', { type: 'IntFieldUpdateOperationsInput' })
     t.field('gunCondition', { type: 'IntFieldUpdateOperationsInput' })
     t.field('shooterId', { type: 'IntFieldUpdateOperationsInput' })
+    t.field('walkthroughTime', { type: 'DecimalFieldUpdateOperationsInput' })
   },
 })
 
@@ -1857,6 +1870,23 @@ export const StringNullableFilter = inputObjectType({
   },
 })
 
+export const DecimalFilter = inputObjectType({
+  nonNullDefaults: {
+    input: false,
+  },
+  name: 'DecimalFilter',
+  definition(t) {
+    t.field('equals', { type: 'Decimal' })
+    t.list.field('in', { type: 'Decimal' })
+    t.list.field('notIn', { type: 'Decimal' })
+    t.field('lt', { type: 'Decimal' })
+    t.field('lte', { type: 'Decimal' })
+    t.field('gt', { type: 'Decimal' })
+    t.field('gte', { type: 'Decimal' })
+    t.field('not', { type: 'NestedDecimalFilter' })
+  },
+})
+
 export const ShooterRelationFilter = inputObjectType({
   nonNullDefaults: {
     input: false,
@@ -1905,6 +1935,7 @@ export const StageCountOrderByAggregateInput = inputObjectType({
     t.field('noshoots', { type: 'SortOrder' })
     t.field('gunCondition', { type: 'SortOrder' })
     t.field('shooterId', { type: 'SortOrder' })
+    t.field('walkthroughTime', { type: 'SortOrder' })
   },
 })
 
@@ -1920,6 +1951,7 @@ export const StageAvgOrderByAggregateInput = inputObjectType({
     t.field('noshoots', { type: 'SortOrder' })
     t.field('gunCondition', { type: 'SortOrder' })
     t.field('shooterId', { type: 'SortOrder' })
+    t.field('walkthroughTime', { type: 'SortOrder' })
   },
 })
 
@@ -1938,6 +1970,7 @@ export const StageMaxOrderByAggregateInput = inputObjectType({
     t.field('noshoots', { type: 'SortOrder' })
     t.field('gunCondition', { type: 'SortOrder' })
     t.field('shooterId', { type: 'SortOrder' })
+    t.field('walkthroughTime', { type: 'SortOrder' })
   },
 })
 
@@ -1956,6 +1989,7 @@ export const StageMinOrderByAggregateInput = inputObjectType({
     t.field('noshoots', { type: 'SortOrder' })
     t.field('gunCondition', { type: 'SortOrder' })
     t.field('shooterId', { type: 'SortOrder' })
+    t.field('walkthroughTime', { type: 'SortOrder' })
   },
 })
 
@@ -1971,6 +2005,7 @@ export const StageSumOrderByAggregateInput = inputObjectType({
     t.field('noshoots', { type: 'SortOrder' })
     t.field('gunCondition', { type: 'SortOrder' })
     t.field('shooterId', { type: 'SortOrder' })
+    t.field('walkthroughTime', { type: 'SortOrder' })
   },
 })
 
@@ -1995,6 +2030,28 @@ export const StringNullableWithAggregatesFilter = inputObjectType({
     t.field('_count', { type: 'NestedIntNullableFilter' })
     t.field('_min', { type: 'NestedStringNullableFilter' })
     t.field('_max', { type: 'NestedStringNullableFilter' })
+  },
+})
+
+export const DecimalWithAggregatesFilter = inputObjectType({
+  nonNullDefaults: {
+    input: false,
+  },
+  name: 'DecimalWithAggregatesFilter',
+  definition(t) {
+    t.field('equals', { type: 'Decimal' })
+    t.list.field('in', { type: 'Decimal' })
+    t.list.field('notIn', { type: 'Decimal' })
+    t.field('lt', { type: 'Decimal' })
+    t.field('lte', { type: 'Decimal' })
+    t.field('gt', { type: 'Decimal' })
+    t.field('gte', { type: 'Decimal' })
+    t.field('not', { type: 'NestedDecimalWithAggregatesFilter' })
+    t.field('_count', { type: 'NestedIntFilter' })
+    t.field('_avg', { type: 'NestedDecimalFilter' })
+    t.field('_sum', { type: 'NestedDecimalFilter' })
+    t.field('_min', { type: 'NestedDecimalFilter' })
+    t.field('_max', { type: 'NestedDecimalFilter' })
   },
 })
 
@@ -2807,6 +2864,20 @@ export const NullableStringFieldUpdateOperationsInput = inputObjectType({
   name: 'NullableStringFieldUpdateOperationsInput',
   definition(t) {
     t.field('set', { type: 'String' })
+  },
+})
+
+export const DecimalFieldUpdateOperationsInput = inputObjectType({
+  nonNullDefaults: {
+    input: false,
+  },
+  name: 'DecimalFieldUpdateOperationsInput',
+  definition(t) {
+    t.field('set', { type: 'Decimal' })
+    t.field('increment', { type: 'Decimal' })
+    t.field('decrement', { type: 'Decimal' })
+    t.field('multiply', { type: 'Decimal' })
+    t.field('divide', { type: 'Decimal' })
   },
 })
 
@@ -3715,6 +3786,23 @@ export const NestedStringNullableFilter = inputObjectType({
   },
 })
 
+export const NestedDecimalFilter = inputObjectType({
+  nonNullDefaults: {
+    input: false,
+  },
+  name: 'NestedDecimalFilter',
+  definition(t) {
+    t.field('equals', { type: 'Decimal' })
+    t.list.field('in', { type: 'Decimal' })
+    t.list.field('notIn', { type: 'Decimal' })
+    t.field('lt', { type: 'Decimal' })
+    t.field('lte', { type: 'Decimal' })
+    t.field('gt', { type: 'Decimal' })
+    t.field('gte', { type: 'Decimal' })
+    t.field('not', { type: 'NestedDecimalFilter' })
+  },
+})
+
 export const NestedStringNullableWithAggregatesFilter = inputObjectType({
   nonNullDefaults: {
     input: false,
@@ -3735,6 +3823,28 @@ export const NestedStringNullableWithAggregatesFilter = inputObjectType({
     t.field('_count', { type: 'NestedIntNullableFilter' })
     t.field('_min', { type: 'NestedStringNullableFilter' })
     t.field('_max', { type: 'NestedStringNullableFilter' })
+  },
+})
+
+export const NestedDecimalWithAggregatesFilter = inputObjectType({
+  nonNullDefaults: {
+    input: false,
+  },
+  name: 'NestedDecimalWithAggregatesFilter',
+  definition(t) {
+    t.field('equals', { type: 'Decimal' })
+    t.list.field('in', { type: 'Decimal' })
+    t.list.field('notIn', { type: 'Decimal' })
+    t.field('lt', { type: 'Decimal' })
+    t.field('lte', { type: 'Decimal' })
+    t.field('gt', { type: 'Decimal' })
+    t.field('gte', { type: 'Decimal' })
+    t.field('not', { type: 'NestedDecimalWithAggregatesFilter' })
+    t.field('_count', { type: 'NestedIntFilter' })
+    t.field('_avg', { type: 'NestedDecimalFilter' })
+    t.field('_sum', { type: 'NestedDecimalFilter' })
+    t.field('_min', { type: 'NestedDecimalFilter' })
+    t.field('_max', { type: 'NestedDecimalFilter' })
   },
 })
 
@@ -3849,6 +3959,7 @@ export const StageCreateWithoutDesignerInput = inputObjectType({
     t.nonNull.field('poppers', { type: 'Int' })
     t.nonNull.field('noshoots', { type: 'Int' })
     t.nonNull.field('gunCondition', { type: 'Int' })
+    t.nonNull.field('walkthroughTime', { type: 'Decimal' })
     t.field('Scorelist', { type: 'ScorelistCreateNestedManyWithoutStageInput' })
   },
 })
@@ -3867,6 +3978,7 @@ export const StageUncheckedCreateWithoutDesignerInput = inputObjectType({
     t.nonNull.field('poppers', { type: 'Int' })
     t.nonNull.field('noshoots', { type: 'Int' })
     t.nonNull.field('gunCondition', { type: 'Int' })
+    t.nonNull.field('walkthroughTime', { type: 'Decimal' })
     t.field('Scorelist', {
       type: 'ScorelistUncheckedCreateNestedManyWithoutStageInput',
     })
@@ -4013,6 +4125,7 @@ export const StageScalarWhereInput = inputObjectType({
     t.field('noshoots', { type: 'IntFilter' })
     t.field('gunCondition', { type: 'IntFilter' })
     t.field('shooterId', { type: 'IntFilter' })
+    t.field('walkthroughTime', { type: 'DecimalFilter' })
   },
 })
 
@@ -4380,6 +4493,7 @@ export const StageCreateWithoutScorelistInput = inputObjectType({
     t.nonNull.field('poppers', { type: 'Int' })
     t.nonNull.field('noshoots', { type: 'Int' })
     t.nonNull.field('gunCondition', { type: 'Int' })
+    t.nonNull.field('walkthroughTime', { type: 'Decimal' })
     t.nonNull.field('designer', {
       type: 'ShooterCreateNestedOneWithoutStageInput',
     })
@@ -4401,6 +4515,7 @@ export const StageUncheckedCreateWithoutScorelistInput = inputObjectType({
     t.nonNull.field('noshoots', { type: 'Int' })
     t.nonNull.field('gunCondition', { type: 'Int' })
     t.nonNull.field('shooterId', { type: 'Int' })
+    t.nonNull.field('walkthroughTime', { type: 'Decimal' })
   },
 })
 
@@ -4557,6 +4672,7 @@ export const StageUpdateWithoutScorelistInput = inputObjectType({
     t.field('poppers', { type: 'IntFieldUpdateOperationsInput' })
     t.field('noshoots', { type: 'IntFieldUpdateOperationsInput' })
     t.field('gunCondition', { type: 'IntFieldUpdateOperationsInput' })
+    t.field('walkthroughTime', { type: 'DecimalFieldUpdateOperationsInput' })
     t.field('designer', {
       type: 'ShooterUpdateOneRequiredWithoutStageNestedInput',
     })
@@ -4578,6 +4694,7 @@ export const StageUncheckedUpdateWithoutScorelistInput = inputObjectType({
     t.field('noshoots', { type: 'IntFieldUpdateOperationsInput' })
     t.field('gunCondition', { type: 'IntFieldUpdateOperationsInput' })
     t.field('shooterId', { type: 'IntFieldUpdateOperationsInput' })
+    t.field('walkthroughTime', { type: 'DecimalFieldUpdateOperationsInput' })
   },
 })
 
@@ -5288,6 +5405,7 @@ export const StageCreateManyDesignerInput = inputObjectType({
     t.nonNull.field('poppers', { type: 'Int' })
     t.nonNull.field('noshoots', { type: 'Int' })
     t.nonNull.field('gunCondition', { type: 'Int' })
+    t.nonNull.field('walkthroughTime', { type: 'Decimal' })
   },
 })
 
@@ -5323,6 +5441,7 @@ export const StageUpdateWithoutDesignerInput = inputObjectType({
     t.field('poppers', { type: 'IntFieldUpdateOperationsInput' })
     t.field('noshoots', { type: 'IntFieldUpdateOperationsInput' })
     t.field('gunCondition', { type: 'IntFieldUpdateOperationsInput' })
+    t.field('walkthroughTime', { type: 'DecimalFieldUpdateOperationsInput' })
     t.field('Scorelist', { type: 'ScorelistUpdateManyWithoutStageNestedInput' })
   },
 })
@@ -5341,6 +5460,7 @@ export const StageUncheckedUpdateWithoutDesignerInput = inputObjectType({
     t.field('poppers', { type: 'IntFieldUpdateOperationsInput' })
     t.field('noshoots', { type: 'IntFieldUpdateOperationsInput' })
     t.field('gunCondition', { type: 'IntFieldUpdateOperationsInput' })
+    t.field('walkthroughTime', { type: 'DecimalFieldUpdateOperationsInput' })
     t.field('Scorelist', {
       type: 'ScorelistUncheckedUpdateManyWithoutStageNestedInput',
     })
@@ -5361,6 +5481,7 @@ export const StageUncheckedUpdateManyWithoutDesignerInput = inputObjectType({
     t.field('poppers', { type: 'IntFieldUpdateOperationsInput' })
     t.field('noshoots', { type: 'IntFieldUpdateOperationsInput' })
     t.field('gunCondition', { type: 'IntFieldUpdateOperationsInput' })
+    t.field('walkthroughTime', { type: 'DecimalFieldUpdateOperationsInput' })
   },
 })
 
@@ -5928,6 +6049,7 @@ export const StageCountAggregateOutputType = objectType({
     t.field('noshoots', { type: 'Int' })
     t.field('gunCondition', { type: 'Int' })
     t.field('shooterId', { type: 'Int' })
+    t.field('walkthroughTime', { type: 'Int' })
     t.field('_all', { type: 'Int' })
   },
 })
@@ -5944,6 +6066,7 @@ export const StageAvgAggregateOutputType = objectType({
     t.nullable.field('noshoots', { type: 'Float' })
     t.nullable.field('gunCondition', { type: 'Float' })
     t.nullable.field('shooterId', { type: 'Float' })
+    t.nullable.field('walkthroughTime', { type: 'Decimal' })
   },
 })
 
@@ -5959,6 +6082,7 @@ export const StageSumAggregateOutputType = objectType({
     t.nullable.field('noshoots', { type: 'Int' })
     t.nullable.field('gunCondition', { type: 'Int' })
     t.nullable.field('shooterId', { type: 'Int' })
+    t.nullable.field('walkthroughTime', { type: 'Decimal' })
   },
 })
 
@@ -5977,6 +6101,7 @@ export const StageMinAggregateOutputType = objectType({
     t.nullable.field('noshoots', { type: 'Int' })
     t.nullable.field('gunCondition', { type: 'Int' })
     t.nullable.field('shooterId', { type: 'Int' })
+    t.nullable.field('walkthroughTime', { type: 'Decimal' })
   },
 })
 
@@ -5995,6 +6120,7 @@ export const StageMaxAggregateOutputType = objectType({
     t.nullable.field('noshoots', { type: 'Int' })
     t.nullable.field('gunCondition', { type: 'Int' })
     t.nullable.field('shooterId', { type: 'Int' })
+    t.nullable.field('walkthroughTime', { type: 'Decimal' })
   },
 })
 

@@ -22,17 +22,19 @@ model Shooter {
 }
 
 model Stage {
-    id           Int         @id @unique @default(autoincrement())
-    createAt     DateTime?   @default(now())
-    name         String
-    description  String?
-    papers       Int
-    poppers      Int
-    noshoots     Int
-    gunCondition Int
-    designer     Shooter     @relation(fields: [shooterId], references: [id])
-    shooterId    Int
-    Scorelist    Scorelist[]
+    id              Int         @id @unique @default(autoincrement())
+    createAt        DateTime?   @default(now())
+    name            String
+    description     String?
+    papers          Int
+    poppers         Int
+    noshoots        Int
+    gunCondition    Int
+    designer        Shooter     @relation(fields: [shooterId], references: [id])
+    shooterId       Int
+    //unit: minutes
+    walkthroughTime Decimal
+    Scorelist       Scorelist[]
 }
 
 model Scoreboard {
