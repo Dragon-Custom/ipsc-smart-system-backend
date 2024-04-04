@@ -16,11 +16,17 @@ new Generator(
 	},
 ).run().then(async () => {
 	// The paljs excludeModels just not fucking working
-	fs.rmSync("src/graphql/generated/Image", { recursive: true, force: true });
-	const exportItem = fs.readFileSync("src/graphql/generated/index.ts").toString();
+	fs.rmSync("src/graphql/generated/Image/mutations", {
+		recursive: true,
+		force: true,
+	});
+	fs.rmSync("src/graphql/generated/Image/queries", {
+		recursive: true,
+		force: true,
+	});
 	fs.writeFileSync(
-		"src/graphql/generated/index.ts",
-		exportItem.replace(/.*Image.*$/gm, ""),
+		"src/graphql/generated/Image/index.ts",
+		"export * from './type'",
 	);
 });
 
