@@ -1,5 +1,9 @@
 import { Prisma, PrismaClient } from "@prisma/client";
-export const prisma = new PrismaClient();
+export let prisma = new PrismaClient();
+
+export function updatePrisma(newPrisma: PrismaClient) {
+	prisma = newPrisma;
+}
 
 interface SubscribeList {
 	cb: () => void;

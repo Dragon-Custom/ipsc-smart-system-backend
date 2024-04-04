@@ -21,6 +21,13 @@ model Shooter {
     email    String
 }
 
+enum StageType {
+    Short
+    Medium
+    Long
+    Unsanctioned
+}
+
 model Stage {
     id              Int         @id @unique @default(autoincrement())
     createAt        DateTime?   @default(now())
@@ -35,6 +42,12 @@ model Stage {
     //unit: minutes
     walkthroughTime Decimal
     Scorelist       Scorelist[]
+    // the calculated field
+    minRounds       Int
+    // the calculated field
+    maxScore        Int
+    // the calculated field
+    stageType       StageType
 }
 
 model Scoreboard {

@@ -17,6 +17,9 @@ export const Stage = objectType({
     t.int('gunCondition')
     t.int('shooterId')
     t.decimal('walkthroughTime')
+    t.int('minRounds')
+    t.int('maxScore')
+    t.field('stageType', { type: 'StageType' })
     t.field('designer', {
       type: 'Shooter',
       resolve(root: any) {
