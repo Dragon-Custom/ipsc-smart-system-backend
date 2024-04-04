@@ -1,8 +1,0 @@
-{
-    "backend": { 
-		"generator": "nexus",
-		"onDelete": true,
-		"output": "src/graphql/generated"
-	},
-    "frontend": { "admin": true }
-}

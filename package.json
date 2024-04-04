@@ -9,7 +9,7 @@
         "prisma:gen": "prisma generate",
         "gql:gen": "npx ts-node --transpile-only src/schema.ts",
         "sdk:gen": "genql --schema build/schema.graphql --output build/sdk",
-        "pal:gen": "pal g -c=pal.json",
+        "pal:gen": "node pal.js",
         "gen": "npm run prisma:gen && npm run gql:gen && npm run sdk:gen"
     },
     "prisma": {
@@ -20,6 +20,7 @@
     "license": "ISC",
     "dependencies": {
         "@graphql-yoga/plugin-graphql-sse": "^3.3.0",
+        "@paljs/generator": "^6.0.7",
         "@paljs/nexus": "^6.0.7",
         "@prisma/client": "^5.11.0",
         "@types/node": "^20.12.2",
