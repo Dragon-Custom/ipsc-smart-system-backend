@@ -1,5 +1,4 @@
 import { Prisma, PrismaClient } from "@prisma/client";
-
 export const prisma = new PrismaClient();
 
 interface SubscribeList {
@@ -40,7 +39,7 @@ function unsubscribe(index: number) {
 }
 
 export interface Context {
-    prisma: PrismaClient;
+	prisma: PrismaClient;
     subscribe: typeof subscribe;
     unsubscribe: typeof unsubscribe;
     userId?: number; // 1

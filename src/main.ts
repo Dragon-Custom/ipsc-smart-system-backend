@@ -9,6 +9,12 @@ import { join } from "node:path";
 const yoga = createYoga({
 	schema,
 	context,
+	logging: {
+		debug: console.log,
+		error: console.log,
+		info: console.log,
+		warn: console.log,
+	},
 });
 
 // Pass it into a server to hook into request handlers.
