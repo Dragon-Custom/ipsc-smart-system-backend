@@ -31,7 +31,13 @@ export const StageScalarFieldEnum = enumType({
     'minRounds',
     'maxScore',
     'stageType',
+    'imageId',
   ],
+})
+
+export const StageTagScalarFieldEnum = enumType({
+  name: 'StageTagScalarFieldEnum',
+  members: ['id', 'title', 'color', 'stageId'],
 })
 
 export const ScoreboardScalarFieldEnum = enumType({
@@ -69,6 +75,11 @@ export const ProErrorObjectsScalarFieldEnum = enumType({
 export const ProErrorsStoreScalarFieldEnum = enumType({
   name: 'ProErrorsStoreScalarFieldEnum',
   members: ['id', 'count', 'scoreId', 'proErrorObjectsId'],
+})
+
+export const ImageScalarFieldEnum = enumType({
+  name: 'ImageScalarFieldEnum',
+  members: ['id', 'imagePath', 'sizeX', 'sizeY'],
 })
 
 export const SortOrder = enumType({
@@ -208,7 +219,10 @@ export const StageWhereInput = inputObjectType({
     t.field('minRounds', { type: 'IntFilter' })
     t.field('maxScore', { type: 'IntFilter' })
     t.field('stageType', { type: 'EnumStageTypeFilter' })
+    t.field('imageId', { type: 'StringFilter' })
+    t.field('image', { type: 'ImageRelationFilter' })
     t.field('designer', { type: 'ShooterRelationFilter' })
+    t.field('tags', { type: 'StageTagListRelationFilter' })
     t.field('Scorelist', { type: 'ScorelistListRelationFilter' })
   },
 })
@@ -232,7 +246,10 @@ export const StageOrderByWithRelationInput = inputObjectType({
     t.field('minRounds', { type: 'SortOrder' })
     t.field('maxScore', { type: 'SortOrder' })
     t.field('stageType', { type: 'SortOrder' })
+    t.field('imageId', { type: 'SortOrder' })
+    t.field('image', { type: 'ImageOrderByWithRelationInput' })
     t.field('designer', { type: 'ShooterOrderByWithRelationInput' })
+    t.field('tags', { type: 'StageTagOrderByRelationAggregateInput' })
     t.field('Scorelist', { type: 'ScorelistOrderByRelationAggregateInput' })
   },
 })
@@ -259,7 +276,10 @@ export const StageWhereUniqueInput = inputObjectType({
     t.field('minRounds', { type: 'IntFilter' })
     t.field('maxScore', { type: 'IntFilter' })
     t.field('stageType', { type: 'EnumStageTypeFilter' })
+    t.field('imageId', { type: 'StringFilter' })
+    t.field('image', { type: 'ImageRelationFilter' })
     t.field('designer', { type: 'ShooterRelationFilter' })
+    t.field('tags', { type: 'StageTagListRelationFilter' })
     t.field('Scorelist', { type: 'ScorelistListRelationFilter' })
   },
 })
@@ -283,6 +303,7 @@ export const StageOrderByWithAggregationInput = inputObjectType({
     t.field('minRounds', { type: 'SortOrder' })
     t.field('maxScore', { type: 'SortOrder' })
     t.field('stageType', { type: 'SortOrder' })
+    t.field('imageId', { type: 'SortOrder' })
     t.field('_count', { type: 'StageCountOrderByAggregateInput' })
     t.field('_avg', { type: 'StageAvgOrderByAggregateInput' })
     t.field('_max', { type: 'StageMaxOrderByAggregateInput' })
@@ -313,6 +334,89 @@ export const StageScalarWhereWithAggregatesInput = inputObjectType({
     t.field('minRounds', { type: 'IntWithAggregatesFilter' })
     t.field('maxScore', { type: 'IntWithAggregatesFilter' })
     t.field('stageType', { type: 'EnumStageTypeWithAggregatesFilter' })
+    t.field('imageId', { type: 'StringWithAggregatesFilter' })
+  },
+})
+
+export const StageTagWhereInput = inputObjectType({
+  nonNullDefaults: {
+    input: false,
+  },
+  name: 'StageTagWhereInput',
+  definition(t) {
+    t.list.field('AND', { type: 'StageTagWhereInput' })
+    t.list.field('OR', { type: 'StageTagWhereInput' })
+    t.list.field('NOT', { type: 'StageTagWhereInput' })
+    t.field('id', { type: 'IntFilter' })
+    t.field('title', { type: 'StringFilter' })
+    t.field('color', { type: 'StringFilter' })
+    t.field('stageId', { type: 'IntNullableFilter' })
+    t.field('Stage', { type: 'StageNullableRelationFilter' })
+  },
+})
+
+export const StageTagOrderByWithRelationInput = inputObjectType({
+  nonNullDefaults: {
+    input: false,
+  },
+  name: 'StageTagOrderByWithRelationInput',
+  definition(t) {
+    t.field('id', { type: 'SortOrder' })
+    t.field('title', { type: 'SortOrder' })
+    t.field('color', { type: 'SortOrder' })
+    t.field('stageId', { type: 'SortOrderInput' })
+    t.field('Stage', { type: 'StageOrderByWithRelationInput' })
+  },
+})
+
+export const StageTagWhereUniqueInput = inputObjectType({
+  nonNullDefaults: {
+    input: false,
+  },
+  name: 'StageTagWhereUniqueInput',
+  definition(t) {
+    t.field('id', { type: 'Int' })
+    t.list.field('AND', { type: 'StageTagWhereInput' })
+    t.list.field('OR', { type: 'StageTagWhereInput' })
+    t.list.field('NOT', { type: 'StageTagWhereInput' })
+    t.field('title', { type: 'StringFilter' })
+    t.field('color', { type: 'StringFilter' })
+    t.field('stageId', { type: 'IntNullableFilter' })
+    t.field('Stage', { type: 'StageNullableRelationFilter' })
+  },
+})
+
+export const StageTagOrderByWithAggregationInput = inputObjectType({
+  nonNullDefaults: {
+    input: false,
+  },
+  name: 'StageTagOrderByWithAggregationInput',
+  definition(t) {
+    t.field('id', { type: 'SortOrder' })
+    t.field('title', { type: 'SortOrder' })
+    t.field('color', { type: 'SortOrder' })
+    t.field('stageId', { type: 'SortOrderInput' })
+    t.field('_count', { type: 'StageTagCountOrderByAggregateInput' })
+    t.field('_avg', { type: 'StageTagAvgOrderByAggregateInput' })
+    t.field('_max', { type: 'StageTagMaxOrderByAggregateInput' })
+    t.field('_min', { type: 'StageTagMinOrderByAggregateInput' })
+    t.field('_sum', { type: 'StageTagSumOrderByAggregateInput' })
+  },
+})
+
+export const StageTagScalarWhereWithAggregatesInput = inputObjectType({
+  nonNullDefaults: {
+    input: false,
+  },
+  name: 'StageTagScalarWhereWithAggregatesInput',
+  definition(t) {
+    t.list.field('AND', { type: 'StageTagScalarWhereWithAggregatesInput' })
+    t.list.field('OR', { type: 'StageTagScalarWhereWithAggregatesInput' })
+    t.list.field('NOT', { type: 'StageTagScalarWhereWithAggregatesInput' })
+    t.field('id', { type: 'IntWithAggregatesFilter' })
+    t.field('title', { type: 'StringWithAggregatesFilter' })
+    t.field('color', { type: 'StringWithAggregatesFilter' })
+    t.field('stageId', { type: 'IntNullableWithAggregatesFilter' })
   },
 })
 
@@ -795,6 +899,88 @@ export const ProErrorsStoreScalarWhereWithAggregatesInput = inputObjectType({
   },
 })
 
+export const ImageWhereInput = inputObjectType({
+  nonNullDefaults: {
+    input: false,
+  },
+  name: 'ImageWhereInput',
+  definition(t) {
+    t.list.field('AND', { type: 'ImageWhereInput' })
+    t.list.field('OR', { type: 'ImageWhereInput' })
+    t.list.field('NOT', { type: 'ImageWhereInput' })
+    t.field('id', { type: 'StringFilter' })
+    t.field('imagePath', { type: 'StringFilter' })
+    t.field('sizeX', { type: 'IntFilter' })
+    t.field('sizeY', { type: 'IntFilter' })
+    t.field('Stage', { type: 'StageListRelationFilter' })
+  },
+})
+
+export const ImageOrderByWithRelationInput = inputObjectType({
+  nonNullDefaults: {
+    input: false,
+  },
+  name: 'ImageOrderByWithRelationInput',
+  definition(t) {
+    t.field('id', { type: 'SortOrder' })
+    t.field('imagePath', { type: 'SortOrder' })
+    t.field('sizeX', { type: 'SortOrder' })
+    t.field('sizeY', { type: 'SortOrder' })
+    t.field('Stage', { type: 'StageOrderByRelationAggregateInput' })
+  },
+})
+
+export const ImageWhereUniqueInput = inputObjectType({
+  nonNullDefaults: {
+    input: false,
+  },
+  name: 'ImageWhereUniqueInput',
+  definition(t) {
+    t.field('id', { type: 'String' })
+    t.list.field('AND', { type: 'ImageWhereInput' })
+    t.list.field('OR', { type: 'ImageWhereInput' })
+    t.list.field('NOT', { type: 'ImageWhereInput' })
+    t.field('imagePath', { type: 'StringFilter' })
+    t.field('sizeX', { type: 'IntFilter' })
+    t.field('sizeY', { type: 'IntFilter' })
+    t.field('Stage', { type: 'StageListRelationFilter' })
+  },
+})
+
+export const ImageOrderByWithAggregationInput = inputObjectType({
+  nonNullDefaults: {
+    input: false,
+  },
+  name: 'ImageOrderByWithAggregationInput',
+  definition(t) {
+    t.field('id', { type: 'SortOrder' })
+    t.field('imagePath', { type: 'SortOrder' })
+    t.field('sizeX', { type: 'SortOrder' })
+    t.field('sizeY', { type: 'SortOrder' })
+    t.field('_count', { type: 'ImageCountOrderByAggregateInput' })
+    t.field('_avg', { type: 'ImageAvgOrderByAggregateInput' })
+    t.field('_max', { type: 'ImageMaxOrderByAggregateInput' })
+    t.field('_min', { type: 'ImageMinOrderByAggregateInput' })
+    t.field('_sum', { type: 'ImageSumOrderByAggregateInput' })
+  },
+})
+
+export const ImageScalarWhereWithAggregatesInput = inputObjectType({
+  nonNullDefaults: {
+    input: false,
+  },
+  name: 'ImageScalarWhereWithAggregatesInput',
+  definition(t) {
+    t.list.field('AND', { type: 'ImageScalarWhereWithAggregatesInput' })
+    t.list.field('OR', { type: 'ImageScalarWhereWithAggregatesInput' })
+    t.list.field('NOT', { type: 'ImageScalarWhereWithAggregatesInput' })
+    t.field('id', { type: 'StringWithAggregatesFilter' })
+    t.field('imagePath', { type: 'StringWithAggregatesFilter' })
+    t.field('sizeX', { type: 'IntWithAggregatesFilter' })
+    t.field('sizeY', { type: 'IntWithAggregatesFilter' })
+  },
+})
+
 export const ShooterCreateInput = inputObjectType({
   nonNullDefaults: {
     input: false,
@@ -923,9 +1109,11 @@ export const StageCreateInput = inputObjectType({
     t.nonNull.field('minRounds', { type: 'Int' })
     t.nonNull.field('maxScore', { type: 'Int' })
     t.nonNull.field('stageType', { type: 'StageType' })
+    t.nonNull.field('image', { type: 'ImageCreateNestedOneWithoutStageInput' })
     t.nonNull.field('designer', {
       type: 'ShooterCreateNestedOneWithoutStageInput',
     })
+    t.field('tags', { type: 'StageTagCreateNestedManyWithoutStageInput' })
     t.field('Scorelist', { type: 'ScorelistCreateNestedManyWithoutStageInput' })
   },
 })
@@ -949,6 +1137,10 @@ export const StageUncheckedCreateInput = inputObjectType({
     t.nonNull.field('minRounds', { type: 'Int' })
     t.nonNull.field('maxScore', { type: 'Int' })
     t.nonNull.field('stageType', { type: 'StageType' })
+    t.nonNull.field('imageId', { type: 'String' })
+    t.field('tags', {
+      type: 'StageTagUncheckedCreateNestedManyWithoutStageInput',
+    })
     t.field('Scorelist', {
       type: 'ScorelistUncheckedCreateNestedManyWithoutStageInput',
     })
@@ -972,9 +1164,11 @@ export const StageUpdateInput = inputObjectType({
     t.field('minRounds', { type: 'IntFieldUpdateOperationsInput' })
     t.field('maxScore', { type: 'IntFieldUpdateOperationsInput' })
     t.field('stageType', { type: 'EnumStageTypeFieldUpdateOperationsInput' })
+    t.field('image', { type: 'ImageUpdateOneRequiredWithoutStageNestedInput' })
     t.field('designer', {
       type: 'ShooterUpdateOneRequiredWithoutStageNestedInput',
     })
+    t.field('tags', { type: 'StageTagUpdateManyWithoutStageNestedInput' })
     t.field('Scorelist', { type: 'ScorelistUpdateManyWithoutStageNestedInput' })
   },
 })
@@ -998,6 +1192,10 @@ export const StageUncheckedUpdateInput = inputObjectType({
     t.field('minRounds', { type: 'IntFieldUpdateOperationsInput' })
     t.field('maxScore', { type: 'IntFieldUpdateOperationsInput' })
     t.field('stageType', { type: 'EnumStageTypeFieldUpdateOperationsInput' })
+    t.field('imageId', { type: 'StringFieldUpdateOperationsInput' })
+    t.field('tags', {
+      type: 'StageTagUncheckedUpdateManyWithoutStageNestedInput',
+    })
     t.field('Scorelist', {
       type: 'ScorelistUncheckedUpdateManyWithoutStageNestedInput',
     })
@@ -1023,6 +1221,7 @@ export const StageCreateManyInput = inputObjectType({
     t.nonNull.field('minRounds', { type: 'Int' })
     t.nonNull.field('maxScore', { type: 'Int' })
     t.nonNull.field('stageType', { type: 'StageType' })
+    t.nonNull.field('imageId', { type: 'String' })
   },
 })
 
@@ -1065,6 +1264,94 @@ export const StageUncheckedUpdateManyInput = inputObjectType({
     t.field('minRounds', { type: 'IntFieldUpdateOperationsInput' })
     t.field('maxScore', { type: 'IntFieldUpdateOperationsInput' })
     t.field('stageType', { type: 'EnumStageTypeFieldUpdateOperationsInput' })
+    t.field('imageId', { type: 'StringFieldUpdateOperationsInput' })
+  },
+})
+
+export const StageTagCreateInput = inputObjectType({
+  nonNullDefaults: {
+    input: false,
+  },
+  name: 'StageTagCreateInput',
+  definition(t) {
+    t.nonNull.field('title', { type: 'String' })
+    t.nonNull.field('color', { type: 'String' })
+    t.field('Stage', { type: 'StageCreateNestedOneWithoutTagsInput' })
+  },
+})
+
+export const StageTagUncheckedCreateInput = inputObjectType({
+  nonNullDefaults: {
+    input: false,
+  },
+  name: 'StageTagUncheckedCreateInput',
+  definition(t) {
+    t.field('id', { type: 'Int' })
+    t.nonNull.field('title', { type: 'String' })
+    t.nonNull.field('color', { type: 'String' })
+    t.field('stageId', { type: 'Int' })
+  },
+})
+
+export const StageTagUpdateInput = inputObjectType({
+  nonNullDefaults: {
+    input: false,
+  },
+  name: 'StageTagUpdateInput',
+  definition(t) {
+    t.field('title', { type: 'StringFieldUpdateOperationsInput' })
+    t.field('color', { type: 'StringFieldUpdateOperationsInput' })
+    t.field('Stage', { type: 'StageUpdateOneWithoutTagsNestedInput' })
+  },
+})
+
+export const StageTagUncheckedUpdateInput = inputObjectType({
+  nonNullDefaults: {
+    input: false,
+  },
+  name: 'StageTagUncheckedUpdateInput',
+  definition(t) {
+    t.field('id', { type: 'IntFieldUpdateOperationsInput' })
+    t.field('title', { type: 'StringFieldUpdateOperationsInput' })
+    t.field('color', { type: 'StringFieldUpdateOperationsInput' })
+    t.field('stageId', { type: 'NullableIntFieldUpdateOperationsInput' })
+  },
+})
+
+export const StageTagCreateManyInput = inputObjectType({
+  nonNullDefaults: {
+    input: false,
+  },
+  name: 'StageTagCreateManyInput',
+  definition(t) {
+    t.field('id', { type: 'Int' })
+    t.nonNull.field('title', { type: 'String' })
+    t.nonNull.field('color', { type: 'String' })
+    t.field('stageId', { type: 'Int' })
+  },
+})
+
+export const StageTagUpdateManyMutationInput = inputObjectType({
+  nonNullDefaults: {
+    input: false,
+  },
+  name: 'StageTagUpdateManyMutationInput',
+  definition(t) {
+    t.field('title', { type: 'StringFieldUpdateOperationsInput' })
+    t.field('color', { type: 'StringFieldUpdateOperationsInput' })
+  },
+})
+
+export const StageTagUncheckedUpdateManyInput = inputObjectType({
+  nonNullDefaults: {
+    input: false,
+  },
+  name: 'StageTagUncheckedUpdateManyInput',
+  definition(t) {
+    t.field('id', { type: 'IntFieldUpdateOperationsInput' })
+    t.field('title', { type: 'StringFieldUpdateOperationsInput' })
+    t.field('color', { type: 'StringFieldUpdateOperationsInput' })
+    t.field('stageId', { type: 'NullableIntFieldUpdateOperationsInput' })
   },
 })
 
@@ -1626,6 +1913,105 @@ export const ProErrorsStoreUncheckedUpdateManyInput = inputObjectType({
   },
 })
 
+export const ImageCreateInput = inputObjectType({
+  nonNullDefaults: {
+    input: false,
+  },
+  name: 'ImageCreateInput',
+  definition(t) {
+    t.field('id', { type: 'String' })
+    t.nonNull.field('imagePath', { type: 'String' })
+    t.nonNull.field('sizeX', { type: 'Int' })
+    t.nonNull.field('sizeY', { type: 'Int' })
+    t.field('Stage', { type: 'StageCreateNestedManyWithoutImageInput' })
+  },
+})
+
+export const ImageUncheckedCreateInput = inputObjectType({
+  nonNullDefaults: {
+    input: false,
+  },
+  name: 'ImageUncheckedCreateInput',
+  definition(t) {
+    t.field('id', { type: 'String' })
+    t.nonNull.field('imagePath', { type: 'String' })
+    t.nonNull.field('sizeX', { type: 'Int' })
+    t.nonNull.field('sizeY', { type: 'Int' })
+    t.field('Stage', {
+      type: 'StageUncheckedCreateNestedManyWithoutImageInput',
+    })
+  },
+})
+
+export const ImageUpdateInput = inputObjectType({
+  nonNullDefaults: {
+    input: false,
+  },
+  name: 'ImageUpdateInput',
+  definition(t) {
+    t.field('id', { type: 'StringFieldUpdateOperationsInput' })
+    t.field('imagePath', { type: 'StringFieldUpdateOperationsInput' })
+    t.field('sizeX', { type: 'IntFieldUpdateOperationsInput' })
+    t.field('sizeY', { type: 'IntFieldUpdateOperationsInput' })
+    t.field('Stage', { type: 'StageUpdateManyWithoutImageNestedInput' })
+  },
+})
+
+export const ImageUncheckedUpdateInput = inputObjectType({
+  nonNullDefaults: {
+    input: false,
+  },
+  name: 'ImageUncheckedUpdateInput',
+  definition(t) {
+    t.field('id', { type: 'StringFieldUpdateOperationsInput' })
+    t.field('imagePath', { type: 'StringFieldUpdateOperationsInput' })
+    t.field('sizeX', { type: 'IntFieldUpdateOperationsInput' })
+    t.field('sizeY', { type: 'IntFieldUpdateOperationsInput' })
+    t.field('Stage', {
+      type: 'StageUncheckedUpdateManyWithoutImageNestedInput',
+    })
+  },
+})
+
+export const ImageCreateManyInput = inputObjectType({
+  nonNullDefaults: {
+    input: false,
+  },
+  name: 'ImageCreateManyInput',
+  definition(t) {
+    t.field('id', { type: 'String' })
+    t.nonNull.field('imagePath', { type: 'String' })
+    t.nonNull.field('sizeX', { type: 'Int' })
+    t.nonNull.field('sizeY', { type: 'Int' })
+  },
+})
+
+export const ImageUpdateManyMutationInput = inputObjectType({
+  nonNullDefaults: {
+    input: false,
+  },
+  name: 'ImageUpdateManyMutationInput',
+  definition(t) {
+    t.field('id', { type: 'StringFieldUpdateOperationsInput' })
+    t.field('imagePath', { type: 'StringFieldUpdateOperationsInput' })
+    t.field('sizeX', { type: 'IntFieldUpdateOperationsInput' })
+    t.field('sizeY', { type: 'IntFieldUpdateOperationsInput' })
+  },
+})
+
+export const ImageUncheckedUpdateManyInput = inputObjectType({
+  nonNullDefaults: {
+    input: false,
+  },
+  name: 'ImageUncheckedUpdateManyInput',
+  definition(t) {
+    t.field('id', { type: 'StringFieldUpdateOperationsInput' })
+    t.field('imagePath', { type: 'StringFieldUpdateOperationsInput' })
+    t.field('sizeX', { type: 'IntFieldUpdateOperationsInput' })
+    t.field('sizeY', { type: 'IntFieldUpdateOperationsInput' })
+  },
+})
+
 export const IntFilter = inputObjectType({
   nonNullDefaults: {
     input: false,
@@ -1944,6 +2330,17 @@ export const EnumStageTypeFilter = inputObjectType({
   },
 })
 
+export const ImageRelationFilter = inputObjectType({
+  nonNullDefaults: {
+    input: false,
+  },
+  name: 'ImageRelationFilter',
+  definition(t) {
+    t.field('is', { type: 'ImageWhereInput' })
+    t.field('isNot', { type: 'ImageWhereInput' })
+  },
+})
+
 export const ShooterRelationFilter = inputObjectType({
   nonNullDefaults: {
     input: false,
@@ -1952,6 +2349,18 @@ export const ShooterRelationFilter = inputObjectType({
   definition(t) {
     t.field('is', { type: 'ShooterWhereInput' })
     t.field('isNot', { type: 'ShooterWhereInput' })
+  },
+})
+
+export const StageTagListRelationFilter = inputObjectType({
+  nonNullDefaults: {
+    input: false,
+  },
+  name: 'StageTagListRelationFilter',
+  definition(t) {
+    t.field('every', { type: 'StageTagWhereInput' })
+    t.field('some', { type: 'StageTagWhereInput' })
+    t.field('none', { type: 'StageTagWhereInput' })
   },
 })
 
@@ -1964,6 +2373,16 @@ export const ScorelistListRelationFilter = inputObjectType({
     t.field('every', { type: 'ScorelistWhereInput' })
     t.field('some', { type: 'ScorelistWhereInput' })
     t.field('none', { type: 'ScorelistWhereInput' })
+  },
+})
+
+export const StageTagOrderByRelationAggregateInput = inputObjectType({
+  nonNullDefaults: {
+    input: false,
+  },
+  name: 'StageTagOrderByRelationAggregateInput',
+  definition(t) {
+    t.field('_count', { type: 'SortOrder' })
   },
 })
 
@@ -1996,6 +2415,7 @@ export const StageCountOrderByAggregateInput = inputObjectType({
     t.field('minRounds', { type: 'SortOrder' })
     t.field('maxScore', { type: 'SortOrder' })
     t.field('stageType', { type: 'SortOrder' })
+    t.field('imageId', { type: 'SortOrder' })
   },
 })
 
@@ -2036,6 +2456,7 @@ export const StageMaxOrderByAggregateInput = inputObjectType({
     t.field('minRounds', { type: 'SortOrder' })
     t.field('maxScore', { type: 'SortOrder' })
     t.field('stageType', { type: 'SortOrder' })
+    t.field('imageId', { type: 'SortOrder' })
   },
 })
 
@@ -2058,6 +2479,7 @@ export const StageMinOrderByAggregateInput = inputObjectType({
     t.field('minRounds', { type: 'SortOrder' })
     t.field('maxScore', { type: 'SortOrder' })
     t.field('stageType', { type: 'SortOrder' })
+    t.field('imageId', { type: 'SortOrder' })
   },
 })
 
@@ -2138,6 +2560,117 @@ export const EnumStageTypeWithAggregatesFilter = inputObjectType({
     t.field('_count', { type: 'NestedIntFilter' })
     t.field('_min', { type: 'NestedEnumStageTypeFilter' })
     t.field('_max', { type: 'NestedEnumStageTypeFilter' })
+  },
+})
+
+export const IntNullableFilter = inputObjectType({
+  nonNullDefaults: {
+    input: false,
+  },
+  name: 'IntNullableFilter',
+  definition(t) {
+    t.field('equals', { type: 'Int' })
+    t.list.field('in', { type: 'Int' })
+    t.list.field('notIn', { type: 'Int' })
+    t.field('lt', { type: 'Int' })
+    t.field('lte', { type: 'Int' })
+    t.field('gt', { type: 'Int' })
+    t.field('gte', { type: 'Int' })
+    t.field('not', { type: 'NestedIntNullableFilter' })
+  },
+})
+
+export const StageNullableRelationFilter = inputObjectType({
+  nonNullDefaults: {
+    input: false,
+  },
+  name: 'StageNullableRelationFilter',
+  definition(t) {
+    t.field('is', { type: 'StageWhereInput' })
+    t.field('isNot', { type: 'StageWhereInput' })
+  },
+})
+
+export const StageTagCountOrderByAggregateInput = inputObjectType({
+  nonNullDefaults: {
+    input: false,
+  },
+  name: 'StageTagCountOrderByAggregateInput',
+  definition(t) {
+    t.field('id', { type: 'SortOrder' })
+    t.field('title', { type: 'SortOrder' })
+    t.field('color', { type: 'SortOrder' })
+    t.field('stageId', { type: 'SortOrder' })
+  },
+})
+
+export const StageTagAvgOrderByAggregateInput = inputObjectType({
+  nonNullDefaults: {
+    input: false,
+  },
+  name: 'StageTagAvgOrderByAggregateInput',
+  definition(t) {
+    t.field('id', { type: 'SortOrder' })
+    t.field('stageId', { type: 'SortOrder' })
+  },
+})
+
+export const StageTagMaxOrderByAggregateInput = inputObjectType({
+  nonNullDefaults: {
+    input: false,
+  },
+  name: 'StageTagMaxOrderByAggregateInput',
+  definition(t) {
+    t.field('id', { type: 'SortOrder' })
+    t.field('title', { type: 'SortOrder' })
+    t.field('color', { type: 'SortOrder' })
+    t.field('stageId', { type: 'SortOrder' })
+  },
+})
+
+export const StageTagMinOrderByAggregateInput = inputObjectType({
+  nonNullDefaults: {
+    input: false,
+  },
+  name: 'StageTagMinOrderByAggregateInput',
+  definition(t) {
+    t.field('id', { type: 'SortOrder' })
+    t.field('title', { type: 'SortOrder' })
+    t.field('color', { type: 'SortOrder' })
+    t.field('stageId', { type: 'SortOrder' })
+  },
+})
+
+export const StageTagSumOrderByAggregateInput = inputObjectType({
+  nonNullDefaults: {
+    input: false,
+  },
+  name: 'StageTagSumOrderByAggregateInput',
+  definition(t) {
+    t.field('id', { type: 'SortOrder' })
+    t.field('stageId', { type: 'SortOrder' })
+  },
+})
+
+export const IntNullableWithAggregatesFilter = inputObjectType({
+  nonNullDefaults: {
+    input: false,
+  },
+  name: 'IntNullableWithAggregatesFilter',
+  definition(t) {
+    t.field('equals', { type: 'Int' })
+    t.list.field('in', { type: 'Int' })
+    t.list.field('notIn', { type: 'Int' })
+    t.field('lt', { type: 'Int' })
+    t.field('lte', { type: 'Int' })
+    t.field('gt', { type: 'Int' })
+    t.field('gte', { type: 'Int' })
+    t.field('not', { type: 'NestedIntNullableWithAggregatesFilter' })
+    t.field('_count', { type: 'NestedIntNullableFilter' })
+    t.field('_avg', { type: 'NestedFloatNullableFilter' })
+    t.field('_sum', { type: 'NestedIntNullableFilter' })
+    t.field('_min', { type: 'NestedIntNullableFilter' })
+    t.field('_max', { type: 'NestedIntNullableFilter' })
   },
 })
 
@@ -2237,34 +2770,6 @@ export const DateTimeWithAggregatesFilter = inputObjectType({
   },
 })
 
-export const IntNullableFilter = inputObjectType({
-  nonNullDefaults: {
-    input: false,
-  },
-  name: 'IntNullableFilter',
-  definition(t) {
-    t.field('equals', { type: 'Int' })
-    t.list.field('in', { type: 'Int' })
-    t.list.field('notIn', { type: 'Int' })
-    t.field('lt', { type: 'Int' })
-    t.field('lte', { type: 'Int' })
-    t.field('gt', { type: 'Int' })
-    t.field('gte', { type: 'Int' })
-    t.field('not', { type: 'NestedIntNullableFilter' })
-  },
-})
-
-export const StageNullableRelationFilter = inputObjectType({
-  nonNullDefaults: {
-    input: false,
-  },
-  name: 'StageNullableRelationFilter',
-  definition(t) {
-    t.field('is', { type: 'StageWhereInput' })
-    t.field('isNot', { type: 'StageWhereInput' })
-  },
-})
-
 export const ScoreboardNullableRelationFilter = inputObjectType({
   nonNullDefaults: {
     input: false,
@@ -2337,28 +2842,6 @@ export const ScorelistSumOrderByAggregateInput = inputObjectType({
   definition(t) {
     t.field('scoreboardId', { type: 'SortOrder' })
     t.field('stageId', { type: 'SortOrder' })
-  },
-})
-
-export const IntNullableWithAggregatesFilter = inputObjectType({
-  nonNullDefaults: {
-    input: false,
-  },
-  name: 'IntNullableWithAggregatesFilter',
-  definition(t) {
-    t.field('equals', { type: 'Int' })
-    t.list.field('in', { type: 'Int' })
-    t.list.field('notIn', { type: 'Int' })
-    t.field('lt', { type: 'Int' })
-    t.field('lte', { type: 'Int' })
-    t.field('gt', { type: 'Int' })
-    t.field('gte', { type: 'Int' })
-    t.field('not', { type: 'NestedIntNullableWithAggregatesFilter' })
-    t.field('_count', { type: 'NestedIntNullableFilter' })
-    t.field('_avg', { type: 'NestedFloatNullableFilter' })
-    t.field('_sum', { type: 'NestedIntNullableFilter' })
-    t.field('_min', { type: 'NestedIntNullableFilter' })
-    t.field('_max', { type: 'NestedIntNullableFilter' })
   },
 })
 
@@ -2678,6 +3161,67 @@ export const ProErrorsStoreSumOrderByAggregateInput = inputObjectType({
   },
 })
 
+export const ImageCountOrderByAggregateInput = inputObjectType({
+  nonNullDefaults: {
+    input: false,
+  },
+  name: 'ImageCountOrderByAggregateInput',
+  definition(t) {
+    t.field('id', { type: 'SortOrder' })
+    t.field('imagePath', { type: 'SortOrder' })
+    t.field('sizeX', { type: 'SortOrder' })
+    t.field('sizeY', { type: 'SortOrder' })
+  },
+})
+
+export const ImageAvgOrderByAggregateInput = inputObjectType({
+  nonNullDefaults: {
+    input: false,
+  },
+  name: 'ImageAvgOrderByAggregateInput',
+  definition(t) {
+    t.field('sizeX', { type: 'SortOrder' })
+    t.field('sizeY', { type: 'SortOrder' })
+  },
+})
+
+export const ImageMaxOrderByAggregateInput = inputObjectType({
+  nonNullDefaults: {
+    input: false,
+  },
+  name: 'ImageMaxOrderByAggregateInput',
+  definition(t) {
+    t.field('id', { type: 'SortOrder' })
+    t.field('imagePath', { type: 'SortOrder' })
+    t.field('sizeX', { type: 'SortOrder' })
+    t.field('sizeY', { type: 'SortOrder' })
+  },
+})
+
+export const ImageMinOrderByAggregateInput = inputObjectType({
+  nonNullDefaults: {
+    input: false,
+  },
+  name: 'ImageMinOrderByAggregateInput',
+  definition(t) {
+    t.field('id', { type: 'SortOrder' })
+    t.field('imagePath', { type: 'SortOrder' })
+    t.field('sizeX', { type: 'SortOrder' })
+    t.field('sizeY', { type: 'SortOrder' })
+  },
+})
+
+export const ImageSumOrderByAggregateInput = inputObjectType({
+  nonNullDefaults: {
+    input: false,
+  },
+  name: 'ImageSumOrderByAggregateInput',
+  definition(t) {
+    t.field('sizeX', { type: 'SortOrder' })
+    t.field('sizeY', { type: 'SortOrder' })
+  },
+})
+
 export const StageCreateNestedManyWithoutDesignerInput = inputObjectType({
   nonNullDefaults: {
     input: false,
@@ -2898,6 +3442,20 @@ export const ScoreUncheckedUpdateManyWithoutShooterNestedInput =
     },
   })
 
+export const ImageCreateNestedOneWithoutStageInput = inputObjectType({
+  nonNullDefaults: {
+    input: false,
+  },
+  name: 'ImageCreateNestedOneWithoutStageInput',
+  definition(t) {
+    t.field('create', { type: 'ImageCreateWithoutStageInput' })
+    t.field('connectOrCreate', {
+      type: 'ImageCreateOrConnectWithoutStageInput',
+    })
+    t.field('connect', { type: 'ImageWhereUniqueInput' })
+  },
+})
+
 export const ShooterCreateNestedOneWithoutStageInput = inputObjectType({
   nonNullDefaults: {
     input: false,
@@ -2909,6 +3467,21 @@ export const ShooterCreateNestedOneWithoutStageInput = inputObjectType({
       type: 'ShooterCreateOrConnectWithoutStageInput',
     })
     t.field('connect', { type: 'ShooterWhereUniqueInput' })
+  },
+})
+
+export const StageTagCreateNestedManyWithoutStageInput = inputObjectType({
+  nonNullDefaults: {
+    input: false,
+  },
+  name: 'StageTagCreateNestedManyWithoutStageInput',
+  definition(t) {
+    t.list.field('create', { type: 'StageTagCreateWithoutStageInput' })
+    t.list.field('connectOrCreate', {
+      type: 'StageTagCreateOrConnectWithoutStageInput',
+    })
+    t.field('createMany', { type: 'StageTagCreateManyStageInputEnvelope' })
+    t.list.field('connect', { type: 'StageTagWhereUniqueInput' })
   },
 })
 
@@ -2926,6 +3499,22 @@ export const ScorelistCreateNestedManyWithoutStageInput = inputObjectType({
     t.list.field('connect', { type: 'ScorelistWhereUniqueInput' })
   },
 })
+
+export const StageTagUncheckedCreateNestedManyWithoutStageInput =
+  inputObjectType({
+    nonNullDefaults: {
+      input: false,
+    },
+    name: 'StageTagUncheckedCreateNestedManyWithoutStageInput',
+    definition(t) {
+      t.list.field('create', { type: 'StageTagCreateWithoutStageInput' })
+      t.list.field('connectOrCreate', {
+        type: 'StageTagCreateOrConnectWithoutStageInput',
+      })
+      t.field('createMany', { type: 'StageTagCreateManyStageInputEnvelope' })
+      t.list.field('connect', { type: 'StageTagWhereUniqueInput' })
+    },
+  })
 
 export const ScorelistUncheckedCreateNestedManyWithoutStageInput =
   inputObjectType({
@@ -2977,6 +3566,22 @@ export const EnumStageTypeFieldUpdateOperationsInput = inputObjectType({
   },
 })
 
+export const ImageUpdateOneRequiredWithoutStageNestedInput = inputObjectType({
+  nonNullDefaults: {
+    input: false,
+  },
+  name: 'ImageUpdateOneRequiredWithoutStageNestedInput',
+  definition(t) {
+    t.field('create', { type: 'ImageCreateWithoutStageInput' })
+    t.field('connectOrCreate', {
+      type: 'ImageCreateOrConnectWithoutStageInput',
+    })
+    t.field('upsert', { type: 'ImageUpsertWithoutStageInput' })
+    t.field('connect', { type: 'ImageWhereUniqueInput' })
+    t.field('update', { type: 'ImageUpdateToOneWithWhereWithoutStageInput' })
+  },
+})
+
 export const ShooterUpdateOneRequiredWithoutStageNestedInput = inputObjectType({
   nonNullDefaults: {
     input: false,
@@ -2990,6 +3595,34 @@ export const ShooterUpdateOneRequiredWithoutStageNestedInput = inputObjectType({
     t.field('upsert', { type: 'ShooterUpsertWithoutStageInput' })
     t.field('connect', { type: 'ShooterWhereUniqueInput' })
     t.field('update', { type: 'ShooterUpdateToOneWithWhereWithoutStageInput' })
+  },
+})
+
+export const StageTagUpdateManyWithoutStageNestedInput = inputObjectType({
+  nonNullDefaults: {
+    input: false,
+  },
+  name: 'StageTagUpdateManyWithoutStageNestedInput',
+  definition(t) {
+    t.list.field('create', { type: 'StageTagCreateWithoutStageInput' })
+    t.list.field('connectOrCreate', {
+      type: 'StageTagCreateOrConnectWithoutStageInput',
+    })
+    t.list.field('upsert', {
+      type: 'StageTagUpsertWithWhereUniqueWithoutStageInput',
+    })
+    t.field('createMany', { type: 'StageTagCreateManyStageInputEnvelope' })
+    t.list.field('set', { type: 'StageTagWhereUniqueInput' })
+    t.list.field('disconnect', { type: 'StageTagWhereUniqueInput' })
+    t.list.field('delete', { type: 'StageTagWhereUniqueInput' })
+    t.list.field('connect', { type: 'StageTagWhereUniqueInput' })
+    t.list.field('update', {
+      type: 'StageTagUpdateWithWhereUniqueWithoutStageInput',
+    })
+    t.list.field('updateMany', {
+      type: 'StageTagUpdateManyWithWhereWithoutStageInput',
+    })
+    t.list.field('deleteMany', { type: 'StageTagScalarWhereInput' })
   },
 })
 
@@ -3021,6 +3654,35 @@ export const ScorelistUpdateManyWithoutStageNestedInput = inputObjectType({
   },
 })
 
+export const StageTagUncheckedUpdateManyWithoutStageNestedInput =
+  inputObjectType({
+    nonNullDefaults: {
+      input: false,
+    },
+    name: 'StageTagUncheckedUpdateManyWithoutStageNestedInput',
+    definition(t) {
+      t.list.field('create', { type: 'StageTagCreateWithoutStageInput' })
+      t.list.field('connectOrCreate', {
+        type: 'StageTagCreateOrConnectWithoutStageInput',
+      })
+      t.list.field('upsert', {
+        type: 'StageTagUpsertWithWhereUniqueWithoutStageInput',
+      })
+      t.field('createMany', { type: 'StageTagCreateManyStageInputEnvelope' })
+      t.list.field('set', { type: 'StageTagWhereUniqueInput' })
+      t.list.field('disconnect', { type: 'StageTagWhereUniqueInput' })
+      t.list.field('delete', { type: 'StageTagWhereUniqueInput' })
+      t.list.field('connect', { type: 'StageTagWhereUniqueInput' })
+      t.list.field('update', {
+        type: 'StageTagUpdateWithWhereUniqueWithoutStageInput',
+      })
+      t.list.field('updateMany', {
+        type: 'StageTagUpdateManyWithWhereWithoutStageInput',
+      })
+      t.list.field('deleteMany', { type: 'StageTagScalarWhereInput' })
+    },
+  })
+
 export const ScorelistUncheckedUpdateManyWithoutStageNestedInput =
   inputObjectType({
     nonNullDefaults: {
@@ -3049,6 +3711,48 @@ export const ScorelistUncheckedUpdateManyWithoutStageNestedInput =
       t.list.field('deleteMany', { type: 'ScorelistScalarWhereInput' })
     },
   })
+
+export const StageCreateNestedOneWithoutTagsInput = inputObjectType({
+  nonNullDefaults: {
+    input: false,
+  },
+  name: 'StageCreateNestedOneWithoutTagsInput',
+  definition(t) {
+    t.field('create', { type: 'StageCreateWithoutTagsInput' })
+    t.field('connectOrCreate', { type: 'StageCreateOrConnectWithoutTagsInput' })
+    t.field('connect', { type: 'StageWhereUniqueInput' })
+  },
+})
+
+export const StageUpdateOneWithoutTagsNestedInput = inputObjectType({
+  nonNullDefaults: {
+    input: false,
+  },
+  name: 'StageUpdateOneWithoutTagsNestedInput',
+  definition(t) {
+    t.field('create', { type: 'StageCreateWithoutTagsInput' })
+    t.field('connectOrCreate', { type: 'StageCreateOrConnectWithoutTagsInput' })
+    t.field('upsert', { type: 'StageUpsertWithoutTagsInput' })
+    t.field('disconnect', { type: 'StageWhereInput' })
+    t.field('delete', { type: 'StageWhereInput' })
+    t.field('connect', { type: 'StageWhereUniqueInput' })
+    t.field('update', { type: 'StageUpdateToOneWithWhereWithoutTagsInput' })
+  },
+})
+
+export const NullableIntFieldUpdateOperationsInput = inputObjectType({
+  nonNullDefaults: {
+    input: false,
+  },
+  name: 'NullableIntFieldUpdateOperationsInput',
+  definition(t) {
+    t.field('set', { type: 'Int' })
+    t.field('increment', { type: 'Int' })
+    t.field('decrement', { type: 'Int' })
+    t.field('multiply', { type: 'Int' })
+    t.field('divide', { type: 'Int' })
+  },
+})
 
 export const ScorelistCreateNestedManyWithoutScoreboardInput = inputObjectType({
   nonNullDefaults: {
@@ -3280,20 +3984,6 @@ export const ScoreboardUpdateOneWithoutScorelistsNestedInput = inputObjectType({
     t.field('update', {
       type: 'ScoreboardUpdateToOneWithWhereWithoutScorelistsInput',
     })
-  },
-})
-
-export const NullableIntFieldUpdateOperationsInput = inputObjectType({
-  nonNullDefaults: {
-    input: false,
-  },
-  name: 'NullableIntFieldUpdateOperationsInput',
-  definition(t) {
-    t.field('set', { type: 'Int' })
-    t.field('increment', { type: 'Int' })
-    t.field('decrement', { type: 'Int' })
-    t.field('multiply', { type: 'Int' })
-    t.field('divide', { type: 'Int' })
   },
 })
 
@@ -3680,6 +4370,92 @@ export const ScoreUpdateOneWithoutProErrorsNestedInput = inputObjectType({
   },
 })
 
+export const StageCreateNestedManyWithoutImageInput = inputObjectType({
+  nonNullDefaults: {
+    input: false,
+  },
+  name: 'StageCreateNestedManyWithoutImageInput',
+  definition(t) {
+    t.list.field('create', { type: 'StageCreateWithoutImageInput' })
+    t.list.field('connectOrCreate', {
+      type: 'StageCreateOrConnectWithoutImageInput',
+    })
+    t.field('createMany', { type: 'StageCreateManyImageInputEnvelope' })
+    t.list.field('connect', { type: 'StageWhereUniqueInput' })
+  },
+})
+
+export const StageUncheckedCreateNestedManyWithoutImageInput = inputObjectType({
+  nonNullDefaults: {
+    input: false,
+  },
+  name: 'StageUncheckedCreateNestedManyWithoutImageInput',
+  definition(t) {
+    t.list.field('create', { type: 'StageCreateWithoutImageInput' })
+    t.list.field('connectOrCreate', {
+      type: 'StageCreateOrConnectWithoutImageInput',
+    })
+    t.field('createMany', { type: 'StageCreateManyImageInputEnvelope' })
+    t.list.field('connect', { type: 'StageWhereUniqueInput' })
+  },
+})
+
+export const StageUpdateManyWithoutImageNestedInput = inputObjectType({
+  nonNullDefaults: {
+    input: false,
+  },
+  name: 'StageUpdateManyWithoutImageNestedInput',
+  definition(t) {
+    t.list.field('create', { type: 'StageCreateWithoutImageInput' })
+    t.list.field('connectOrCreate', {
+      type: 'StageCreateOrConnectWithoutImageInput',
+    })
+    t.list.field('upsert', {
+      type: 'StageUpsertWithWhereUniqueWithoutImageInput',
+    })
+    t.field('createMany', { type: 'StageCreateManyImageInputEnvelope' })
+    t.list.field('set', { type: 'StageWhereUniqueInput' })
+    t.list.field('disconnect', { type: 'StageWhereUniqueInput' })
+    t.list.field('delete', { type: 'StageWhereUniqueInput' })
+    t.list.field('connect', { type: 'StageWhereUniqueInput' })
+    t.list.field('update', {
+      type: 'StageUpdateWithWhereUniqueWithoutImageInput',
+    })
+    t.list.field('updateMany', {
+      type: 'StageUpdateManyWithWhereWithoutImageInput',
+    })
+    t.list.field('deleteMany', { type: 'StageScalarWhereInput' })
+  },
+})
+
+export const StageUncheckedUpdateManyWithoutImageNestedInput = inputObjectType({
+  nonNullDefaults: {
+    input: false,
+  },
+  name: 'StageUncheckedUpdateManyWithoutImageNestedInput',
+  definition(t) {
+    t.list.field('create', { type: 'StageCreateWithoutImageInput' })
+    t.list.field('connectOrCreate', {
+      type: 'StageCreateOrConnectWithoutImageInput',
+    })
+    t.list.field('upsert', {
+      type: 'StageUpsertWithWhereUniqueWithoutImageInput',
+    })
+    t.field('createMany', { type: 'StageCreateManyImageInputEnvelope' })
+    t.list.field('set', { type: 'StageWhereUniqueInput' })
+    t.list.field('disconnect', { type: 'StageWhereUniqueInput' })
+    t.list.field('delete', { type: 'StageWhereUniqueInput' })
+    t.list.field('connect', { type: 'StageWhereUniqueInput' })
+    t.list.field('update', {
+      type: 'StageUpdateWithWhereUniqueWithoutImageInput',
+    })
+    t.list.field('updateMany', {
+      type: 'StageUpdateManyWithWhereWithoutImageInput',
+    })
+    t.list.field('deleteMany', { type: 'StageScalarWhereInput' })
+  },
+})
+
 export const NestedIntFilter = inputObjectType({
   nonNullDefaults: {
     input: false,
@@ -3973,43 +4749,6 @@ export const NestedEnumStageTypeWithAggregatesFilter = inputObjectType({
   },
 })
 
-export const NestedDateTimeFilter = inputObjectType({
-  nonNullDefaults: {
-    input: false,
-  },
-  name: 'NestedDateTimeFilter',
-  definition(t) {
-    t.field('equals', { type: 'DateTime' })
-    t.list.field('in', { type: 'DateTime' })
-    t.list.field('notIn', { type: 'DateTime' })
-    t.field('lt', { type: 'DateTime' })
-    t.field('lte', { type: 'DateTime' })
-    t.field('gt', { type: 'DateTime' })
-    t.field('gte', { type: 'DateTime' })
-    t.field('not', { type: 'NestedDateTimeFilter' })
-  },
-})
-
-export const NestedDateTimeWithAggregatesFilter = inputObjectType({
-  nonNullDefaults: {
-    input: false,
-  },
-  name: 'NestedDateTimeWithAggregatesFilter',
-  definition(t) {
-    t.field('equals', { type: 'DateTime' })
-    t.list.field('in', { type: 'DateTime' })
-    t.list.field('notIn', { type: 'DateTime' })
-    t.field('lt', { type: 'DateTime' })
-    t.field('lte', { type: 'DateTime' })
-    t.field('gt', { type: 'DateTime' })
-    t.field('gte', { type: 'DateTime' })
-    t.field('not', { type: 'NestedDateTimeWithAggregatesFilter' })
-    t.field('_count', { type: 'NestedIntFilter' })
-    t.field('_min', { type: 'NestedDateTimeFilter' })
-    t.field('_max', { type: 'NestedDateTimeFilter' })
-  },
-})
-
 export const NestedIntNullableWithAggregatesFilter = inputObjectType({
   nonNullDefaults: {
     input: false,
@@ -4046,6 +4785,43 @@ export const NestedFloatNullableFilter = inputObjectType({
     t.field('gt', { type: 'Float' })
     t.field('gte', { type: 'Float' })
     t.field('not', { type: 'NestedFloatNullableFilter' })
+  },
+})
+
+export const NestedDateTimeFilter = inputObjectType({
+  nonNullDefaults: {
+    input: false,
+  },
+  name: 'NestedDateTimeFilter',
+  definition(t) {
+    t.field('equals', { type: 'DateTime' })
+    t.list.field('in', { type: 'DateTime' })
+    t.list.field('notIn', { type: 'DateTime' })
+    t.field('lt', { type: 'DateTime' })
+    t.field('lte', { type: 'DateTime' })
+    t.field('gt', { type: 'DateTime' })
+    t.field('gte', { type: 'DateTime' })
+    t.field('not', { type: 'NestedDateTimeFilter' })
+  },
+})
+
+export const NestedDateTimeWithAggregatesFilter = inputObjectType({
+  nonNullDefaults: {
+    input: false,
+  },
+  name: 'NestedDateTimeWithAggregatesFilter',
+  definition(t) {
+    t.field('equals', { type: 'DateTime' })
+    t.list.field('in', { type: 'DateTime' })
+    t.list.field('notIn', { type: 'DateTime' })
+    t.field('lt', { type: 'DateTime' })
+    t.field('lte', { type: 'DateTime' })
+    t.field('gt', { type: 'DateTime' })
+    t.field('gte', { type: 'DateTime' })
+    t.field('not', { type: 'NestedDateTimeWithAggregatesFilter' })
+    t.field('_count', { type: 'NestedIntFilter' })
+    t.field('_min', { type: 'NestedDateTimeFilter' })
+    t.field('_max', { type: 'NestedDateTimeFilter' })
   },
 })
 
@@ -4088,6 +4864,8 @@ export const StageCreateWithoutDesignerInput = inputObjectType({
     t.nonNull.field('minRounds', { type: 'Int' })
     t.nonNull.field('maxScore', { type: 'Int' })
     t.nonNull.field('stageType', { type: 'StageType' })
+    t.nonNull.field('image', { type: 'ImageCreateNestedOneWithoutStageInput' })
+    t.field('tags', { type: 'StageTagCreateNestedManyWithoutStageInput' })
     t.field('Scorelist', { type: 'ScorelistCreateNestedManyWithoutStageInput' })
   },
 })
@@ -4110,6 +4888,10 @@ export const StageUncheckedCreateWithoutDesignerInput = inputObjectType({
     t.nonNull.field('minRounds', { type: 'Int' })
     t.nonNull.field('maxScore', { type: 'Int' })
     t.nonNull.field('stageType', { type: 'StageType' })
+    t.nonNull.field('imageId', { type: 'String' })
+    t.field('tags', {
+      type: 'StageTagUncheckedCreateNestedManyWithoutStageInput',
+    })
     t.field('Scorelist', {
       type: 'ScorelistUncheckedCreateNestedManyWithoutStageInput',
     })
@@ -4260,6 +5042,7 @@ export const StageScalarWhereInput = inputObjectType({
     t.field('minRounds', { type: 'IntFilter' })
     t.field('maxScore', { type: 'IntFilter' })
     t.field('stageType', { type: 'EnumStageTypeFilter' })
+    t.field('imageId', { type: 'StringFilter' })
   },
 })
 
@@ -4320,6 +5103,43 @@ export const ScoreScalarWhereInput = inputObjectType({
   },
 })
 
+export const ImageCreateWithoutStageInput = inputObjectType({
+  nonNullDefaults: {
+    input: false,
+  },
+  name: 'ImageCreateWithoutStageInput',
+  definition(t) {
+    t.field('id', { type: 'String' })
+    t.nonNull.field('imagePath', { type: 'String' })
+    t.nonNull.field('sizeX', { type: 'Int' })
+    t.nonNull.field('sizeY', { type: 'Int' })
+  },
+})
+
+export const ImageUncheckedCreateWithoutStageInput = inputObjectType({
+  nonNullDefaults: {
+    input: false,
+  },
+  name: 'ImageUncheckedCreateWithoutStageInput',
+  definition(t) {
+    t.field('id', { type: 'String' })
+    t.nonNull.field('imagePath', { type: 'String' })
+    t.nonNull.field('sizeX', { type: 'Int' })
+    t.nonNull.field('sizeY', { type: 'Int' })
+  },
+})
+
+export const ImageCreateOrConnectWithoutStageInput = inputObjectType({
+  nonNullDefaults: {
+    input: false,
+  },
+  name: 'ImageCreateOrConnectWithoutStageInput',
+  definition(t) {
+    t.nonNull.field('where', { type: 'ImageWhereUniqueInput' })
+    t.nonNull.field('create', { type: 'ImageCreateWithoutStageInput' })
+  },
+})
+
 export const ShooterCreateWithoutStageInput = inputObjectType({
   nonNullDefaults: {
     input: false,
@@ -4359,6 +5179,51 @@ export const ShooterCreateOrConnectWithoutStageInput = inputObjectType({
   definition(t) {
     t.nonNull.field('where', { type: 'ShooterWhereUniqueInput' })
     t.nonNull.field('create', { type: 'ShooterCreateWithoutStageInput' })
+  },
+})
+
+export const StageTagCreateWithoutStageInput = inputObjectType({
+  nonNullDefaults: {
+    input: false,
+  },
+  name: 'StageTagCreateWithoutStageInput',
+  definition(t) {
+    t.nonNull.field('title', { type: 'String' })
+    t.nonNull.field('color', { type: 'String' })
+  },
+})
+
+export const StageTagUncheckedCreateWithoutStageInput = inputObjectType({
+  nonNullDefaults: {
+    input: false,
+  },
+  name: 'StageTagUncheckedCreateWithoutStageInput',
+  definition(t) {
+    t.field('id', { type: 'Int' })
+    t.nonNull.field('title', { type: 'String' })
+    t.nonNull.field('color', { type: 'String' })
+  },
+})
+
+export const StageTagCreateOrConnectWithoutStageInput = inputObjectType({
+  nonNullDefaults: {
+    input: false,
+  },
+  name: 'StageTagCreateOrConnectWithoutStageInput',
+  definition(t) {
+    t.nonNull.field('where', { type: 'StageTagWhereUniqueInput' })
+    t.nonNull.field('create', { type: 'StageTagCreateWithoutStageInput' })
+  },
+})
+
+export const StageTagCreateManyStageInputEnvelope = inputObjectType({
+  nonNullDefaults: {
+    input: false,
+  },
+  name: 'StageTagCreateManyStageInputEnvelope',
+  definition(t) {
+    t.nonNull.field('data', { type: 'StageTagCreateManyStageInput' })
+    t.field('skipDuplicates', { type: 'Boolean' })
   },
 })
 
@@ -4416,6 +5281,55 @@ export const ScorelistCreateManyStageInputEnvelope = inputObjectType({
   },
 })
 
+export const ImageUpsertWithoutStageInput = inputObjectType({
+  nonNullDefaults: {
+    input: false,
+  },
+  name: 'ImageUpsertWithoutStageInput',
+  definition(t) {
+    t.nonNull.field('update', { type: 'ImageUpdateWithoutStageInput' })
+    t.nonNull.field('create', { type: 'ImageCreateWithoutStageInput' })
+    t.field('where', { type: 'ImageWhereInput' })
+  },
+})
+
+export const ImageUpdateToOneWithWhereWithoutStageInput = inputObjectType({
+  nonNullDefaults: {
+    input: false,
+  },
+  name: 'ImageUpdateToOneWithWhereWithoutStageInput',
+  definition(t) {
+    t.field('where', { type: 'ImageWhereInput' })
+    t.nonNull.field('data', { type: 'ImageUpdateWithoutStageInput' })
+  },
+})
+
+export const ImageUpdateWithoutStageInput = inputObjectType({
+  nonNullDefaults: {
+    input: false,
+  },
+  name: 'ImageUpdateWithoutStageInput',
+  definition(t) {
+    t.field('id', { type: 'StringFieldUpdateOperationsInput' })
+    t.field('imagePath', { type: 'StringFieldUpdateOperationsInput' })
+    t.field('sizeX', { type: 'IntFieldUpdateOperationsInput' })
+    t.field('sizeY', { type: 'IntFieldUpdateOperationsInput' })
+  },
+})
+
+export const ImageUncheckedUpdateWithoutStageInput = inputObjectType({
+  nonNullDefaults: {
+    input: false,
+  },
+  name: 'ImageUncheckedUpdateWithoutStageInput',
+  definition(t) {
+    t.field('id', { type: 'StringFieldUpdateOperationsInput' })
+    t.field('imagePath', { type: 'StringFieldUpdateOperationsInput' })
+    t.field('sizeX', { type: 'IntFieldUpdateOperationsInput' })
+    t.field('sizeY', { type: 'IntFieldUpdateOperationsInput' })
+  },
+})
+
 export const ShooterUpsertWithoutStageInput = inputObjectType({
   nonNullDefaults: {
     input: false,
@@ -4470,6 +5384,56 @@ export const ShooterUncheckedUpdateWithoutStageInput = inputObjectType({
   },
 })
 
+export const StageTagUpsertWithWhereUniqueWithoutStageInput = inputObjectType({
+  nonNullDefaults: {
+    input: false,
+  },
+  name: 'StageTagUpsertWithWhereUniqueWithoutStageInput',
+  definition(t) {
+    t.nonNull.field('where', { type: 'StageTagWhereUniqueInput' })
+    t.nonNull.field('update', { type: 'StageTagUpdateWithoutStageInput' })
+    t.nonNull.field('create', { type: 'StageTagCreateWithoutStageInput' })
+  },
+})
+
+export const StageTagUpdateWithWhereUniqueWithoutStageInput = inputObjectType({
+  nonNullDefaults: {
+    input: false,
+  },
+  name: 'StageTagUpdateWithWhereUniqueWithoutStageInput',
+  definition(t) {
+    t.nonNull.field('where', { type: 'StageTagWhereUniqueInput' })
+    t.nonNull.field('data', { type: 'StageTagUpdateWithoutStageInput' })
+  },
+})
+
+export const StageTagUpdateManyWithWhereWithoutStageInput = inputObjectType({
+  nonNullDefaults: {
+    input: false,
+  },
+  name: 'StageTagUpdateManyWithWhereWithoutStageInput',
+  definition(t) {
+    t.nonNull.field('where', { type: 'StageTagScalarWhereInput' })
+    t.nonNull.field('data', { type: 'StageTagUpdateManyMutationInput' })
+  },
+})
+
+export const StageTagScalarWhereInput = inputObjectType({
+  nonNullDefaults: {
+    input: false,
+  },
+  name: 'StageTagScalarWhereInput',
+  definition(t) {
+    t.list.field('AND', { type: 'StageTagScalarWhereInput' })
+    t.list.field('OR', { type: 'StageTagScalarWhereInput' })
+    t.list.field('NOT', { type: 'StageTagScalarWhereInput' })
+    t.field('id', { type: 'IntFilter' })
+    t.field('title', { type: 'StringFilter' })
+    t.field('color', { type: 'StringFilter' })
+    t.field('stageId', { type: 'IntNullableFilter' })
+  },
+})
+
 export const ScorelistUpsertWithWhereUniqueWithoutStageInput = inputObjectType({
   nonNullDefaults: {
     input: false,
@@ -4518,6 +5482,142 @@ export const ScorelistScalarWhereInput = inputObjectType({
     t.field('lastUpdate', { type: 'DateTimeFilter' })
     t.field('scoreboardId', { type: 'IntNullableFilter' })
     t.field('stageId', { type: 'IntNullableFilter' })
+  },
+})
+
+export const StageCreateWithoutTagsInput = inputObjectType({
+  nonNullDefaults: {
+    input: false,
+  },
+  name: 'StageCreateWithoutTagsInput',
+  definition(t) {
+    t.field('createAt', { type: 'DateTime' })
+    t.nonNull.field('name', { type: 'String' })
+    t.field('description', { type: 'String' })
+    t.nonNull.field('papers', { type: 'Int' })
+    t.nonNull.field('poppers', { type: 'Int' })
+    t.nonNull.field('noshoots', { type: 'Int' })
+    t.nonNull.field('gunCondition', { type: 'Int' })
+    t.nonNull.field('walkthroughTime', { type: 'Decimal' })
+    t.nonNull.field('minRounds', { type: 'Int' })
+    t.nonNull.field('maxScore', { type: 'Int' })
+    t.nonNull.field('stageType', { type: 'StageType' })
+    t.nonNull.field('image', { type: 'ImageCreateNestedOneWithoutStageInput' })
+    t.nonNull.field('designer', {
+      type: 'ShooterCreateNestedOneWithoutStageInput',
+    })
+    t.field('Scorelist', { type: 'ScorelistCreateNestedManyWithoutStageInput' })
+  },
+})
+
+export const StageUncheckedCreateWithoutTagsInput = inputObjectType({
+  nonNullDefaults: {
+    input: false,
+  },
+  name: 'StageUncheckedCreateWithoutTagsInput',
+  definition(t) {
+    t.field('id', { type: 'Int' })
+    t.field('createAt', { type: 'DateTime' })
+    t.nonNull.field('name', { type: 'String' })
+    t.field('description', { type: 'String' })
+    t.nonNull.field('papers', { type: 'Int' })
+    t.nonNull.field('poppers', { type: 'Int' })
+    t.nonNull.field('noshoots', { type: 'Int' })
+    t.nonNull.field('gunCondition', { type: 'Int' })
+    t.nonNull.field('shooterId', { type: 'Int' })
+    t.nonNull.field('walkthroughTime', { type: 'Decimal' })
+    t.nonNull.field('minRounds', { type: 'Int' })
+    t.nonNull.field('maxScore', { type: 'Int' })
+    t.nonNull.field('stageType', { type: 'StageType' })
+    t.nonNull.field('imageId', { type: 'String' })
+    t.field('Scorelist', {
+      type: 'ScorelistUncheckedCreateNestedManyWithoutStageInput',
+    })
+  },
+})
+
+export const StageCreateOrConnectWithoutTagsInput = inputObjectType({
+  nonNullDefaults: {
+    input: false,
+  },
+  name: 'StageCreateOrConnectWithoutTagsInput',
+  definition(t) {
+    t.nonNull.field('where', { type: 'StageWhereUniqueInput' })
+    t.nonNull.field('create', { type: 'StageCreateWithoutTagsInput' })
+  },
+})
+
+export const StageUpsertWithoutTagsInput = inputObjectType({
+  nonNullDefaults: {
+    input: false,
+  },
+  name: 'StageUpsertWithoutTagsInput',
+  definition(t) {
+    t.nonNull.field('update', { type: 'StageUpdateWithoutTagsInput' })
+    t.nonNull.field('create', { type: 'StageCreateWithoutTagsInput' })
+    t.field('where', { type: 'StageWhereInput' })
+  },
+})
+
+export const StageUpdateToOneWithWhereWithoutTagsInput = inputObjectType({
+  nonNullDefaults: {
+    input: false,
+  },
+  name: 'StageUpdateToOneWithWhereWithoutTagsInput',
+  definition(t) {
+    t.field('where', { type: 'StageWhereInput' })
+    t.nonNull.field('data', { type: 'StageUpdateWithoutTagsInput' })
+  },
+})
+
+export const StageUpdateWithoutTagsInput = inputObjectType({
+  nonNullDefaults: {
+    input: false,
+  },
+  name: 'StageUpdateWithoutTagsInput',
+  definition(t) {
+    t.field('createAt', { type: 'NullableDateTimeFieldUpdateOperationsInput' })
+    t.field('name', { type: 'StringFieldUpdateOperationsInput' })
+    t.field('description', { type: 'NullableStringFieldUpdateOperationsInput' })
+    t.field('papers', { type: 'IntFieldUpdateOperationsInput' })
+    t.field('poppers', { type: 'IntFieldUpdateOperationsInput' })
+    t.field('noshoots', { type: 'IntFieldUpdateOperationsInput' })
+    t.field('gunCondition', { type: 'IntFieldUpdateOperationsInput' })
+    t.field('walkthroughTime', { type: 'DecimalFieldUpdateOperationsInput' })
+    t.field('minRounds', { type: 'IntFieldUpdateOperationsInput' })
+    t.field('maxScore', { type: 'IntFieldUpdateOperationsInput' })
+    t.field('stageType', { type: 'EnumStageTypeFieldUpdateOperationsInput' })
+    t.field('image', { type: 'ImageUpdateOneRequiredWithoutStageNestedInput' })
+    t.field('designer', {
+      type: 'ShooterUpdateOneRequiredWithoutStageNestedInput',
+    })
+    t.field('Scorelist', { type: 'ScorelistUpdateManyWithoutStageNestedInput' })
+  },
+})
+
+export const StageUncheckedUpdateWithoutTagsInput = inputObjectType({
+  nonNullDefaults: {
+    input: false,
+  },
+  name: 'StageUncheckedUpdateWithoutTagsInput',
+  definition(t) {
+    t.field('id', { type: 'IntFieldUpdateOperationsInput' })
+    t.field('createAt', { type: 'NullableDateTimeFieldUpdateOperationsInput' })
+    t.field('name', { type: 'StringFieldUpdateOperationsInput' })
+    t.field('description', { type: 'NullableStringFieldUpdateOperationsInput' })
+    t.field('papers', { type: 'IntFieldUpdateOperationsInput' })
+    t.field('poppers', { type: 'IntFieldUpdateOperationsInput' })
+    t.field('noshoots', { type: 'IntFieldUpdateOperationsInput' })
+    t.field('gunCondition', { type: 'IntFieldUpdateOperationsInput' })
+    t.field('shooterId', { type: 'IntFieldUpdateOperationsInput' })
+    t.field('walkthroughTime', { type: 'DecimalFieldUpdateOperationsInput' })
+    t.field('minRounds', { type: 'IntFieldUpdateOperationsInput' })
+    t.field('maxScore', { type: 'IntFieldUpdateOperationsInput' })
+    t.field('stageType', { type: 'EnumStageTypeFieldUpdateOperationsInput' })
+    t.field('imageId', { type: 'StringFieldUpdateOperationsInput' })
+    t.field('Scorelist', {
+      type: 'ScorelistUncheckedUpdateManyWithoutStageNestedInput',
+    })
   },
 })
 
@@ -4631,9 +5731,11 @@ export const StageCreateWithoutScorelistInput = inputObjectType({
     t.nonNull.field('minRounds', { type: 'Int' })
     t.nonNull.field('maxScore', { type: 'Int' })
     t.nonNull.field('stageType', { type: 'StageType' })
+    t.nonNull.field('image', { type: 'ImageCreateNestedOneWithoutStageInput' })
     t.nonNull.field('designer', {
       type: 'ShooterCreateNestedOneWithoutStageInput',
     })
+    t.field('tags', { type: 'StageTagCreateNestedManyWithoutStageInput' })
   },
 })
 
@@ -4656,6 +5758,10 @@ export const StageUncheckedCreateWithoutScorelistInput = inputObjectType({
     t.nonNull.field('minRounds', { type: 'Int' })
     t.nonNull.field('maxScore', { type: 'Int' })
     t.nonNull.field('stageType', { type: 'StageType' })
+    t.nonNull.field('imageId', { type: 'String' })
+    t.field('tags', {
+      type: 'StageTagUncheckedCreateNestedManyWithoutStageInput',
+    })
   },
 })
 
@@ -4816,9 +5922,11 @@ export const StageUpdateWithoutScorelistInput = inputObjectType({
     t.field('minRounds', { type: 'IntFieldUpdateOperationsInput' })
     t.field('maxScore', { type: 'IntFieldUpdateOperationsInput' })
     t.field('stageType', { type: 'EnumStageTypeFieldUpdateOperationsInput' })
+    t.field('image', { type: 'ImageUpdateOneRequiredWithoutStageNestedInput' })
     t.field('designer', {
       type: 'ShooterUpdateOneRequiredWithoutStageNestedInput',
     })
+    t.field('tags', { type: 'StageTagUpdateManyWithoutStageNestedInput' })
   },
 })
 
@@ -4841,6 +5949,10 @@ export const StageUncheckedUpdateWithoutScorelistInput = inputObjectType({
     t.field('minRounds', { type: 'IntFieldUpdateOperationsInput' })
     t.field('maxScore', { type: 'IntFieldUpdateOperationsInput' })
     t.field('stageType', { type: 'EnumStageTypeFieldUpdateOperationsInput' })
+    t.field('imageId', { type: 'StringFieldUpdateOperationsInput' })
+    t.field('tags', {
+      type: 'StageTagUncheckedUpdateManyWithoutStageNestedInput',
+    })
   },
 })
 
@@ -5537,6 +6649,115 @@ export const ScoreUncheckedUpdateWithoutProErrorsInput = inputObjectType({
   },
 })
 
+export const StageCreateWithoutImageInput = inputObjectType({
+  nonNullDefaults: {
+    input: false,
+  },
+  name: 'StageCreateWithoutImageInput',
+  definition(t) {
+    t.field('createAt', { type: 'DateTime' })
+    t.nonNull.field('name', { type: 'String' })
+    t.field('description', { type: 'String' })
+    t.nonNull.field('papers', { type: 'Int' })
+    t.nonNull.field('poppers', { type: 'Int' })
+    t.nonNull.field('noshoots', { type: 'Int' })
+    t.nonNull.field('gunCondition', { type: 'Int' })
+    t.nonNull.field('walkthroughTime', { type: 'Decimal' })
+    t.nonNull.field('minRounds', { type: 'Int' })
+    t.nonNull.field('maxScore', { type: 'Int' })
+    t.nonNull.field('stageType', { type: 'StageType' })
+    t.nonNull.field('designer', {
+      type: 'ShooterCreateNestedOneWithoutStageInput',
+    })
+    t.field('tags', { type: 'StageTagCreateNestedManyWithoutStageInput' })
+    t.field('Scorelist', { type: 'ScorelistCreateNestedManyWithoutStageInput' })
+  },
+})
+
+export const StageUncheckedCreateWithoutImageInput = inputObjectType({
+  nonNullDefaults: {
+    input: false,
+  },
+  name: 'StageUncheckedCreateWithoutImageInput',
+  definition(t) {
+    t.field('id', { type: 'Int' })
+    t.field('createAt', { type: 'DateTime' })
+    t.nonNull.field('name', { type: 'String' })
+    t.field('description', { type: 'String' })
+    t.nonNull.field('papers', { type: 'Int' })
+    t.nonNull.field('poppers', { type: 'Int' })
+    t.nonNull.field('noshoots', { type: 'Int' })
+    t.nonNull.field('gunCondition', { type: 'Int' })
+    t.nonNull.field('shooterId', { type: 'Int' })
+    t.nonNull.field('walkthroughTime', { type: 'Decimal' })
+    t.nonNull.field('minRounds', { type: 'Int' })
+    t.nonNull.field('maxScore', { type: 'Int' })
+    t.nonNull.field('stageType', { type: 'StageType' })
+    t.field('tags', {
+      type: 'StageTagUncheckedCreateNestedManyWithoutStageInput',
+    })
+    t.field('Scorelist', {
+      type: 'ScorelistUncheckedCreateNestedManyWithoutStageInput',
+    })
+  },
+})
+
+export const StageCreateOrConnectWithoutImageInput = inputObjectType({
+  nonNullDefaults: {
+    input: false,
+  },
+  name: 'StageCreateOrConnectWithoutImageInput',
+  definition(t) {
+    t.nonNull.field('where', { type: 'StageWhereUniqueInput' })
+    t.nonNull.field('create', { type: 'StageCreateWithoutImageInput' })
+  },
+})
+
+export const StageCreateManyImageInputEnvelope = inputObjectType({
+  nonNullDefaults: {
+    input: false,
+  },
+  name: 'StageCreateManyImageInputEnvelope',
+  definition(t) {
+    t.nonNull.field('data', { type: 'StageCreateManyImageInput' })
+    t.field('skipDuplicates', { type: 'Boolean' })
+  },
+})
+
+export const StageUpsertWithWhereUniqueWithoutImageInput = inputObjectType({
+  nonNullDefaults: {
+    input: false,
+  },
+  name: 'StageUpsertWithWhereUniqueWithoutImageInput',
+  definition(t) {
+    t.nonNull.field('where', { type: 'StageWhereUniqueInput' })
+    t.nonNull.field('update', { type: 'StageUpdateWithoutImageInput' })
+    t.nonNull.field('create', { type: 'StageCreateWithoutImageInput' })
+  },
+})
+
+export const StageUpdateWithWhereUniqueWithoutImageInput = inputObjectType({
+  nonNullDefaults: {
+    input: false,
+  },
+  name: 'StageUpdateWithWhereUniqueWithoutImageInput',
+  definition(t) {
+    t.nonNull.field('where', { type: 'StageWhereUniqueInput' })
+    t.nonNull.field('data', { type: 'StageUpdateWithoutImageInput' })
+  },
+})
+
+export const StageUpdateManyWithWhereWithoutImageInput = inputObjectType({
+  nonNullDefaults: {
+    input: false,
+  },
+  name: 'StageUpdateManyWithWhereWithoutImageInput',
+  definition(t) {
+    t.nonNull.field('where', { type: 'StageScalarWhereInput' })
+    t.nonNull.field('data', { type: 'StageUpdateManyMutationInput' })
+  },
+})
+
 export const StageCreateManyDesignerInput = inputObjectType({
   nonNullDefaults: {
     input: false,
@@ -5555,6 +6776,7 @@ export const StageCreateManyDesignerInput = inputObjectType({
     t.nonNull.field('minRounds', { type: 'Int' })
     t.nonNull.field('maxScore', { type: 'Int' })
     t.nonNull.field('stageType', { type: 'StageType' })
+    t.nonNull.field('imageId', { type: 'String' })
   },
 })
 
@@ -5594,6 +6816,8 @@ export const StageUpdateWithoutDesignerInput = inputObjectType({
     t.field('minRounds', { type: 'IntFieldUpdateOperationsInput' })
     t.field('maxScore', { type: 'IntFieldUpdateOperationsInput' })
     t.field('stageType', { type: 'EnumStageTypeFieldUpdateOperationsInput' })
+    t.field('image', { type: 'ImageUpdateOneRequiredWithoutStageNestedInput' })
+    t.field('tags', { type: 'StageTagUpdateManyWithoutStageNestedInput' })
     t.field('Scorelist', { type: 'ScorelistUpdateManyWithoutStageNestedInput' })
   },
 })
@@ -5616,6 +6840,10 @@ export const StageUncheckedUpdateWithoutDesignerInput = inputObjectType({
     t.field('minRounds', { type: 'IntFieldUpdateOperationsInput' })
     t.field('maxScore', { type: 'IntFieldUpdateOperationsInput' })
     t.field('stageType', { type: 'EnumStageTypeFieldUpdateOperationsInput' })
+    t.field('imageId', { type: 'StringFieldUpdateOperationsInput' })
+    t.field('tags', {
+      type: 'StageTagUncheckedUpdateManyWithoutStageNestedInput',
+    })
     t.field('Scorelist', {
       type: 'ScorelistUncheckedUpdateManyWithoutStageNestedInput',
     })
@@ -5640,6 +6868,7 @@ export const StageUncheckedUpdateManyWithoutDesignerInput = inputObjectType({
     t.field('minRounds', { type: 'IntFieldUpdateOperationsInput' })
     t.field('maxScore', { type: 'IntFieldUpdateOperationsInput' })
     t.field('stageType', { type: 'EnumStageTypeFieldUpdateOperationsInput' })
+    t.field('imageId', { type: 'StringFieldUpdateOperationsInput' })
   },
 })
 
@@ -5706,6 +6935,18 @@ export const ScoreUncheckedUpdateManyWithoutShooterInput = inputObjectType({
   },
 })
 
+export const StageTagCreateManyStageInput = inputObjectType({
+  nonNullDefaults: {
+    input: false,
+  },
+  name: 'StageTagCreateManyStageInput',
+  definition(t) {
+    t.field('id', { type: 'Int' })
+    t.nonNull.field('title', { type: 'String' })
+    t.nonNull.field('color', { type: 'String' })
+  },
+})
+
 export const ScorelistCreateManyStageInput = inputObjectType({
   nonNullDefaults: {
     input: false,
@@ -5716,6 +6957,41 @@ export const ScorelistCreateManyStageInput = inputObjectType({
     t.field('createAt', { type: 'DateTime' })
     t.field('lastUpdate', { type: 'DateTime' })
     t.field('scoreboardId', { type: 'Int' })
+  },
+})
+
+export const StageTagUpdateWithoutStageInput = inputObjectType({
+  nonNullDefaults: {
+    input: false,
+  },
+  name: 'StageTagUpdateWithoutStageInput',
+  definition(t) {
+    t.field('title', { type: 'StringFieldUpdateOperationsInput' })
+    t.field('color', { type: 'StringFieldUpdateOperationsInput' })
+  },
+})
+
+export const StageTagUncheckedUpdateWithoutStageInput = inputObjectType({
+  nonNullDefaults: {
+    input: false,
+  },
+  name: 'StageTagUncheckedUpdateWithoutStageInput',
+  definition(t) {
+    t.field('id', { type: 'IntFieldUpdateOperationsInput' })
+    t.field('title', { type: 'StringFieldUpdateOperationsInput' })
+    t.field('color', { type: 'StringFieldUpdateOperationsInput' })
+  },
+})
+
+export const StageTagUncheckedUpdateManyWithoutStageInput = inputObjectType({
+  nonNullDefaults: {
+    input: false,
+  },
+  name: 'StageTagUncheckedUpdateManyWithoutStageInput',
+  definition(t) {
+    t.field('id', { type: 'IntFieldUpdateOperationsInput' })
+    t.field('title', { type: 'StringFieldUpdateOperationsInput' })
+    t.field('color', { type: 'StringFieldUpdateOperationsInput' })
   },
 })
 
@@ -6006,6 +7282,103 @@ export const ProErrorsStoreUncheckedUpdateManyWithoutProErrorInput =
     },
   })
 
+export const StageCreateManyImageInput = inputObjectType({
+  nonNullDefaults: {
+    input: false,
+  },
+  name: 'StageCreateManyImageInput',
+  definition(t) {
+    t.field('id', { type: 'Int' })
+    t.field('createAt', { type: 'DateTime' })
+    t.nonNull.field('name', { type: 'String' })
+    t.field('description', { type: 'String' })
+    t.nonNull.field('papers', { type: 'Int' })
+    t.nonNull.field('poppers', { type: 'Int' })
+    t.nonNull.field('noshoots', { type: 'Int' })
+    t.nonNull.field('gunCondition', { type: 'Int' })
+    t.nonNull.field('shooterId', { type: 'Int' })
+    t.nonNull.field('walkthroughTime', { type: 'Decimal' })
+    t.nonNull.field('minRounds', { type: 'Int' })
+    t.nonNull.field('maxScore', { type: 'Int' })
+    t.nonNull.field('stageType', { type: 'StageType' })
+  },
+})
+
+export const StageUpdateWithoutImageInput = inputObjectType({
+  nonNullDefaults: {
+    input: false,
+  },
+  name: 'StageUpdateWithoutImageInput',
+  definition(t) {
+    t.field('createAt', { type: 'NullableDateTimeFieldUpdateOperationsInput' })
+    t.field('name', { type: 'StringFieldUpdateOperationsInput' })
+    t.field('description', { type: 'NullableStringFieldUpdateOperationsInput' })
+    t.field('papers', { type: 'IntFieldUpdateOperationsInput' })
+    t.field('poppers', { type: 'IntFieldUpdateOperationsInput' })
+    t.field('noshoots', { type: 'IntFieldUpdateOperationsInput' })
+    t.field('gunCondition', { type: 'IntFieldUpdateOperationsInput' })
+    t.field('walkthroughTime', { type: 'DecimalFieldUpdateOperationsInput' })
+    t.field('minRounds', { type: 'IntFieldUpdateOperationsInput' })
+    t.field('maxScore', { type: 'IntFieldUpdateOperationsInput' })
+    t.field('stageType', { type: 'EnumStageTypeFieldUpdateOperationsInput' })
+    t.field('designer', {
+      type: 'ShooterUpdateOneRequiredWithoutStageNestedInput',
+    })
+    t.field('tags', { type: 'StageTagUpdateManyWithoutStageNestedInput' })
+    t.field('Scorelist', { type: 'ScorelistUpdateManyWithoutStageNestedInput' })
+  },
+})
+
+export const StageUncheckedUpdateWithoutImageInput = inputObjectType({
+  nonNullDefaults: {
+    input: false,
+  },
+  name: 'StageUncheckedUpdateWithoutImageInput',
+  definition(t) {
+    t.field('id', { type: 'IntFieldUpdateOperationsInput' })
+    t.field('createAt', { type: 'NullableDateTimeFieldUpdateOperationsInput' })
+    t.field('name', { type: 'StringFieldUpdateOperationsInput' })
+    t.field('description', { type: 'NullableStringFieldUpdateOperationsInput' })
+    t.field('papers', { type: 'IntFieldUpdateOperationsInput' })
+    t.field('poppers', { type: 'IntFieldUpdateOperationsInput' })
+    t.field('noshoots', { type: 'IntFieldUpdateOperationsInput' })
+    t.field('gunCondition', { type: 'IntFieldUpdateOperationsInput' })
+    t.field('shooterId', { type: 'IntFieldUpdateOperationsInput' })
+    t.field('walkthroughTime', { type: 'DecimalFieldUpdateOperationsInput' })
+    t.field('minRounds', { type: 'IntFieldUpdateOperationsInput' })
+    t.field('maxScore', { type: 'IntFieldUpdateOperationsInput' })
+    t.field('stageType', { type: 'EnumStageTypeFieldUpdateOperationsInput' })
+    t.field('tags', {
+      type: 'StageTagUncheckedUpdateManyWithoutStageNestedInput',
+    })
+    t.field('Scorelist', {
+      type: 'ScorelistUncheckedUpdateManyWithoutStageNestedInput',
+    })
+  },
+})
+
+export const StageUncheckedUpdateManyWithoutImageInput = inputObjectType({
+  nonNullDefaults: {
+    input: false,
+  },
+  name: 'StageUncheckedUpdateManyWithoutImageInput',
+  definition(t) {
+    t.field('id', { type: 'IntFieldUpdateOperationsInput' })
+    t.field('createAt', { type: 'NullableDateTimeFieldUpdateOperationsInput' })
+    t.field('name', { type: 'StringFieldUpdateOperationsInput' })
+    t.field('description', { type: 'NullableStringFieldUpdateOperationsInput' })
+    t.field('papers', { type: 'IntFieldUpdateOperationsInput' })
+    t.field('poppers', { type: 'IntFieldUpdateOperationsInput' })
+    t.field('noshoots', { type: 'IntFieldUpdateOperationsInput' })
+    t.field('gunCondition', { type: 'IntFieldUpdateOperationsInput' })
+    t.field('shooterId', { type: 'IntFieldUpdateOperationsInput' })
+    t.field('walkthroughTime', { type: 'DecimalFieldUpdateOperationsInput' })
+    t.field('minRounds', { type: 'IntFieldUpdateOperationsInput' })
+    t.field('maxScore', { type: 'IntFieldUpdateOperationsInput' })
+    t.field('stageType', { type: 'EnumStageTypeFieldUpdateOperationsInput' })
+  },
+})
+
 export const AggregateShooter = objectType({
   nonNullDefaults: {
     output: true,
@@ -6031,6 +7404,20 @@ export const AggregateStage = objectType({
     t.nullable.field('_sum', { type: 'StageSumAggregateOutputType' })
     t.nullable.field('_min', { type: 'StageMinAggregateOutputType' })
     t.nullable.field('_max', { type: 'StageMaxAggregateOutputType' })
+  },
+})
+
+export const AggregateStageTag = objectType({
+  nonNullDefaults: {
+    output: true,
+  },
+  name: 'AggregateStageTag',
+  definition(t) {
+    t.nullable.field('_count', { type: 'StageTagCountAggregateOutputType' })
+    t.nullable.field('_avg', { type: 'StageTagAvgAggregateOutputType' })
+    t.nullable.field('_sum', { type: 'StageTagSumAggregateOutputType' })
+    t.nullable.field('_min', { type: 'StageTagMinAggregateOutputType' })
+    t.nullable.field('_max', { type: 'StageTagMaxAggregateOutputType' })
   },
 })
 
@@ -6105,6 +7492,20 @@ export const AggregateProErrorsStore = objectType({
     t.nullable.field('_sum', { type: 'ProErrorsStoreSumAggregateOutputType' })
     t.nullable.field('_min', { type: 'ProErrorsStoreMinAggregateOutputType' })
     t.nullable.field('_max', { type: 'ProErrorsStoreMaxAggregateOutputType' })
+  },
+})
+
+export const AggregateImage = objectType({
+  nonNullDefaults: {
+    output: true,
+  },
+  name: 'AggregateImage',
+  definition(t) {
+    t.nullable.field('_count', { type: 'ImageCountAggregateOutputType' })
+    t.nullable.field('_avg', { type: 'ImageAvgAggregateOutputType' })
+    t.nullable.field('_sum', { type: 'ImageSumAggregateOutputType' })
+    t.nullable.field('_min', { type: 'ImageMinAggregateOutputType' })
+    t.nullable.field('_max', { type: 'ImageMaxAggregateOutputType' })
   },
 })
 
@@ -6188,6 +7589,7 @@ export const StageCountOutputType = objectType({
   },
   name: 'StageCountOutputType',
   definition(t) {
+    t.field('tags', { type: 'Int' })
     t.field('Scorelist', { type: 'Int' })
   },
 })
@@ -6211,6 +7613,7 @@ export const StageCountAggregateOutputType = objectType({
     t.field('minRounds', { type: 'Int' })
     t.field('maxScore', { type: 'Int' })
     t.field('stageType', { type: 'Int' })
+    t.field('imageId', { type: 'Int' })
     t.field('_all', { type: 'Int' })
   },
 })
@@ -6270,6 +7673,7 @@ export const StageMinAggregateOutputType = objectType({
     t.nullable.field('minRounds', { type: 'Int' })
     t.nullable.field('maxScore', { type: 'Int' })
     t.nullable.field('stageType', { type: 'StageType' })
+    t.nullable.field('imageId', { type: 'String' })
   },
 })
 
@@ -6292,6 +7696,69 @@ export const StageMaxAggregateOutputType = objectType({
     t.nullable.field('minRounds', { type: 'Int' })
     t.nullable.field('maxScore', { type: 'Int' })
     t.nullable.field('stageType', { type: 'StageType' })
+    t.nullable.field('imageId', { type: 'String' })
+  },
+})
+
+export const StageTagCountAggregateOutputType = objectType({
+  nonNullDefaults: {
+    output: true,
+  },
+  name: 'StageTagCountAggregateOutputType',
+  definition(t) {
+    t.field('id', { type: 'Int' })
+    t.field('title', { type: 'Int' })
+    t.field('color', { type: 'Int' })
+    t.field('stageId', { type: 'Int' })
+    t.field('_all', { type: 'Int' })
+  },
+})
+
+export const StageTagAvgAggregateOutputType = objectType({
+  nonNullDefaults: {
+    output: true,
+  },
+  name: 'StageTagAvgAggregateOutputType',
+  definition(t) {
+    t.nullable.field('id', { type: 'Float' })
+    t.nullable.field('stageId', { type: 'Float' })
+  },
+})
+
+export const StageTagSumAggregateOutputType = objectType({
+  nonNullDefaults: {
+    output: true,
+  },
+  name: 'StageTagSumAggregateOutputType',
+  definition(t) {
+    t.nullable.field('id', { type: 'Int' })
+    t.nullable.field('stageId', { type: 'Int' })
+  },
+})
+
+export const StageTagMinAggregateOutputType = objectType({
+  nonNullDefaults: {
+    output: true,
+  },
+  name: 'StageTagMinAggregateOutputType',
+  definition(t) {
+    t.nullable.field('id', { type: 'Int' })
+    t.nullable.field('title', { type: 'String' })
+    t.nullable.field('color', { type: 'String' })
+    t.nullable.field('stageId', { type: 'Int' })
+  },
+})
+
+export const StageTagMaxAggregateOutputType = objectType({
+  nonNullDefaults: {
+    output: true,
+  },
+  name: 'StageTagMaxAggregateOutputType',
+  definition(t) {
+    t.nullable.field('id', { type: 'Int' })
+    t.nullable.field('title', { type: 'String' })
+    t.nullable.field('color', { type: 'String' })
+    t.nullable.field('stageId', { type: 'Int' })
   },
 })
 
@@ -6682,5 +8149,77 @@ export const ProErrorsStoreMaxAggregateOutputType = objectType({
     t.nullable.field('count', { type: 'Int' })
     t.nullable.field('scoreId', { type: 'Int' })
     t.nullable.field('proErrorObjectsId', { type: 'Int' })
+  },
+})
+
+export const ImageCountOutputType = objectType({
+  nonNullDefaults: {
+    output: true,
+  },
+  name: 'ImageCountOutputType',
+  definition(t) {
+    t.field('Stage', { type: 'Int' })
+  },
+})
+
+export const ImageCountAggregateOutputType = objectType({
+  nonNullDefaults: {
+    output: true,
+  },
+  name: 'ImageCountAggregateOutputType',
+  definition(t) {
+    t.field('id', { type: 'Int' })
+    t.field('imagePath', { type: 'Int' })
+    t.field('sizeX', { type: 'Int' })
+    t.field('sizeY', { type: 'Int' })
+    t.field('_all', { type: 'Int' })
+  },
+})
+
+export const ImageAvgAggregateOutputType = objectType({
+  nonNullDefaults: {
+    output: true,
+  },
+  name: 'ImageAvgAggregateOutputType',
+  definition(t) {
+    t.nullable.field('sizeX', { type: 'Float' })
+    t.nullable.field('sizeY', { type: 'Float' })
+  },
+})
+
+export const ImageSumAggregateOutputType = objectType({
+  nonNullDefaults: {
+    output: true,
+  },
+  name: 'ImageSumAggregateOutputType',
+  definition(t) {
+    t.nullable.field('sizeX', { type: 'Int' })
+    t.nullable.field('sizeY', { type: 'Int' })
+  },
+})
+
+export const ImageMinAggregateOutputType = objectType({
+  nonNullDefaults: {
+    output: true,
+  },
+  name: 'ImageMinAggregateOutputType',
+  definition(t) {
+    t.nullable.field('id', { type: 'String' })
+    t.nullable.field('imagePath', { type: 'String' })
+    t.nullable.field('sizeX', { type: 'Int' })
+    t.nullable.field('sizeY', { type: 'Int' })
+  },
+})
+
+export const ImageMaxAggregateOutputType = objectType({
+  nonNullDefaults: {
+    output: true,
+  },
+  name: 'ImageMaxAggregateOutputType',
+  definition(t) {
+    t.nullable.field('id', { type: 'String' })
+    t.nullable.field('imagePath', { type: 'String' })
+    t.nullable.field('sizeX', { type: 'Int' })
+    t.nullable.field('sizeY', { type: 'Int' })
   },
 })

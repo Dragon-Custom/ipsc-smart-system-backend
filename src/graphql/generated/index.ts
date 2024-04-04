@@ -1,3 +1,5 @@
+export * from './Image'
+export * from './StageTag'
 export * from './InputTypes'
 export * from './ProErrorsStore'
 export * from './ProErrorObjects'

@@ -31,6 +31,7 @@ enum StageType {
 model Stage {
     id              Int         @id @unique @default(autoincrement())
     createAt        DateTime?   @default(now())
+    image           Image       @relation(fields: [imageId], references: [id])
     name            String
     description     String?
     papers          Int
@@ -39,6 +40,7 @@ model Stage {
     gunCondition    Int
     designer        Shooter     @relation(fields: [shooterId], references: [id])
     shooterId       Int
+    tags            StageTag[]
     //unit: minutes
     walkthroughTime Decimal
     Scorelist       Scorelist[]
@@ -48,6 +50,15 @@ model Stage {
     maxScore        Int
     // the calculated field
     stageType       StageType
+    imageId         String
+}
+
+model StageTag {
+    id      Int    @id @unique @default(autoincrement())
+    title   String
+    color   String
+    Stage   Stage? @relation(fields: [stageId], references: [id])
+    stageId Int?
 }
 
 model Scoreboard {
@@ -108,4 +119,12 @@ enum Division {
     Open
     Production
     ProductionOptics
+}
+
+model Image {
+    id        String  @id @unique @default("cuid()")
+    imagePath String
+    sizeX     Int
+    sizeY     Int
+    Stage     Stage[]
 }

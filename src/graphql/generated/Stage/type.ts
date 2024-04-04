@@ -20,10 +20,31 @@ export const Stage = objectType({
     t.int('minRounds')
     t.int('maxScore')
     t.field('stageType', { type: 'StageType' })
+    t.string('imageId')
+    t.field('image', {
+      type: 'Image',
+      resolve(root: any) {
+        return root.image
+      },
+    })
     t.field('designer', {
       type: 'Shooter',
       resolve(root: any) {
         return root.designer
+      },
+    })
+    t.list.field('tags', {
+      type: 'StageTag',
+      args: {
+        where: 'StageTagWhereInput',
+        orderBy: list('StageTagOrderByWithRelationInput'),
+        cursor: 'StageTagWhereUniqueInput',
+        take: 'Int',
+        skip: 'Int',
+        distinct: list('StageTagScalarFieldEnum'),
+      },
+      resolve(root: any) {
+        return root.tags
       },
     })
     t.list.field('Scorelist', {
