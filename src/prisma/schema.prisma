@@ -18,6 +18,7 @@ model Shooter {
     division Division
     stage    Stage[]
     score    Score[]
+    email    String
 }
 
 model Stage {

@@ -12,7 +12,7 @@ export const TransactionIsolationLevel = enumType({
 
 export const ShooterScalarFieldEnum = enumType({
   name: 'ShooterScalarFieldEnum',
-  members: ['id', 'createAt', 'name', 'division'],
+  members: ['id', 'createAt', 'name', 'division', 'email'],
 })
 
 export const StageScalarFieldEnum = enumType({
@@ -100,6 +100,7 @@ export const ShooterWhereInput = inputObjectType({
     t.field('createAt', { type: 'DateTimeNullableFilter' })
     t.field('name', { type: 'StringFilter' })
     t.field('division', { type: 'EnumDivisionFilter' })
+    t.field('email', { type: 'StringFilter' })
     t.field('stage', { type: 'StageListRelationFilter' })
     t.field('score', { type: 'ScoreListRelationFilter' })
   },
@@ -115,6 +116,7 @@ export const ShooterOrderByWithRelationInput = inputObjectType({
     t.field('createAt', { type: 'SortOrderInput' })
     t.field('name', { type: 'SortOrder' })
     t.field('division', { type: 'SortOrder' })
+    t.field('email', { type: 'SortOrder' })
     t.field('stage', { type: 'StageOrderByRelationAggregateInput' })
     t.field('score', { type: 'ScoreOrderByRelationAggregateInput' })
   },
@@ -133,6 +135,7 @@ export const ShooterWhereUniqueInput = inputObjectType({
     t.field('createAt', { type: 'DateTimeNullableFilter' })
     t.field('name', { type: 'StringFilter' })
     t.field('division', { type: 'EnumDivisionFilter' })
+    t.field('email', { type: 'StringFilter' })
     t.field('stage', { type: 'StageListRelationFilter' })
     t.field('score', { type: 'ScoreListRelationFilter' })
   },
@@ -148,6 +151,7 @@ export const ShooterOrderByWithAggregationInput = inputObjectType({
     t.field('createAt', { type: 'SortOrderInput' })
     t.field('name', { type: 'SortOrder' })
     t.field('division', { type: 'SortOrder' })
+    t.field('email', { type: 'SortOrder' })
     t.field('_count', { type: 'ShooterCountOrderByAggregateInput' })
     t.field('_avg', { type: 'ShooterAvgOrderByAggregateInput' })
     t.field('_max', { type: 'ShooterMaxOrderByAggregateInput' })
@@ -169,6 +173,7 @@ export const ShooterScalarWhereWithAggregatesInput = inputObjectType({
     t.field('createAt', { type: 'DateTimeNullableWithAggregatesFilter' })
     t.field('name', { type: 'StringWithAggregatesFilter' })
     t.field('division', { type: 'EnumDivisionWithAggregatesFilter' })
+    t.field('email', { type: 'StringWithAggregatesFilter' })
   },
 })
 
@@ -770,6 +775,7 @@ export const ShooterCreateInput = inputObjectType({
     t.field('createAt', { type: 'DateTime' })
     t.nonNull.field('name', { type: 'String' })
     t.nonNull.field('division', { type: 'Division' })
+    t.nonNull.field('email', { type: 'String' })
     t.field('stage', { type: 'StageCreateNestedManyWithoutDesignerInput' })
     t.field('score', { type: 'ScoreCreateNestedManyWithoutShooterInput' })
   },
@@ -785,6 +791,7 @@ export const ShooterUncheckedCreateInput = inputObjectType({
     t.field('createAt', { type: 'DateTime' })
     t.nonNull.field('name', { type: 'String' })
     t.nonNull.field('division', { type: 'Division' })
+    t.nonNull.field('email', { type: 'String' })
     t.field('stage', {
       type: 'StageUncheckedCreateNestedManyWithoutDesignerInput',
     })
@@ -803,6 +810,7 @@ export const ShooterUpdateInput = inputObjectType({
     t.field('createAt', { type: 'NullableDateTimeFieldUpdateOperationsInput' })
     t.field('name', { type: 'StringFieldUpdateOperationsInput' })
     t.field('division', { type: 'EnumDivisionFieldUpdateOperationsInput' })
+    t.field('email', { type: 'StringFieldUpdateOperationsInput' })
     t.field('stage', { type: 'StageUpdateManyWithoutDesignerNestedInput' })
     t.field('score', { type: 'ScoreUpdateManyWithoutShooterNestedInput' })
   },
@@ -818,6 +826,7 @@ export const ShooterUncheckedUpdateInput = inputObjectType({
     t.field('createAt', { type: 'NullableDateTimeFieldUpdateOperationsInput' })
     t.field('name', { type: 'StringFieldUpdateOperationsInput' })
     t.field('division', { type: 'EnumDivisionFieldUpdateOperationsInput' })
+    t.field('email', { type: 'StringFieldUpdateOperationsInput' })
     t.field('stage', {
       type: 'StageUncheckedUpdateManyWithoutDesignerNestedInput',
     })
@@ -837,6 +846,7 @@ export const ShooterCreateManyInput = inputObjectType({
     t.field('createAt', { type: 'DateTime' })
     t.nonNull.field('name', { type: 'String' })
     t.nonNull.field('division', { type: 'Division' })
+    t.nonNull.field('email', { type: 'String' })
   },
 })
 
@@ -849,6 +859,7 @@ export const ShooterUpdateManyMutationInput = inputObjectType({
     t.field('createAt', { type: 'NullableDateTimeFieldUpdateOperationsInput' })
     t.field('name', { type: 'StringFieldUpdateOperationsInput' })
     t.field('division', { type: 'EnumDivisionFieldUpdateOperationsInput' })
+    t.field('email', { type: 'StringFieldUpdateOperationsInput' })
   },
 })
 
@@ -862,6 +873,7 @@ export const ShooterUncheckedUpdateManyInput = inputObjectType({
     t.field('createAt', { type: 'NullableDateTimeFieldUpdateOperationsInput' })
     t.field('name', { type: 'StringFieldUpdateOperationsInput' })
     t.field('division', { type: 'EnumDivisionFieldUpdateOperationsInput' })
+    t.field('email', { type: 'StringFieldUpdateOperationsInput' })
   },
 })
 
@@ -1690,6 +1702,7 @@ export const ShooterCountOrderByAggregateInput = inputObjectType({
     t.field('createAt', { type: 'SortOrder' })
     t.field('name', { type: 'SortOrder' })
     t.field('division', { type: 'SortOrder' })
+    t.field('email', { type: 'SortOrder' })
   },
 })
 
@@ -1713,6 +1726,7 @@ export const ShooterMaxOrderByAggregateInput = inputObjectType({
     t.field('createAt', { type: 'SortOrder' })
     t.field('name', { type: 'SortOrder' })
     t.field('division', { type: 'SortOrder' })
+    t.field('email', { type: 'SortOrder' })
   },
 })
 
@@ -1726,6 +1740,7 @@ export const ShooterMinOrderByAggregateInput = inputObjectType({
     t.field('createAt', { type: 'SortOrder' })
     t.field('name', { type: 'SortOrder' })
     t.field('division', { type: 'SortOrder' })
+    t.field('email', { type: 'SortOrder' })
   },
 })
 
@@ -4067,6 +4082,7 @@ export const ShooterCreateWithoutStageInput = inputObjectType({
     t.field('createAt', { type: 'DateTime' })
     t.nonNull.field('name', { type: 'String' })
     t.nonNull.field('division', { type: 'Division' })
+    t.nonNull.field('email', { type: 'String' })
     t.field('score', { type: 'ScoreCreateNestedManyWithoutShooterInput' })
   },
 })
@@ -4081,6 +4097,7 @@ export const ShooterUncheckedCreateWithoutStageInput = inputObjectType({
     t.field('createAt', { type: 'DateTime' })
     t.nonNull.field('name', { type: 'String' })
     t.nonNull.field('division', { type: 'Division' })
+    t.nonNull.field('email', { type: 'String' })
     t.field('score', {
       type: 'ScoreUncheckedCreateNestedManyWithoutShooterInput',
     })
@@ -4184,6 +4201,7 @@ export const ShooterUpdateWithoutStageInput = inputObjectType({
     t.field('createAt', { type: 'NullableDateTimeFieldUpdateOperationsInput' })
     t.field('name', { type: 'StringFieldUpdateOperationsInput' })
     t.field('division', { type: 'EnumDivisionFieldUpdateOperationsInput' })
+    t.field('email', { type: 'StringFieldUpdateOperationsInput' })
     t.field('score', { type: 'ScoreUpdateManyWithoutShooterNestedInput' })
   },
 })
@@ -4198,6 +4216,7 @@ export const ShooterUncheckedUpdateWithoutStageInput = inputObjectType({
     t.field('createAt', { type: 'NullableDateTimeFieldUpdateOperationsInput' })
     t.field('name', { type: 'StringFieldUpdateOperationsInput' })
     t.field('division', { type: 'EnumDivisionFieldUpdateOperationsInput' })
+    t.field('email', { type: 'StringFieldUpdateOperationsInput' })
     t.field('score', {
       type: 'ScoreUncheckedUpdateManyWithoutShooterNestedInput',
     })
@@ -4660,6 +4679,7 @@ export const ShooterCreateWithoutScoreInput = inputObjectType({
     t.field('createAt', { type: 'DateTime' })
     t.nonNull.field('name', { type: 'String' })
     t.nonNull.field('division', { type: 'Division' })
+    t.nonNull.field('email', { type: 'String' })
     t.field('stage', { type: 'StageCreateNestedManyWithoutDesignerInput' })
   },
 })
@@ -4674,6 +4694,7 @@ export const ShooterUncheckedCreateWithoutScoreInput = inputObjectType({
     t.field('createAt', { type: 'DateTime' })
     t.nonNull.field('name', { type: 'String' })
     t.nonNull.field('division', { type: 'Division' })
+    t.nonNull.field('email', { type: 'String' })
     t.field('stage', {
       type: 'StageUncheckedCreateNestedManyWithoutDesignerInput',
     })
@@ -4812,6 +4833,7 @@ export const ShooterUpdateWithoutScoreInput = inputObjectType({
     t.field('createAt', { type: 'NullableDateTimeFieldUpdateOperationsInput' })
     t.field('name', { type: 'StringFieldUpdateOperationsInput' })
     t.field('division', { type: 'EnumDivisionFieldUpdateOperationsInput' })
+    t.field('email', { type: 'StringFieldUpdateOperationsInput' })
     t.field('stage', { type: 'StageUpdateManyWithoutDesignerNestedInput' })
   },
 })
@@ -4826,6 +4848,7 @@ export const ShooterUncheckedUpdateWithoutScoreInput = inputObjectType({
     t.field('createAt', { type: 'NullableDateTimeFieldUpdateOperationsInput' })
     t.field('name', { type: 'StringFieldUpdateOperationsInput' })
     t.field('division', { type: 'EnumDivisionFieldUpdateOperationsInput' })
+    t.field('email', { type: 'StringFieldUpdateOperationsInput' })
     t.field('stage', {
       type: 'StageUncheckedUpdateManyWithoutDesignerNestedInput',
     })
@@ -5827,6 +5850,7 @@ export const ShooterCountAggregateOutputType = objectType({
     t.field('createAt', { type: 'Int' })
     t.field('name', { type: 'Int' })
     t.field('division', { type: 'Int' })
+    t.field('email', { type: 'Int' })
     t.field('_all', { type: 'Int' })
   },
 })
@@ -5861,6 +5885,7 @@ export const ShooterMinAggregateOutputType = objectType({
     t.nullable.field('createAt', { type: 'DateTime' })
     t.nullable.field('name', { type: 'String' })
     t.nullable.field('division', { type: 'Division' })
+    t.nullable.field('email', { type: 'String' })
   },
 })
 
@@ -5874,6 +5899,7 @@ export const ShooterMaxAggregateOutputType = objectType({
     t.nullable.field('createAt', { type: 'DateTime' })
     t.nullable.field('name', { type: 'String' })
     t.nullable.field('division', { type: 'Division' })
+    t.nullable.field('email', { type: 'String' })
   },
 })
 

@@ -4,6 +4,7 @@ import { schema } from "./schema";
 import { context } from "./context";
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
+import { useGraphQLSSE } from "@graphql-yoga/plugin-graphql-sse";
 
 // Create a Yoga instance with a GraphQL schema.
 const yoga = createYoga({
@@ -15,6 +16,11 @@ const yoga = createYoga({
 		info: console.log,
 		warn: console.log,
 	},
+	plugins: [
+		useGraphQLSSE({
+			endpoint: "/graphql/",
+		}),
+	],
 });
 
 // Pass it into a server to hook into request handlers.
