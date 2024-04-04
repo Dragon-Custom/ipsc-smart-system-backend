@@ -1,6 +1,7 @@
 const { Generator } = require("@paljs/generator");
 const fs = require("fs");
 
+fs.rmSync("src/graphql/generated", { recursive: true, force: true });
 new Generator(
 	{ name: "nexus", schemaPath: "src/prisma/schema.prisma" },
 	{
@@ -14,7 +15,6 @@ new Generator(
 		],
 	},
 ).run().then(async () => {
-	await new Promise((r) => setTimeout(r, 1000));
 	// The paljs excludeModels just not fucking working
 	fs.rmSync("src/graphql/generated/Image", { recursive: true, force: true });
 	const exportItem = fs.readFileSync("src/graphql/generated/index.ts").toString();
