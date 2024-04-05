@@ -21,6 +21,7 @@ const yoga = createYoga({
 			endpoint: "/graphql/",
 		}),
 	],
+	// multipart: false,
 });
 
 // Pass it into a server to hook into request handlers.

@@ -9,8 +9,6 @@ export const Image = objectType({
   definition(t) {
     t.string('id')
     t.string('imagePath')
-    t.int('sizeX')
-    t.int('sizeY')
     t.list.field('Stage', {
       type: 'Stage',
       args: {

@@ -79,7 +79,7 @@ export const ProErrorsStoreScalarFieldEnum = enumType({
 
 export const ImageScalarFieldEnum = enumType({
   name: 'ImageScalarFieldEnum',
-  members: ['id', 'imagePath', 'sizeX', 'sizeY'],
+  members: ['id', 'imagePath'],
 })
 
 export const SortOrder = enumType({
@@ -910,8 +910,6 @@ export const ImageWhereInput = inputObjectType({
     t.list.field('NOT', { type: 'ImageWhereInput' })
     t.field('id', { type: 'StringFilter' })
     t.field('imagePath', { type: 'StringFilter' })
-    t.field('sizeX', { type: 'IntFilter' })
-    t.field('sizeY', { type: 'IntFilter' })
     t.field('Stage', { type: 'StageListRelationFilter' })
   },
 })
@@ -924,8 +922,6 @@ export const ImageOrderByWithRelationInput = inputObjectType({
   definition(t) {
     t.field('id', { type: 'SortOrder' })
     t.field('imagePath', { type: 'SortOrder' })
-    t.field('sizeX', { type: 'SortOrder' })
-    t.field('sizeY', { type: 'SortOrder' })
     t.field('Stage', { type: 'StageOrderByRelationAggregateInput' })
   },
 })
@@ -941,8 +937,6 @@ export const ImageWhereUniqueInput = inputObjectType({
     t.list.field('OR', { type: 'ImageWhereInput' })
     t.list.field('NOT', { type: 'ImageWhereInput' })
     t.field('imagePath', { type: 'StringFilter' })
-    t.field('sizeX', { type: 'IntFilter' })
-    t.field('sizeY', { type: 'IntFilter' })
     t.field('Stage', { type: 'StageListRelationFilter' })
   },
 })
@@ -955,13 +949,9 @@ export const ImageOrderByWithAggregationInput = inputObjectType({
   definition(t) {
     t.field('id', { type: 'SortOrder' })
     t.field('imagePath', { type: 'SortOrder' })
-    t.field('sizeX', { type: 'SortOrder' })
-    t.field('sizeY', { type: 'SortOrder' })
     t.field('_count', { type: 'ImageCountOrderByAggregateInput' })
-    t.field('_avg', { type: 'ImageAvgOrderByAggregateInput' })
     t.field('_max', { type: 'ImageMaxOrderByAggregateInput' })
     t.field('_min', { type: 'ImageMinOrderByAggregateInput' })
-    t.field('_sum', { type: 'ImageSumOrderByAggregateInput' })
   },
 })
 
@@ -976,8 +966,6 @@ export const ImageScalarWhereWithAggregatesInput = inputObjectType({
     t.list.field('NOT', { type: 'ImageScalarWhereWithAggregatesInput' })
     t.field('id', { type: 'StringWithAggregatesFilter' })
     t.field('imagePath', { type: 'StringWithAggregatesFilter' })
-    t.field('sizeX', { type: 'IntWithAggregatesFilter' })
-    t.field('sizeY', { type: 'IntWithAggregatesFilter' })
   },
 })
 
@@ -1921,8 +1909,6 @@ export const ImageCreateInput = inputObjectType({
   definition(t) {
     t.field('id', { type: 'String' })
     t.nonNull.field('imagePath', { type: 'String' })
-    t.nonNull.field('sizeX', { type: 'Int' })
-    t.nonNull.field('sizeY', { type: 'Int' })
     t.field('Stage', { type: 'StageCreateNestedManyWithoutImageInput' })
   },
 })
@@ -1935,8 +1921,6 @@ export const ImageUncheckedCreateInput = inputObjectType({
   definition(t) {
     t.field('id', { type: 'String' })
     t.nonNull.field('imagePath', { type: 'String' })
-    t.nonNull.field('sizeX', { type: 'Int' })
-    t.nonNull.field('sizeY', { type: 'Int' })
     t.field('Stage', {
       type: 'StageUncheckedCreateNestedManyWithoutImageInput',
     })
@@ -1951,8 +1935,6 @@ export const ImageUpdateInput = inputObjectType({
   definition(t) {
     t.field('id', { type: 'StringFieldUpdateOperationsInput' })
     t.field('imagePath', { type: 'StringFieldUpdateOperationsInput' })
-    t.field('sizeX', { type: 'IntFieldUpdateOperationsInput' })
-    t.field('sizeY', { type: 'IntFieldUpdateOperationsInput' })
     t.field('Stage', { type: 'StageUpdateManyWithoutImageNestedInput' })
   },
 })
@@ -1965,8 +1947,6 @@ export const ImageUncheckedUpdateInput = inputObjectType({
   definition(t) {
     t.field('id', { type: 'StringFieldUpdateOperationsInput' })
     t.field('imagePath', { type: 'StringFieldUpdateOperationsInput' })
-    t.field('sizeX', { type: 'IntFieldUpdateOperationsInput' })
-    t.field('sizeY', { type: 'IntFieldUpdateOperationsInput' })
     t.field('Stage', {
       type: 'StageUncheckedUpdateManyWithoutImageNestedInput',
     })
@@ -1981,8 +1961,6 @@ export const ImageCreateManyInput = inputObjectType({
   definition(t) {
     t.field('id', { type: 'String' })
     t.nonNull.field('imagePath', { type: 'String' })
-    t.nonNull.field('sizeX', { type: 'Int' })
-    t.nonNull.field('sizeY', { type: 'Int' })
   },
 })
 
@@ -1994,8 +1972,6 @@ export const ImageUpdateManyMutationInput = inputObjectType({
   definition(t) {
     t.field('id', { type: 'StringFieldUpdateOperationsInput' })
     t.field('imagePath', { type: 'StringFieldUpdateOperationsInput' })
-    t.field('sizeX', { type: 'IntFieldUpdateOperationsInput' })
-    t.field('sizeY', { type: 'IntFieldUpdateOperationsInput' })
   },
 })
 
@@ -2007,8 +1983,6 @@ export const ImageUncheckedUpdateManyInput = inputObjectType({
   definition(t) {
     t.field('id', { type: 'StringFieldUpdateOperationsInput' })
     t.field('imagePath', { type: 'StringFieldUpdateOperationsInput' })
-    t.field('sizeX', { type: 'IntFieldUpdateOperationsInput' })
-    t.field('sizeY', { type: 'IntFieldUpdateOperationsInput' })
   },
 })
 
@@ -3169,19 +3143,6 @@ export const ImageCountOrderByAggregateInput = inputObjectType({
   definition(t) {
     t.field('id', { type: 'SortOrder' })
     t.field('imagePath', { type: 'SortOrder' })
-    t.field('sizeX', { type: 'SortOrder' })
-    t.field('sizeY', { type: 'SortOrder' })
-  },
-})
-
-export const ImageAvgOrderByAggregateInput = inputObjectType({
-  nonNullDefaults: {
-    input: false,
-  },
-  name: 'ImageAvgOrderByAggregateInput',
-  definition(t) {
-    t.field('sizeX', { type: 'SortOrder' })
-    t.field('sizeY', { type: 'SortOrder' })
   },
 })
 
@@ -3193,8 +3154,6 @@ export const ImageMaxOrderByAggregateInput = inputObjectType({
   definition(t) {
     t.field('id', { type: 'SortOrder' })
     t.field('imagePath', { type: 'SortOrder' })
-    t.field('sizeX', { type: 'SortOrder' })
-    t.field('sizeY', { type: 'SortOrder' })
   },
 })
 
@@ -3206,19 +3165,6 @@ export const ImageMinOrderByAggregateInput = inputObjectType({
   definition(t) {
     t.field('id', { type: 'SortOrder' })
     t.field('imagePath', { type: 'SortOrder' })
-    t.field('sizeX', { type: 'SortOrder' })
-    t.field('sizeY', { type: 'SortOrder' })
-  },
-})
-
-export const ImageSumOrderByAggregateInput = inputObjectType({
-  nonNullDefaults: {
-    input: false,
-  },
-  name: 'ImageSumOrderByAggregateInput',
-  definition(t) {
-    t.field('sizeX', { type: 'SortOrder' })
-    t.field('sizeY', { type: 'SortOrder' })
   },
 })
 
@@ -5111,8 +5057,6 @@ export const ImageCreateWithoutStageInput = inputObjectType({
   definition(t) {
     t.field('id', { type: 'String' })
     t.nonNull.field('imagePath', { type: 'String' })
-    t.nonNull.field('sizeX', { type: 'Int' })
-    t.nonNull.field('sizeY', { type: 'Int' })
   },
 })
 
@@ -5124,8 +5068,6 @@ export const ImageUncheckedCreateWithoutStageInput = inputObjectType({
   definition(t) {
     t.field('id', { type: 'String' })
     t.nonNull.field('imagePath', { type: 'String' })
-    t.nonNull.field('sizeX', { type: 'Int' })
-    t.nonNull.field('sizeY', { type: 'Int' })
   },
 })
 
@@ -5312,8 +5254,6 @@ export const ImageUpdateWithoutStageInput = inputObjectType({
   definition(t) {
     t.field('id', { type: 'StringFieldUpdateOperationsInput' })
     t.field('imagePath', { type: 'StringFieldUpdateOperationsInput' })
-    t.field('sizeX', { type: 'IntFieldUpdateOperationsInput' })
-    t.field('sizeY', { type: 'IntFieldUpdateOperationsInput' })
   },
 })
 
@@ -5325,8 +5265,6 @@ export const ImageUncheckedUpdateWithoutStageInput = inputObjectType({
   definition(t) {
     t.field('id', { type: 'StringFieldUpdateOperationsInput' })
     t.field('imagePath', { type: 'StringFieldUpdateOperationsInput' })
-    t.field('sizeX', { type: 'IntFieldUpdateOperationsInput' })
-    t.field('sizeY', { type: 'IntFieldUpdateOperationsInput' })
   },
 })
 
@@ -7502,8 +7440,6 @@ export const AggregateImage = objectType({
   name: 'AggregateImage',
   definition(t) {
     t.nullable.field('_count', { type: 'ImageCountAggregateOutputType' })
-    t.nullable.field('_avg', { type: 'ImageAvgAggregateOutputType' })
-    t.nullable.field('_sum', { type: 'ImageSumAggregateOutputType' })
     t.nullable.field('_min', { type: 'ImageMinAggregateOutputType' })
     t.nullable.field('_max', { type: 'ImageMaxAggregateOutputType' })
   },
@@ -8170,31 +8106,7 @@ export const ImageCountAggregateOutputType = objectType({
   definition(t) {
     t.field('id', { type: 'Int' })
     t.field('imagePath', { type: 'Int' })
-    t.field('sizeX', { type: 'Int' })
-    t.field('sizeY', { type: 'Int' })
     t.field('_all', { type: 'Int' })
-  },
-})
-
-export const ImageAvgAggregateOutputType = objectType({
-  nonNullDefaults: {
-    output: true,
-  },
-  name: 'ImageAvgAggregateOutputType',
-  definition(t) {
-    t.nullable.field('sizeX', { type: 'Float' })
-    t.nullable.field('sizeY', { type: 'Float' })
-  },
-})
-
-export const ImageSumAggregateOutputType = objectType({
-  nonNullDefaults: {
-    output: true,
-  },
-  name: 'ImageSumAggregateOutputType',
-  definition(t) {
-    t.nullable.field('sizeX', { type: 'Int' })
-    t.nullable.field('sizeY', { type: 'Int' })
   },
 })
 
@@ -8206,8 +8118,6 @@ export const ImageMinAggregateOutputType = objectType({
   definition(t) {
     t.nullable.field('id', { type: 'String' })
     t.nullable.field('imagePath', { type: 'String' })
-    t.nullable.field('sizeX', { type: 'Int' })
-    t.nullable.field('sizeY', { type: 'Int' })
   },
 })
 
@@ -8219,7 +8129,5 @@ export const ImageMaxAggregateOutputType = objectType({
   definition(t) {
     t.nullable.field('id', { type: 'String' })
     t.nullable.field('imagePath', { type: 'String' })
-    t.nullable.field('sizeX', { type: 'Int' })
-    t.nullable.field('sizeY', { type: 'Int' })
   },
 })
