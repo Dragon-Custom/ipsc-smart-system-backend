@@ -1094,9 +1094,9 @@ export const StageCreateInput = inputObjectType({
     t.nonNull.field('noshoots', { type: 'Int' })
     t.nonNull.field('gunCondition', { type: 'Int' })
     t.nonNull.field('walkthroughTime', { type: 'Decimal' })
-    t.nonNull.field('minRounds', { type: 'Int' })
-    t.nonNull.field('maxScore', { type: 'Int' })
-    t.nonNull.field('stageType', { type: 'StageType' })
+    t.field('minRounds', { type: 'Int' })
+    t.field('maxScore', { type: 'Int' })
+    t.field('stageType', { type: 'StageType' })
     t.nonNull.field('image', { type: 'ImageCreateNestedOneWithoutStageInput' })
     t.nonNull.field('designer', {
       type: 'ShooterCreateNestedOneWithoutStageInput',

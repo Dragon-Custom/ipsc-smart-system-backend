@@ -28,6 +28,21 @@ new Generator(
 		"src/graphql/generated/Image/index.ts",
 		"export * from './type'",
 	);
+
+	let inputType = fs.readFileSync("src/graphql/generated/InputTypes.ts").toString();
+	inputType = inputType.replace(
+		"t.nonNull.field('minRounds', { type: 'Int' })",
+		"t.field('minRounds', { type: 'Int' })",
+	);
+	inputType = inputType.replace(
+		"t.nonNull.field('maxScore', { type: 'Int' })",
+		"t.field('maxScore', { type: 'Int' })",
+	);
+	inputType = inputType.replace(
+		"t.nonNull.field('stageType', { type: 'StageType' })",
+		"t.field('stageType', { type: 'StageType' })",
+	);
+	fs.writeFileSync("src/graphql/generated/InputTypes.ts", inputType);
 });
 
 
