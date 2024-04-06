@@ -45,11 +45,11 @@ model Stage {
     walkthroughTime Decimal
     Scorelist       Scorelist[]
     // the calculated field
-    minRounds       Int
+    minRounds       Int         @default(dbgenerated("calculated field"))
     // the calculated field
-    maxScore        Int
+    maxScore        Int         @default(dbgenerated("calculated field"))
     // the calculated field
-    stageType       StageType
+    stageType       StageType   @default(dbgenerated("calculated field"))
     imageId         String
 }
 

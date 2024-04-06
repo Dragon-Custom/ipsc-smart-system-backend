@@ -1122,9 +1122,9 @@ export const StageUncheckedCreateInput = inputObjectType({
     t.nonNull.field('gunCondition', { type: 'Int' })
     t.nonNull.field('shooterId', { type: 'Int' })
     t.nonNull.field('walkthroughTime', { type: 'Decimal' })
-    t.nonNull.field('minRounds', { type: 'Int' })
-    t.nonNull.field('maxScore', { type: 'Int' })
-    t.nonNull.field('stageType', { type: 'StageType' })
+    t.field('minRounds', { type: 'Int' })
+    t.field('maxScore', { type: 'Int' })
+    t.field('stageType', { type: 'StageType' })
     t.nonNull.field('imageId', { type: 'String' })
     t.field('tags', {
       type: 'StageTagUncheckedCreateNestedManyWithoutStageInput',
@@ -1206,9 +1206,9 @@ export const StageCreateManyInput = inputObjectType({
     t.nonNull.field('gunCondition', { type: 'Int' })
     t.nonNull.field('shooterId', { type: 'Int' })
     t.nonNull.field('walkthroughTime', { type: 'Decimal' })
-    t.nonNull.field('minRounds', { type: 'Int' })
-    t.nonNull.field('maxScore', { type: 'Int' })
-    t.nonNull.field('stageType', { type: 'StageType' })
+    t.field('minRounds', { type: 'Int' })
+    t.field('maxScore', { type: 'Int' })
+    t.field('stageType', { type: 'StageType' })
     t.nonNull.field('imageId', { type: 'String' })
   },
 })
@@ -4807,9 +4807,9 @@ export const StageCreateWithoutDesignerInput = inputObjectType({
     t.nonNull.field('noshoots', { type: 'Int' })
     t.nonNull.field('gunCondition', { type: 'Int' })
     t.nonNull.field('walkthroughTime', { type: 'Decimal' })
-    t.nonNull.field('minRounds', { type: 'Int' })
-    t.nonNull.field('maxScore', { type: 'Int' })
-    t.nonNull.field('stageType', { type: 'StageType' })
+    t.field('minRounds', { type: 'Int' })
+    t.field('maxScore', { type: 'Int' })
+    t.field('stageType', { type: 'StageType' })
     t.nonNull.field('image', { type: 'ImageCreateNestedOneWithoutStageInput' })
     t.field('tags', { type: 'StageTagCreateNestedManyWithoutStageInput' })
     t.field('Scorelist', { type: 'ScorelistCreateNestedManyWithoutStageInput' })
@@ -4831,9 +4831,9 @@ export const StageUncheckedCreateWithoutDesignerInput = inputObjectType({
     t.nonNull.field('noshoots', { type: 'Int' })
     t.nonNull.field('gunCondition', { type: 'Int' })
     t.nonNull.field('walkthroughTime', { type: 'Decimal' })
-    t.nonNull.field('minRounds', { type: 'Int' })
-    t.nonNull.field('maxScore', { type: 'Int' })
-    t.nonNull.field('stageType', { type: 'StageType' })
+    t.field('minRounds', { type: 'Int' })
+    t.field('maxScore', { type: 'Int' })
+    t.field('stageType', { type: 'StageType' })
     t.nonNull.field('imageId', { type: 'String' })
     t.field('tags', {
       type: 'StageTagUncheckedCreateNestedManyWithoutStageInput',
@@ -5437,9 +5437,9 @@ export const StageCreateWithoutTagsInput = inputObjectType({
     t.nonNull.field('noshoots', { type: 'Int' })
     t.nonNull.field('gunCondition', { type: 'Int' })
     t.nonNull.field('walkthroughTime', { type: 'Decimal' })
-    t.nonNull.field('minRounds', { type: 'Int' })
-    t.nonNull.field('maxScore', { type: 'Int' })
-    t.nonNull.field('stageType', { type: 'StageType' })
+    t.field('minRounds', { type: 'Int' })
+    t.field('maxScore', { type: 'Int' })
+    t.field('stageType', { type: 'StageType' })
     t.nonNull.field('image', { type: 'ImageCreateNestedOneWithoutStageInput' })
     t.nonNull.field('designer', {
       type: 'ShooterCreateNestedOneWithoutStageInput',
@@ -5464,9 +5464,9 @@ export const StageUncheckedCreateWithoutTagsInput = inputObjectType({
     t.nonNull.field('gunCondition', { type: 'Int' })
     t.nonNull.field('shooterId', { type: 'Int' })
     t.nonNull.field('walkthroughTime', { type: 'Decimal' })
-    t.nonNull.field('minRounds', { type: 'Int' })
-    t.nonNull.field('maxScore', { type: 'Int' })
-    t.nonNull.field('stageType', { type: 'StageType' })
+    t.field('minRounds', { type: 'Int' })
+    t.field('maxScore', { type: 'Int' })
+    t.field('stageType', { type: 'StageType' })
     t.nonNull.field('imageId', { type: 'String' })
     t.field('Scorelist', {
       type: 'ScorelistUncheckedCreateNestedManyWithoutStageInput',
@@ -5666,9 +5666,9 @@ export const StageCreateWithoutScorelistInput = inputObjectType({
     t.nonNull.field('noshoots', { type: 'Int' })
     t.nonNull.field('gunCondition', { type: 'Int' })
     t.nonNull.field('walkthroughTime', { type: 'Decimal' })
-    t.nonNull.field('minRounds', { type: 'Int' })
-    t.nonNull.field('maxScore', { type: 'Int' })
-    t.nonNull.field('stageType', { type: 'StageType' })
+    t.field('minRounds', { type: 'Int' })
+    t.field('maxScore', { type: 'Int' })
+    t.field('stageType', { type: 'StageType' })
     t.nonNull.field('image', { type: 'ImageCreateNestedOneWithoutStageInput' })
     t.nonNull.field('designer', {
       type: 'ShooterCreateNestedOneWithoutStageInput',
@@ -5693,9 +5693,9 @@ export const StageUncheckedCreateWithoutScorelistInput = inputObjectType({
     t.nonNull.field('gunCondition', { type: 'Int' })
     t.nonNull.field('shooterId', { type: 'Int' })
     t.nonNull.field('walkthroughTime', { type: 'Decimal' })
-    t.nonNull.field('minRounds', { type: 'Int' })
-    t.nonNull.field('maxScore', { type: 'Int' })
-    t.nonNull.field('stageType', { type: 'StageType' })
+    t.field('minRounds', { type: 'Int' })
+    t.field('maxScore', { type: 'Int' })
+    t.field('stageType', { type: 'StageType' })
     t.nonNull.field('imageId', { type: 'String' })
     t.field('tags', {
       type: 'StageTagUncheckedCreateNestedManyWithoutStageInput',
@@ -6601,9 +6601,9 @@ export const StageCreateWithoutImageInput = inputObjectType({
     t.nonNull.field('noshoots', { type: 'Int' })
     t.nonNull.field('gunCondition', { type: 'Int' })
     t.nonNull.field('walkthroughTime', { type: 'Decimal' })
-    t.nonNull.field('minRounds', { type: 'Int' })
-    t.nonNull.field('maxScore', { type: 'Int' })
-    t.nonNull.field('stageType', { type: 'StageType' })
+    t.field('minRounds', { type: 'Int' })
+    t.field('maxScore', { type: 'Int' })
+    t.field('stageType', { type: 'StageType' })
     t.nonNull.field('designer', {
       type: 'ShooterCreateNestedOneWithoutStageInput',
     })
@@ -6628,9 +6628,9 @@ export const StageUncheckedCreateWithoutImageInput = inputObjectType({
     t.nonNull.field('gunCondition', { type: 'Int' })
     t.nonNull.field('shooterId', { type: 'Int' })
     t.nonNull.field('walkthroughTime', { type: 'Decimal' })
-    t.nonNull.field('minRounds', { type: 'Int' })
-    t.nonNull.field('maxScore', { type: 'Int' })
-    t.nonNull.field('stageType', { type: 'StageType' })
+    t.field('minRounds', { type: 'Int' })
+    t.field('maxScore', { type: 'Int' })
+    t.field('stageType', { type: 'StageType' })
     t.field('tags', {
       type: 'StageTagUncheckedCreateNestedManyWithoutStageInput',
     })
@@ -6711,9 +6711,9 @@ export const StageCreateManyDesignerInput = inputObjectType({
     t.nonNull.field('noshoots', { type: 'Int' })
     t.nonNull.field('gunCondition', { type: 'Int' })
     t.nonNull.field('walkthroughTime', { type: 'Decimal' })
-    t.nonNull.field('minRounds', { type: 'Int' })
-    t.nonNull.field('maxScore', { type: 'Int' })
-    t.nonNull.field('stageType', { type: 'StageType' })
+    t.field('minRounds', { type: 'Int' })
+    t.field('maxScore', { type: 'Int' })
+    t.field('stageType', { type: 'StageType' })
     t.nonNull.field('imageId', { type: 'String' })
   },
 })
@@ -7236,9 +7236,9 @@ export const StageCreateManyImageInput = inputObjectType({
     t.nonNull.field('gunCondition', { type: 'Int' })
     t.nonNull.field('shooterId', { type: 'Int' })
     t.nonNull.field('walkthroughTime', { type: 'Decimal' })
-    t.nonNull.field('minRounds', { type: 'Int' })
-    t.nonNull.field('maxScore', { type: 'Int' })
-    t.nonNull.field('stageType', { type: 'StageType' })
+    t.field('minRounds', { type: 'Int' })
+    t.field('maxScore', { type: 'Int' })
+    t.field('stageType', { type: 'StageType' })
   },
 })
 
