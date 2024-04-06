@@ -1,5 +1,5 @@
-import { mkdir, writeFile } from "fs/promises";
-import { arg, extendType, nonNull, scalarType } from "nexus";
+import { mkdir, readFile, writeFile } from "fs/promises";
+import { arg, extendType, nonNull, scalarType, stringArg } from "nexus";
 import path from "path";
 import sharp from "sharp";
 
@@ -42,6 +42,33 @@ export const ImageUpload = extendType({
 					},
 				});
 				return filename;
+			},
+		});
+	},
+});
+
+export const FileOutput = scalarType({
+	name: "FileOutput",
+	description: "the base64 encoded file",
+	sourceType: "String",
+});
+
+export const ImageGet = extendType({
+	type: "Query",
+	definition(t) {
+		t.field("getImage", {
+			type: "FileOutput",
+			args: {
+				id: nonNull(stringArg()),
+			},
+			async resolve(src, args, ctx) {
+				const image = (await ctx.prisma.image.findUniqueOrThrow({
+					where: {
+						id: args.id,
+					},
+				}));
+				const buffer = (await readFile(image.imagePath));
+				return await Buffer.from(buffer).toString("base64");
 			},
 		});
 	},
