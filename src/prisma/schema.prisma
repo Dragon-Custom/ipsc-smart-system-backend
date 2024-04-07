@@ -40,25 +40,25 @@ model Stage {
     gunCondition    Int
     designer        Shooter     @relation(fields: [shooterId], references: [id])
     shooterId       Int
-    tags            StageTag[]
     //unit: minutes
     walkthroughTime Decimal
     Scorelist       Scorelist[]
     // the calculated field
-    minRounds       Int         @default(dbgenerated("calculated field"))
+    minRounds       Int         @default(dbgenerated("Remove this line from sql while migration"))
     // the calculated field
-    maxScore        Int         @default(dbgenerated("calculated field"))
+    maxScore        Int         @default(dbgenerated("Remove this line from sql while migration"))
     // the calculated field
-    stageType       StageType   @default(dbgenerated("calculated field"))
+    stageType       StageType   @default(dbgenerated("Remove this line from sql while migration"))
     imageId         String
+    tags            StageTag?   @relation(fields: [stageTagId], references: [id])
+    stageTagId      Int?
 }
 
 model StageTag {
-    id      Int    @id @unique @default(autoincrement())
-    title   String
-    color   String
-    Stage   Stage? @relation(fields: [stageId], references: [id])
-    stageId Int?
+    id     Int     @id @unique @default(autoincrement())
+    title  String
+    color  String
+    stages Stage[]
 }
 
 model Scoreboard {

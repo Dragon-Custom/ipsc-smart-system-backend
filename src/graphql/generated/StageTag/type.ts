@@ -1,4 +1,4 @@
-import { objectType } from 'nexus'
+import { objectType, list } from 'nexus'
 
 export const StageTag = objectType({
   nonNullDefaults: {
@@ -10,14 +10,24 @@ export const StageTag = objectType({
     t.int('id')
     t.string('title')
     t.string('color')
-    t.nullable.int('stageId')
-    t.nullable.field('Stage', {
+    t.list.field('stages', {
       type: 'Stage',
       args: {
         where: 'StageWhereInput',
+        orderBy: list('StageOrderByWithRelationInput'),
+        cursor: 'StageWhereUniqueInput',
+        take: 'Int',
+        skip: 'Int',
+        distinct: list('StageScalarFieldEnum'),
       },
       resolve(root: any) {
-        return root.Stage
+        return root.stages
+      },
+    })
+    t.field('_count', {
+      type: 'StageTagCountOutputType',
+      resolve(root: any) {
+        return root._count
       },
     })
   },
