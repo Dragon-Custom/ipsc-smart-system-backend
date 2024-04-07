@@ -21,7 +21,6 @@ export const Stage = objectType({
     t.int('maxScore')
     t.field('stageType', { type: 'StageType' })
     t.string('imageId')
-    t.nullable.int('stageTagId')
     t.field('image', {
       type: 'Image',
       resolve(root: any) {
@@ -48,10 +47,15 @@ export const Stage = objectType({
         return root.Scorelist
       },
     })
-    t.nullable.field('tags', {
-      type: 'StageTag',
+    t.list.field('tags', {
+      type: 'TagOnStage',
       args: {
-        where: 'StageTagWhereInput',
+        where: 'TagOnStageWhereInput',
+        orderBy: list('TagOnStageOrderByWithRelationInput'),
+        cursor: 'TagOnStageWhereUniqueInput',
+        take: 'Int',
+        skip: 'Int',
+        distinct: list('TagOnStageScalarFieldEnum'),
       },
       resolve(root: any) {
         return root.tags

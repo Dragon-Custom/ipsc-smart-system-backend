@@ -10,18 +10,18 @@ export const StageTag = objectType({
     t.int('id')
     t.string('title')
     t.string('color')
-    t.list.field('stages', {
-      type: 'Stage',
+    t.list.field('TagOnStage', {
+      type: 'TagOnStage',
       args: {
-        where: 'StageWhereInput',
-        orderBy: list('StageOrderByWithRelationInput'),
-        cursor: 'StageWhereUniqueInput',
+        where: 'TagOnStageWhereInput',
+        orderBy: list('TagOnStageOrderByWithRelationInput'),
+        cursor: 'TagOnStageWhereUniqueInput',
         take: 'Int',
         skip: 'Int',
-        distinct: list('StageScalarFieldEnum'),
+        distinct: list('TagOnStageScalarFieldEnum'),
       },
       resolve(root: any) {
-        return root.stages
+        return root.TagOnStage
       },
     })
     t.field('_count', {
