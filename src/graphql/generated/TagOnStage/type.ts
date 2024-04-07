@@ -8,9 +8,9 @@ export const TagOnStage = objectType({
   name: 'TagOnStage',
   definition(t) {
     t.int('id')
-    t.int('count')
     t.int('tagId')
     t.int('stageId')
+    t.nullable.int('flag')
     t.field('tag', {
       type: 'StageTag',
       resolve(root: any) {

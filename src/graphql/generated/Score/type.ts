@@ -15,7 +15,7 @@ export const Score = objectType({
     t.int('noshoots')
     t.nullable.int('poppers')
     t.float('time')
-    t.nullable.string('scorelistId')
+    t.nullable.int('scorelistId')
     t.int('shooterId')
     t.int('round')
     t.field('shooter', {

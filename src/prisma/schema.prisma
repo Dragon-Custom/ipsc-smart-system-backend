@@ -61,12 +61,12 @@ model StageTag {
 }
 
 model TagOnStage {
-    id      Int      @id @unique
-    count   Int
+    id      Int      @id @unique @default(autoincrement())
     tag     StageTag @relation(fields: [tagId], references: [id])
     tagId   Int
     stage   Stage    @relation(fields: [stageId], references: [id])
     stageId Int
+    flag    Int?     @default(0)
 }
 
 model Scoreboard {
@@ -78,7 +78,7 @@ model Scoreboard {
 }
 
 model Scorelist {
-    id           String      @id @unique @default(cuid())
+    id           Int         @id @unique @default(autoincrement())
     createAt     DateTime    @default(now())
     lastUpdate   DateTime    @default(now()) @updatedAt
     stage        Stage?      @relation(fields: [stageId], references: [id])
@@ -89,7 +89,7 @@ model Scorelist {
 }
 
 model Score {
-    id          Int              @id @unique
+    id          Int              @id @unique @default(autoincrement())
     shooter     Shooter          @relation(fields: [shooterId], references: [id])
     alphas      Int
     charlies    Int
@@ -100,13 +100,13 @@ model Score {
     time        Float
     proErrors   ProErrorsStore[]
     scorelist   Scorelist?       @relation(fields: [scorelistId], references: [id])
-    scorelistId String?
+    scorelistId Int?
     shooterId   Int
     round       Int
 }
 
 model ProErrorObjects {
-    id             Int              @id @unique
+    id             Int              @id @unique @default(autoincrement())
     index          String           @unique
     title          String
     description    String
@@ -114,7 +114,7 @@ model ProErrorObjects {
 }
 
 model ProErrorsStore {
-    id                Int             @id @unique
+    id                Int             @id @unique @default(autoincrement())
     count             Int
     proError          ProErrorObjects @relation(fields: [proErrorObjectsId], references: [id])
     score             Score?          @relation(fields: [scoreId], references: [id])

@@ -42,7 +42,7 @@ export const StageTagScalarFieldEnum = enumType({
 
 export const TagOnStageScalarFieldEnum = enumType({
   name: 'TagOnStageScalarFieldEnum',
-  members: ['id', 'count', 'tagId', 'stageId'],
+  members: ['id', 'tagId', 'stageId', 'flag'],
 })
 
 export const ScoreboardScalarFieldEnum = enumType({
@@ -430,9 +430,9 @@ export const TagOnStageWhereInput = inputObjectType({
     t.list.field('OR', { type: 'TagOnStageWhereInput' })
     t.list.field('NOT', { type: 'TagOnStageWhereInput' })
     t.field('id', { type: 'IntFilter' })
-    t.field('count', { type: 'IntFilter' })
     t.field('tagId', { type: 'IntFilter' })
     t.field('stageId', { type: 'IntFilter' })
+    t.field('flag', { type: 'IntNullableFilter' })
     t.field('tag', { type: 'StageTagRelationFilter' })
     t.field('stage', { type: 'StageRelationFilter' })
   },
@@ -445,9 +445,9 @@ export const TagOnStageOrderByWithRelationInput = inputObjectType({
   name: 'TagOnStageOrderByWithRelationInput',
   definition(t) {
     t.field('id', { type: 'SortOrder' })
-    t.field('count', { type: 'SortOrder' })
     t.field('tagId', { type: 'SortOrder' })
     t.field('stageId', { type: 'SortOrder' })
+    t.field('flag', { type: 'SortOrderInput' })
     t.field('tag', { type: 'StageTagOrderByWithRelationInput' })
     t.field('stage', { type: 'StageOrderByWithRelationInput' })
   },
@@ -463,9 +463,9 @@ export const TagOnStageWhereUniqueInput = inputObjectType({
     t.list.field('AND', { type: 'TagOnStageWhereInput' })
     t.list.field('OR', { type: 'TagOnStageWhereInput' })
     t.list.field('NOT', { type: 'TagOnStageWhereInput' })
-    t.field('count', { type: 'IntFilter' })
     t.field('tagId', { type: 'IntFilter' })
     t.field('stageId', { type: 'IntFilter' })
+    t.field('flag', { type: 'IntNullableFilter' })
     t.field('tag', { type: 'StageTagRelationFilter' })
     t.field('stage', { type: 'StageRelationFilter' })
   },
@@ -478,9 +478,9 @@ export const TagOnStageOrderByWithAggregationInput = inputObjectType({
   name: 'TagOnStageOrderByWithAggregationInput',
   definition(t) {
     t.field('id', { type: 'SortOrder' })
-    t.field('count', { type: 'SortOrder' })
     t.field('tagId', { type: 'SortOrder' })
     t.field('stageId', { type: 'SortOrder' })
+    t.field('flag', { type: 'SortOrderInput' })
     t.field('_count', { type: 'TagOnStageCountOrderByAggregateInput' })
     t.field('_avg', { type: 'TagOnStageAvgOrderByAggregateInput' })
     t.field('_max', { type: 'TagOnStageMaxOrderByAggregateInput' })
@@ -499,9 +499,9 @@ export const TagOnStageScalarWhereWithAggregatesInput = inputObjectType({
     t.list.field('OR', { type: 'TagOnStageScalarWhereWithAggregatesInput' })
     t.list.field('NOT', { type: 'TagOnStageScalarWhereWithAggregatesInput' })
     t.field('id', { type: 'IntWithAggregatesFilter' })
-    t.field('count', { type: 'IntWithAggregatesFilter' })
     t.field('tagId', { type: 'IntWithAggregatesFilter' })
     t.field('stageId', { type: 'IntWithAggregatesFilter' })
+    t.field('flag', { type: 'IntNullableWithAggregatesFilter' })
   },
 })
 
@@ -596,7 +596,7 @@ export const ScorelistWhereInput = inputObjectType({
     t.list.field('AND', { type: 'ScorelistWhereInput' })
     t.list.field('OR', { type: 'ScorelistWhereInput' })
     t.list.field('NOT', { type: 'ScorelistWhereInput' })
-    t.field('id', { type: 'StringFilter' })
+    t.field('id', { type: 'IntFilter' })
     t.field('createAt', { type: 'DateTimeFilter' })
     t.field('lastUpdate', { type: 'DateTimeFilter' })
     t.field('scoreboardId', { type: 'IntNullableFilter' })
@@ -630,7 +630,7 @@ export const ScorelistWhereUniqueInput = inputObjectType({
   },
   name: 'ScorelistWhereUniqueInput',
   definition(t) {
-    t.field('id', { type: 'String' })
+    t.field('id', { type: 'Int' })
     t.list.field('AND', { type: 'ScorelistWhereInput' })
     t.list.field('OR', { type: 'ScorelistWhereInput' })
     t.list.field('NOT', { type: 'ScorelistWhereInput' })
@@ -672,7 +672,7 @@ export const ScorelistScalarWhereWithAggregatesInput = inputObjectType({
     t.list.field('AND', { type: 'ScorelistScalarWhereWithAggregatesInput' })
     t.list.field('OR', { type: 'ScorelistScalarWhereWithAggregatesInput' })
     t.list.field('NOT', { type: 'ScorelistScalarWhereWithAggregatesInput' })
-    t.field('id', { type: 'StringWithAggregatesFilter' })
+    t.field('id', { type: 'IntWithAggregatesFilter' })
     t.field('createAt', { type: 'DateTimeWithAggregatesFilter' })
     t.field('lastUpdate', { type: 'DateTimeWithAggregatesFilter' })
     t.field('scoreboardId', { type: 'IntNullableWithAggregatesFilter' })
@@ -697,7 +697,7 @@ export const ScoreWhereInput = inputObjectType({
     t.field('noshoots', { type: 'IntFilter' })
     t.field('poppers', { type: 'IntNullableFilter' })
     t.field('time', { type: 'FloatFilter' })
-    t.field('scorelistId', { type: 'StringNullableFilter' })
+    t.field('scorelistId', { type: 'IntNullableFilter' })
     t.field('shooterId', { type: 'IntFilter' })
     t.field('round', { type: 'IntFilter' })
     t.field('shooter', { type: 'ShooterRelationFilter' })
@@ -748,7 +748,7 @@ export const ScoreWhereUniqueInput = inputObjectType({
     t.field('noshoots', { type: 'IntFilter' })
     t.field('poppers', { type: 'IntNullableFilter' })
     t.field('time', { type: 'FloatFilter' })
-    t.field('scorelistId', { type: 'StringNullableFilter' })
+    t.field('scorelistId', { type: 'IntNullableFilter' })
     t.field('shooterId', { type: 'IntFilter' })
     t.field('round', { type: 'IntFilter' })
     t.field('shooter', { type: 'ShooterRelationFilter' })
@@ -799,7 +799,7 @@ export const ScoreScalarWhereWithAggregatesInput = inputObjectType({
     t.field('noshoots', { type: 'IntWithAggregatesFilter' })
     t.field('poppers', { type: 'IntNullableWithAggregatesFilter' })
     t.field('time', { type: 'FloatWithAggregatesFilter' })
-    t.field('scorelistId', { type: 'StringNullableWithAggregatesFilter' })
+    t.field('scorelistId', { type: 'IntNullableWithAggregatesFilter' })
     t.field('shooterId', { type: 'IntWithAggregatesFilter' })
     t.field('round', { type: 'IntWithAggregatesFilter' })
   },
@@ -1436,8 +1436,7 @@ export const TagOnStageCreateInput = inputObjectType({
   },
   name: 'TagOnStageCreateInput',
   definition(t) {
-    t.nonNull.field('id', { type: 'Int' })
-    t.nonNull.field('count', { type: 'Int' })
+    t.field('flag', { type: 'Int' })
     t.nonNull.field('tag', {
       type: 'StageTagCreateNestedOneWithoutTagOnStageInput',
     })
@@ -1451,10 +1450,10 @@ export const TagOnStageUncheckedCreateInput = inputObjectType({
   },
   name: 'TagOnStageUncheckedCreateInput',
   definition(t) {
-    t.nonNull.field('id', { type: 'Int' })
-    t.nonNull.field('count', { type: 'Int' })
+    t.field('id', { type: 'Int' })
     t.nonNull.field('tagId', { type: 'Int' })
     t.nonNull.field('stageId', { type: 'Int' })
+    t.field('flag', { type: 'Int' })
   },
 })
 
@@ -1464,8 +1463,7 @@ export const TagOnStageUpdateInput = inputObjectType({
   },
   name: 'TagOnStageUpdateInput',
   definition(t) {
-    t.field('id', { type: 'IntFieldUpdateOperationsInput' })
-    t.field('count', { type: 'IntFieldUpdateOperationsInput' })
+    t.field('flag', { type: 'NullableIntFieldUpdateOperationsInput' })
     t.field('tag', {
       type: 'StageTagUpdateOneRequiredWithoutTagOnStageNestedInput',
     })
@@ -1480,9 +1478,9 @@ export const TagOnStageUncheckedUpdateInput = inputObjectType({
   name: 'TagOnStageUncheckedUpdateInput',
   definition(t) {
     t.field('id', { type: 'IntFieldUpdateOperationsInput' })
-    t.field('count', { type: 'IntFieldUpdateOperationsInput' })
     t.field('tagId', { type: 'IntFieldUpdateOperationsInput' })
     t.field('stageId', { type: 'IntFieldUpdateOperationsInput' })
+    t.field('flag', { type: 'NullableIntFieldUpdateOperationsInput' })
   },
 })
 
@@ -1492,10 +1490,10 @@ export const TagOnStageCreateManyInput = inputObjectType({
   },
   name: 'TagOnStageCreateManyInput',
   definition(t) {
-    t.nonNull.field('id', { type: 'Int' })
-    t.nonNull.field('count', { type: 'Int' })
+    t.field('id', { type: 'Int' })
     t.nonNull.field('tagId', { type: 'Int' })
     t.nonNull.field('stageId', { type: 'Int' })
+    t.field('flag', { type: 'Int' })
   },
 })
 
@@ -1505,8 +1503,7 @@ export const TagOnStageUpdateManyMutationInput = inputObjectType({
   },
   name: 'TagOnStageUpdateManyMutationInput',
   definition(t) {
-    t.field('id', { type: 'IntFieldUpdateOperationsInput' })
-    t.field('count', { type: 'IntFieldUpdateOperationsInput' })
+    t.field('flag', { type: 'NullableIntFieldUpdateOperationsInput' })
   },
 })
 
@@ -1517,9 +1514,9 @@ export const TagOnStageUncheckedUpdateManyInput = inputObjectType({
   name: 'TagOnStageUncheckedUpdateManyInput',
   definition(t) {
     t.field('id', { type: 'IntFieldUpdateOperationsInput' })
-    t.field('count', { type: 'IntFieldUpdateOperationsInput' })
     t.field('tagId', { type: 'IntFieldUpdateOperationsInput' })
     t.field('stageId', { type: 'IntFieldUpdateOperationsInput' })
+    t.field('flag', { type: 'NullableIntFieldUpdateOperationsInput' })
   },
 })
 
@@ -1629,7 +1626,6 @@ export const ScorelistCreateInput = inputObjectType({
   },
   name: 'ScorelistCreateInput',
   definition(t) {
-    t.field('id', { type: 'String' })
     t.field('createAt', { type: 'DateTime' })
     t.field('lastUpdate', { type: 'DateTime' })
     t.field('stage', { type: 'StageCreateNestedOneWithoutScorelistInput' })
@@ -1646,7 +1642,7 @@ export const ScorelistUncheckedCreateInput = inputObjectType({
   },
   name: 'ScorelistUncheckedCreateInput',
   definition(t) {
-    t.field('id', { type: 'String' })
+    t.field('id', { type: 'Int' })
     t.field('createAt', { type: 'DateTime' })
     t.field('lastUpdate', { type: 'DateTime' })
     t.field('scoreboardId', { type: 'Int' })
@@ -1663,7 +1659,6 @@ export const ScorelistUpdateInput = inputObjectType({
   },
   name: 'ScorelistUpdateInput',
   definition(t) {
-    t.field('id', { type: 'StringFieldUpdateOperationsInput' })
     t.field('createAt', { type: 'DateTimeFieldUpdateOperationsInput' })
     t.field('lastUpdate', { type: 'DateTimeFieldUpdateOperationsInput' })
     t.field('stage', { type: 'StageUpdateOneWithoutScorelistNestedInput' })
@@ -1680,7 +1675,7 @@ export const ScorelistUncheckedUpdateInput = inputObjectType({
   },
   name: 'ScorelistUncheckedUpdateInput',
   definition(t) {
-    t.field('id', { type: 'StringFieldUpdateOperationsInput' })
+    t.field('id', { type: 'IntFieldUpdateOperationsInput' })
     t.field('createAt', { type: 'DateTimeFieldUpdateOperationsInput' })
     t.field('lastUpdate', { type: 'DateTimeFieldUpdateOperationsInput' })
     t.field('scoreboardId', { type: 'NullableIntFieldUpdateOperationsInput' })
@@ -1697,7 +1692,7 @@ export const ScorelistCreateManyInput = inputObjectType({
   },
   name: 'ScorelistCreateManyInput',
   definition(t) {
-    t.field('id', { type: 'String' })
+    t.field('id', { type: 'Int' })
     t.field('createAt', { type: 'DateTime' })
     t.field('lastUpdate', { type: 'DateTime' })
     t.field('scoreboardId', { type: 'Int' })
@@ -1711,7 +1706,6 @@ export const ScorelistUpdateManyMutationInput = inputObjectType({
   },
   name: 'ScorelistUpdateManyMutationInput',
   definition(t) {
-    t.field('id', { type: 'StringFieldUpdateOperationsInput' })
     t.field('createAt', { type: 'DateTimeFieldUpdateOperationsInput' })
     t.field('lastUpdate', { type: 'DateTimeFieldUpdateOperationsInput' })
   },
@@ -1723,7 +1717,7 @@ export const ScorelistUncheckedUpdateManyInput = inputObjectType({
   },
   name: 'ScorelistUncheckedUpdateManyInput',
   definition(t) {
-    t.field('id', { type: 'StringFieldUpdateOperationsInput' })
+    t.field('id', { type: 'IntFieldUpdateOperationsInput' })
     t.field('createAt', { type: 'DateTimeFieldUpdateOperationsInput' })
     t.field('lastUpdate', { type: 'DateTimeFieldUpdateOperationsInput' })
     t.field('scoreboardId', { type: 'NullableIntFieldUpdateOperationsInput' })
@@ -1737,7 +1731,6 @@ export const ScoreCreateInput = inputObjectType({
   },
   name: 'ScoreCreateInput',
   definition(t) {
-    t.nonNull.field('id', { type: 'Int' })
     t.nonNull.field('alphas', { type: 'Int' })
     t.nonNull.field('charlies', { type: 'Int' })
     t.nonNull.field('deltas', { type: 'Int' })
@@ -1762,7 +1755,7 @@ export const ScoreUncheckedCreateInput = inputObjectType({
   },
   name: 'ScoreUncheckedCreateInput',
   definition(t) {
-    t.nonNull.field('id', { type: 'Int' })
+    t.field('id', { type: 'Int' })
     t.nonNull.field('alphas', { type: 'Int' })
     t.nonNull.field('charlies', { type: 'Int' })
     t.nonNull.field('deltas', { type: 'Int' })
@@ -1770,7 +1763,7 @@ export const ScoreUncheckedCreateInput = inputObjectType({
     t.nonNull.field('noshoots', { type: 'Int' })
     t.field('poppers', { type: 'Int' })
     t.nonNull.field('time', { type: 'Float' })
-    t.field('scorelistId', { type: 'String' })
+    t.field('scorelistId', { type: 'Int' })
     t.nonNull.field('shooterId', { type: 'Int' })
     t.nonNull.field('round', { type: 'Int' })
     t.field('proErrors', {
@@ -1785,7 +1778,6 @@ export const ScoreUpdateInput = inputObjectType({
   },
   name: 'ScoreUpdateInput',
   definition(t) {
-    t.field('id', { type: 'IntFieldUpdateOperationsInput' })
     t.field('alphas', { type: 'IntFieldUpdateOperationsInput' })
     t.field('charlies', { type: 'IntFieldUpdateOperationsInput' })
     t.field('deltas', { type: 'IntFieldUpdateOperationsInput' })
@@ -1818,7 +1810,7 @@ export const ScoreUncheckedUpdateInput = inputObjectType({
     t.field('noshoots', { type: 'IntFieldUpdateOperationsInput' })
     t.field('poppers', { type: 'NullableIntFieldUpdateOperationsInput' })
     t.field('time', { type: 'FloatFieldUpdateOperationsInput' })
-    t.field('scorelistId', { type: 'NullableStringFieldUpdateOperationsInput' })
+    t.field('scorelistId', { type: 'NullableIntFieldUpdateOperationsInput' })
     t.field('shooterId', { type: 'IntFieldUpdateOperationsInput' })
     t.field('round', { type: 'IntFieldUpdateOperationsInput' })
     t.field('proErrors', {
@@ -1833,7 +1825,7 @@ export const ScoreCreateManyInput = inputObjectType({
   },
   name: 'ScoreCreateManyInput',
   definition(t) {
-    t.nonNull.field('id', { type: 'Int' })
+    t.field('id', { type: 'Int' })
     t.nonNull.field('alphas', { type: 'Int' })
     t.nonNull.field('charlies', { type: 'Int' })
     t.nonNull.field('deltas', { type: 'Int' })
@@ -1841,7 +1833,7 @@ export const ScoreCreateManyInput = inputObjectType({
     t.nonNull.field('noshoots', { type: 'Int' })
     t.field('poppers', { type: 'Int' })
     t.nonNull.field('time', { type: 'Float' })
-    t.field('scorelistId', { type: 'String' })
+    t.field('scorelistId', { type: 'Int' })
     t.nonNull.field('shooterId', { type: 'Int' })
     t.nonNull.field('round', { type: 'Int' })
   },
@@ -1853,7 +1845,6 @@ export const ScoreUpdateManyMutationInput = inputObjectType({
   },
   name: 'ScoreUpdateManyMutationInput',
   definition(t) {
-    t.field('id', { type: 'IntFieldUpdateOperationsInput' })
     t.field('alphas', { type: 'IntFieldUpdateOperationsInput' })
     t.field('charlies', { type: 'IntFieldUpdateOperationsInput' })
     t.field('deltas', { type: 'IntFieldUpdateOperationsInput' })
@@ -1879,7 +1870,7 @@ export const ScoreUncheckedUpdateManyInput = inputObjectType({
     t.field('noshoots', { type: 'IntFieldUpdateOperationsInput' })
     t.field('poppers', { type: 'NullableIntFieldUpdateOperationsInput' })
     t.field('time', { type: 'FloatFieldUpdateOperationsInput' })
-    t.field('scorelistId', { type: 'NullableStringFieldUpdateOperationsInput' })
+    t.field('scorelistId', { type: 'NullableIntFieldUpdateOperationsInput' })
     t.field('shooterId', { type: 'IntFieldUpdateOperationsInput' })
     t.field('round', { type: 'IntFieldUpdateOperationsInput' })
   },
@@ -1891,7 +1882,6 @@ export const ProErrorObjectsCreateInput = inputObjectType({
   },
   name: 'ProErrorObjectsCreateInput',
   definition(t) {
-    t.nonNull.field('id', { type: 'Int' })
     t.nonNull.field('index', { type: 'String' })
     t.nonNull.field('title', { type: 'String' })
     t.nonNull.field('description', { type: 'String' })
@@ -1907,7 +1897,7 @@ export const ProErrorObjectsUncheckedCreateInput = inputObjectType({
   },
   name: 'ProErrorObjectsUncheckedCreateInput',
   definition(t) {
-    t.nonNull.field('id', { type: 'Int' })
+    t.field('id', { type: 'Int' })
     t.nonNull.field('index', { type: 'String' })
     t.nonNull.field('title', { type: 'String' })
     t.nonNull.field('description', { type: 'String' })
@@ -1923,7 +1913,6 @@ export const ProErrorObjectsUpdateInput = inputObjectType({
   },
   name: 'ProErrorObjectsUpdateInput',
   definition(t) {
-    t.field('id', { type: 'IntFieldUpdateOperationsInput' })
     t.field('index', { type: 'StringFieldUpdateOperationsInput' })
     t.field('title', { type: 'StringFieldUpdateOperationsInput' })
     t.field('description', { type: 'StringFieldUpdateOperationsInput' })
@@ -1955,7 +1944,7 @@ export const ProErrorObjectsCreateManyInput = inputObjectType({
   },
   name: 'ProErrorObjectsCreateManyInput',
   definition(t) {
-    t.nonNull.field('id', { type: 'Int' })
+    t.field('id', { type: 'Int' })
     t.nonNull.field('index', { type: 'String' })
     t.nonNull.field('title', { type: 'String' })
     t.nonNull.field('description', { type: 'String' })
@@ -1968,7 +1957,6 @@ export const ProErrorObjectsUpdateManyMutationInput = inputObjectType({
   },
   name: 'ProErrorObjectsUpdateManyMutationInput',
   definition(t) {
-    t.field('id', { type: 'IntFieldUpdateOperationsInput' })
     t.field('index', { type: 'StringFieldUpdateOperationsInput' })
     t.field('title', { type: 'StringFieldUpdateOperationsInput' })
     t.field('description', { type: 'StringFieldUpdateOperationsInput' })
@@ -1994,7 +1982,6 @@ export const ProErrorsStoreCreateInput = inputObjectType({
   },
   name: 'ProErrorsStoreCreateInput',
   definition(t) {
-    t.nonNull.field('id', { type: 'Int' })
     t.nonNull.field('count', { type: 'Int' })
     t.nonNull.field('proError', {
       type: 'ProErrorObjectsCreateNestedOneWithoutProErrorsStoreInput',
@@ -2009,7 +1996,7 @@ export const ProErrorsStoreUncheckedCreateInput = inputObjectType({
   },
   name: 'ProErrorsStoreUncheckedCreateInput',
   definition(t) {
-    t.nonNull.field('id', { type: 'Int' })
+    t.field('id', { type: 'Int' })
     t.nonNull.field('count', { type: 'Int' })
     t.field('scoreId', { type: 'Int' })
     t.nonNull.field('proErrorObjectsId', { type: 'Int' })
@@ -2022,7 +2009,6 @@ export const ProErrorsStoreUpdateInput = inputObjectType({
   },
   name: 'ProErrorsStoreUpdateInput',
   definition(t) {
-    t.field('id', { type: 'IntFieldUpdateOperationsInput' })
     t.field('count', { type: 'IntFieldUpdateOperationsInput' })
     t.field('proError', {
       type: 'ProErrorObjectsUpdateOneRequiredWithoutProErrorsStoreNestedInput',
@@ -2050,7 +2036,7 @@ export const ProErrorsStoreCreateManyInput = inputObjectType({
   },
   name: 'ProErrorsStoreCreateManyInput',
   definition(t) {
-    t.nonNull.field('id', { type: 'Int' })
+    t.field('id', { type: 'Int' })
     t.nonNull.field('count', { type: 'Int' })
     t.field('scoreId', { type: 'Int' })
     t.nonNull.field('proErrorObjectsId', { type: 'Int' })
@@ -2063,7 +2049,6 @@ export const ProErrorsStoreUpdateManyMutationInput = inputObjectType({
   },
   name: 'ProErrorsStoreUpdateManyMutationInput',
   definition(t) {
-    t.field('id', { type: 'IntFieldUpdateOperationsInput' })
     t.field('count', { type: 'IntFieldUpdateOperationsInput' })
   },
 })
@@ -2773,6 +2758,23 @@ export const StageTagSumOrderByAggregateInput = inputObjectType({
   },
 })
 
+export const IntNullableFilter = inputObjectType({
+  nonNullDefaults: {
+    input: false,
+  },
+  name: 'IntNullableFilter',
+  definition(t) {
+    t.field('equals', { type: 'Int' })
+    t.list.field('in', { type: 'Int' })
+    t.list.field('notIn', { type: 'Int' })
+    t.field('lt', { type: 'Int' })
+    t.field('lte', { type: 'Int' })
+    t.field('gt', { type: 'Int' })
+    t.field('gte', { type: 'Int' })
+    t.field('not', { type: 'NestedIntNullableFilter' })
+  },
+})
+
 export const StageTagRelationFilter = inputObjectType({
   nonNullDefaults: {
     input: false,
@@ -2802,9 +2804,9 @@ export const TagOnStageCountOrderByAggregateInput = inputObjectType({
   name: 'TagOnStageCountOrderByAggregateInput',
   definition(t) {
     t.field('id', { type: 'SortOrder' })
-    t.field('count', { type: 'SortOrder' })
     t.field('tagId', { type: 'SortOrder' })
     t.field('stageId', { type: 'SortOrder' })
+    t.field('flag', { type: 'SortOrder' })
   },
 })
 
@@ -2815,9 +2817,9 @@ export const TagOnStageAvgOrderByAggregateInput = inputObjectType({
   name: 'TagOnStageAvgOrderByAggregateInput',
   definition(t) {
     t.field('id', { type: 'SortOrder' })
-    t.field('count', { type: 'SortOrder' })
     t.field('tagId', { type: 'SortOrder' })
     t.field('stageId', { type: 'SortOrder' })
+    t.field('flag', { type: 'SortOrder' })
   },
 })
 
@@ -2828,9 +2830,9 @@ export const TagOnStageMaxOrderByAggregateInput = inputObjectType({
   name: 'TagOnStageMaxOrderByAggregateInput',
   definition(t) {
     t.field('id', { type: 'SortOrder' })
-    t.field('count', { type: 'SortOrder' })
     t.field('tagId', { type: 'SortOrder' })
     t.field('stageId', { type: 'SortOrder' })
+    t.field('flag', { type: 'SortOrder' })
   },
 })
 
@@ -2841,9 +2843,9 @@ export const TagOnStageMinOrderByAggregateInput = inputObjectType({
   name: 'TagOnStageMinOrderByAggregateInput',
   definition(t) {
     t.field('id', { type: 'SortOrder' })
-    t.field('count', { type: 'SortOrder' })
     t.field('tagId', { type: 'SortOrder' })
     t.field('stageId', { type: 'SortOrder' })
+    t.field('flag', { type: 'SortOrder' })
   },
 })
 
@@ -2854,9 +2856,31 @@ export const TagOnStageSumOrderByAggregateInput = inputObjectType({
   name: 'TagOnStageSumOrderByAggregateInput',
   definition(t) {
     t.field('id', { type: 'SortOrder' })
-    t.field('count', { type: 'SortOrder' })
     t.field('tagId', { type: 'SortOrder' })
     t.field('stageId', { type: 'SortOrder' })
+    t.field('flag', { type: 'SortOrder' })
+  },
+})
+
+export const IntNullableWithAggregatesFilter = inputObjectType({
+  nonNullDefaults: {
+    input: false,
+  },
+  name: 'IntNullableWithAggregatesFilter',
+  definition(t) {
+    t.field('equals', { type: 'Int' })
+    t.list.field('in', { type: 'Int' })
+    t.list.field('notIn', { type: 'Int' })
+    t.field('lt', { type: 'Int' })
+    t.field('lte', { type: 'Int' })
+    t.field('gt', { type: 'Int' })
+    t.field('gte', { type: 'Int' })
+    t.field('not', { type: 'NestedIntNullableWithAggregatesFilter' })
+    t.field('_count', { type: 'NestedIntNullableFilter' })
+    t.field('_avg', { type: 'NestedFloatNullableFilter' })
+    t.field('_sum', { type: 'NestedIntNullableFilter' })
+    t.field('_min', { type: 'NestedIntNullableFilter' })
+    t.field('_max', { type: 'NestedIntNullableFilter' })
   },
 })
 
@@ -2956,23 +2980,6 @@ export const DateTimeWithAggregatesFilter = inputObjectType({
   },
 })
 
-export const IntNullableFilter = inputObjectType({
-  nonNullDefaults: {
-    input: false,
-  },
-  name: 'IntNullableFilter',
-  definition(t) {
-    t.field('equals', { type: 'Int' })
-    t.list.field('in', { type: 'Int' })
-    t.list.field('notIn', { type: 'Int' })
-    t.field('lt', { type: 'Int' })
-    t.field('lte', { type: 'Int' })
-    t.field('gt', { type: 'Int' })
-    t.field('gte', { type: 'Int' })
-    t.field('not', { type: 'NestedIntNullableFilter' })
-  },
-})
-
 export const StageNullableRelationFilter = inputObjectType({
   nonNullDefaults: {
     input: false,
@@ -3015,6 +3022,7 @@ export const ScorelistAvgOrderByAggregateInput = inputObjectType({
   },
   name: 'ScorelistAvgOrderByAggregateInput',
   definition(t) {
+    t.field('id', { type: 'SortOrder' })
     t.field('scoreboardId', { type: 'SortOrder' })
     t.field('stageId', { type: 'SortOrder' })
   },
@@ -3054,30 +3062,9 @@ export const ScorelistSumOrderByAggregateInput = inputObjectType({
   },
   name: 'ScorelistSumOrderByAggregateInput',
   definition(t) {
+    t.field('id', { type: 'SortOrder' })
     t.field('scoreboardId', { type: 'SortOrder' })
     t.field('stageId', { type: 'SortOrder' })
-  },
-})
-
-export const IntNullableWithAggregatesFilter = inputObjectType({
-  nonNullDefaults: {
-    input: false,
-  },
-  name: 'IntNullableWithAggregatesFilter',
-  definition(t) {
-    t.field('equals', { type: 'Int' })
-    t.list.field('in', { type: 'Int' })
-    t.list.field('notIn', { type: 'Int' })
-    t.field('lt', { type: 'Int' })
-    t.field('lte', { type: 'Int' })
-    t.field('gt', { type: 'Int' })
-    t.field('gte', { type: 'Int' })
-    t.field('not', { type: 'NestedIntNullableWithAggregatesFilter' })
-    t.field('_count', { type: 'NestedIntNullableFilter' })
-    t.field('_avg', { type: 'NestedFloatNullableFilter' })
-    t.field('_sum', { type: 'NestedIntNullableFilter' })
-    t.field('_min', { type: 'NestedIntNullableFilter' })
-    t.field('_max', { type: 'NestedIntNullableFilter' })
   },
 })
 
@@ -3165,6 +3152,7 @@ export const ScoreAvgOrderByAggregateInput = inputObjectType({
     t.field('noshoots', { type: 'SortOrder' })
     t.field('poppers', { type: 'SortOrder' })
     t.field('time', { type: 'SortOrder' })
+    t.field('scorelistId', { type: 'SortOrder' })
     t.field('shooterId', { type: 'SortOrder' })
     t.field('round', { type: 'SortOrder' })
   },
@@ -3224,6 +3212,7 @@ export const ScoreSumOrderByAggregateInput = inputObjectType({
     t.field('noshoots', { type: 'SortOrder' })
     t.field('poppers', { type: 'SortOrder' })
     t.field('time', { type: 'SortOrder' })
+    t.field('scorelistId', { type: 'SortOrder' })
     t.field('shooterId', { type: 'SortOrder' })
     t.field('round', { type: 'SortOrder' })
   },
@@ -4034,6 +4023,20 @@ export const StageCreateNestedOneWithoutTagsInput = inputObjectType({
   },
 })
 
+export const NullableIntFieldUpdateOperationsInput = inputObjectType({
+  nonNullDefaults: {
+    input: false,
+  },
+  name: 'NullableIntFieldUpdateOperationsInput',
+  definition(t) {
+    t.field('set', { type: 'Int' })
+    t.field('increment', { type: 'Int' })
+    t.field('decrement', { type: 'Int' })
+    t.field('multiply', { type: 'Int' })
+    t.field('divide', { type: 'Int' })
+  },
+})
+
 export const StageTagUpdateOneRequiredWithoutTagOnStageNestedInput =
   inputObjectType({
     nonNullDefaults: {
@@ -4297,20 +4300,6 @@ export const ScoreboardUpdateOneWithoutScorelistsNestedInput = inputObjectType({
     t.field('update', {
       type: 'ScoreboardUpdateToOneWithWhereWithoutScorelistsInput',
     })
-  },
-})
-
-export const NullableIntFieldUpdateOperationsInput = inputObjectType({
-  nonNullDefaults: {
-    input: false,
-  },
-  name: 'NullableIntFieldUpdateOperationsInput',
-  definition(t) {
-    t.field('set', { type: 'Int' })
-    t.field('increment', { type: 'Int' })
-    t.field('decrement', { type: 'Int' })
-    t.field('multiply', { type: 'Int' })
-    t.field('divide', { type: 'Int' })
   },
 })
 
@@ -5076,43 +5065,6 @@ export const NestedEnumStageTypeWithAggregatesFilter = inputObjectType({
   },
 })
 
-export const NestedDateTimeFilter = inputObjectType({
-  nonNullDefaults: {
-    input: false,
-  },
-  name: 'NestedDateTimeFilter',
-  definition(t) {
-    t.field('equals', { type: 'DateTime' })
-    t.list.field('in', { type: 'DateTime' })
-    t.list.field('notIn', { type: 'DateTime' })
-    t.field('lt', { type: 'DateTime' })
-    t.field('lte', { type: 'DateTime' })
-    t.field('gt', { type: 'DateTime' })
-    t.field('gte', { type: 'DateTime' })
-    t.field('not', { type: 'NestedDateTimeFilter' })
-  },
-})
-
-export const NestedDateTimeWithAggregatesFilter = inputObjectType({
-  nonNullDefaults: {
-    input: false,
-  },
-  name: 'NestedDateTimeWithAggregatesFilter',
-  definition(t) {
-    t.field('equals', { type: 'DateTime' })
-    t.list.field('in', { type: 'DateTime' })
-    t.list.field('notIn', { type: 'DateTime' })
-    t.field('lt', { type: 'DateTime' })
-    t.field('lte', { type: 'DateTime' })
-    t.field('gt', { type: 'DateTime' })
-    t.field('gte', { type: 'DateTime' })
-    t.field('not', { type: 'NestedDateTimeWithAggregatesFilter' })
-    t.field('_count', { type: 'NestedIntFilter' })
-    t.field('_min', { type: 'NestedDateTimeFilter' })
-    t.field('_max', { type: 'NestedDateTimeFilter' })
-  },
-})
-
 export const NestedIntNullableWithAggregatesFilter = inputObjectType({
   nonNullDefaults: {
     input: false,
@@ -5149,6 +5101,43 @@ export const NestedFloatNullableFilter = inputObjectType({
     t.field('gt', { type: 'Float' })
     t.field('gte', { type: 'Float' })
     t.field('not', { type: 'NestedFloatNullableFilter' })
+  },
+})
+
+export const NestedDateTimeFilter = inputObjectType({
+  nonNullDefaults: {
+    input: false,
+  },
+  name: 'NestedDateTimeFilter',
+  definition(t) {
+    t.field('equals', { type: 'DateTime' })
+    t.list.field('in', { type: 'DateTime' })
+    t.list.field('notIn', { type: 'DateTime' })
+    t.field('lt', { type: 'DateTime' })
+    t.field('lte', { type: 'DateTime' })
+    t.field('gt', { type: 'DateTime' })
+    t.field('gte', { type: 'DateTime' })
+    t.field('not', { type: 'NestedDateTimeFilter' })
+  },
+})
+
+export const NestedDateTimeWithAggregatesFilter = inputObjectType({
+  nonNullDefaults: {
+    input: false,
+  },
+  name: 'NestedDateTimeWithAggregatesFilter',
+  definition(t) {
+    t.field('equals', { type: 'DateTime' })
+    t.list.field('in', { type: 'DateTime' })
+    t.list.field('notIn', { type: 'DateTime' })
+    t.field('lt', { type: 'DateTime' })
+    t.field('lte', { type: 'DateTime' })
+    t.field('gt', { type: 'DateTime' })
+    t.field('gte', { type: 'DateTime' })
+    t.field('not', { type: 'NestedDateTimeWithAggregatesFilter' })
+    t.field('_count', { type: 'NestedIntFilter' })
+    t.field('_min', { type: 'NestedDateTimeFilter' })
+    t.field('_max', { type: 'NestedDateTimeFilter' })
   },
 })
 
@@ -5253,7 +5242,6 @@ export const ScoreCreateWithoutShooterInput = inputObjectType({
   },
   name: 'ScoreCreateWithoutShooterInput',
   definition(t) {
-    t.nonNull.field('id', { type: 'Int' })
     t.nonNull.field('alphas', { type: 'Int' })
     t.nonNull.field('charlies', { type: 'Int' })
     t.nonNull.field('deltas', { type: 'Int' })
@@ -5275,7 +5263,7 @@ export const ScoreUncheckedCreateWithoutShooterInput = inputObjectType({
   },
   name: 'ScoreUncheckedCreateWithoutShooterInput',
   definition(t) {
-    t.nonNull.field('id', { type: 'Int' })
+    t.field('id', { type: 'Int' })
     t.nonNull.field('alphas', { type: 'Int' })
     t.nonNull.field('charlies', { type: 'Int' })
     t.nonNull.field('deltas', { type: 'Int' })
@@ -5283,7 +5271,7 @@ export const ScoreUncheckedCreateWithoutShooterInput = inputObjectType({
     t.nonNull.field('noshoots', { type: 'Int' })
     t.field('poppers', { type: 'Int' })
     t.nonNull.field('time', { type: 'Float' })
-    t.field('scorelistId', { type: 'String' })
+    t.field('scorelistId', { type: 'Int' })
     t.nonNull.field('round', { type: 'Int' })
     t.field('proErrors', {
       type: 'ProErrorsStoreUncheckedCreateNestedManyWithoutScoreInput',
@@ -5424,7 +5412,7 @@ export const ScoreScalarWhereInput = inputObjectType({
     t.field('noshoots', { type: 'IntFilter' })
     t.field('poppers', { type: 'IntNullableFilter' })
     t.field('time', { type: 'FloatFilter' })
-    t.field('scorelistId', { type: 'StringNullableFilter' })
+    t.field('scorelistId', { type: 'IntNullableFilter' })
     t.field('shooterId', { type: 'IntFilter' })
     t.field('round', { type: 'IntFilter' })
   },
@@ -5511,7 +5499,6 @@ export const ScorelistCreateWithoutStageInput = inputObjectType({
   },
   name: 'ScorelistCreateWithoutStageInput',
   definition(t) {
-    t.field('id', { type: 'String' })
     t.field('createAt', { type: 'DateTime' })
     t.field('lastUpdate', { type: 'DateTime' })
     t.field('scores', { type: 'ScoreCreateNestedManyWithoutScorelistInput' })
@@ -5527,7 +5514,7 @@ export const ScorelistUncheckedCreateWithoutStageInput = inputObjectType({
   },
   name: 'ScorelistUncheckedCreateWithoutStageInput',
   definition(t) {
-    t.field('id', { type: 'String' })
+    t.field('id', { type: 'Int' })
     t.field('createAt', { type: 'DateTime' })
     t.field('lastUpdate', { type: 'DateTime' })
     t.field('scoreboardId', { type: 'Int' })
@@ -5565,8 +5552,7 @@ export const TagOnStageCreateWithoutStageInput = inputObjectType({
   },
   name: 'TagOnStageCreateWithoutStageInput',
   definition(t) {
-    t.nonNull.field('id', { type: 'Int' })
-    t.nonNull.field('count', { type: 'Int' })
+    t.field('flag', { type: 'Int' })
     t.nonNull.field('tag', {
       type: 'StageTagCreateNestedOneWithoutTagOnStageInput',
     })
@@ -5579,9 +5565,9 @@ export const TagOnStageUncheckedCreateWithoutStageInput = inputObjectType({
   },
   name: 'TagOnStageUncheckedCreateWithoutStageInput',
   definition(t) {
-    t.nonNull.field('id', { type: 'Int' })
-    t.nonNull.field('count', { type: 'Int' })
+    t.field('id', { type: 'Int' })
     t.nonNull.field('tagId', { type: 'Int' })
+    t.field('flag', { type: 'Int' })
   },
 })
 
@@ -5749,7 +5735,7 @@ export const ScorelistScalarWhereInput = inputObjectType({
     t.list.field('AND', { type: 'ScorelistScalarWhereInput' })
     t.list.field('OR', { type: 'ScorelistScalarWhereInput' })
     t.list.field('NOT', { type: 'ScorelistScalarWhereInput' })
-    t.field('id', { type: 'StringFilter' })
+    t.field('id', { type: 'IntFilter' })
     t.field('createAt', { type: 'DateTimeFilter' })
     t.field('lastUpdate', { type: 'DateTimeFilter' })
     t.field('scoreboardId', { type: 'IntNullableFilter' })
@@ -5805,9 +5791,9 @@ export const TagOnStageScalarWhereInput = inputObjectType({
     t.list.field('OR', { type: 'TagOnStageScalarWhereInput' })
     t.list.field('NOT', { type: 'TagOnStageScalarWhereInput' })
     t.field('id', { type: 'IntFilter' })
-    t.field('count', { type: 'IntFilter' })
     t.field('tagId', { type: 'IntFilter' })
     t.field('stageId', { type: 'IntFilter' })
+    t.field('flag', { type: 'IntNullableFilter' })
   },
 })
 
@@ -5817,8 +5803,7 @@ export const TagOnStageCreateWithoutTagInput = inputObjectType({
   },
   name: 'TagOnStageCreateWithoutTagInput',
   definition(t) {
-    t.nonNull.field('id', { type: 'Int' })
-    t.nonNull.field('count', { type: 'Int' })
+    t.field('flag', { type: 'Int' })
     t.nonNull.field('stage', { type: 'StageCreateNestedOneWithoutTagsInput' })
   },
 })
@@ -5829,9 +5814,9 @@ export const TagOnStageUncheckedCreateWithoutTagInput = inputObjectType({
   },
   name: 'TagOnStageUncheckedCreateWithoutTagInput',
   definition(t) {
-    t.nonNull.field('id', { type: 'Int' })
-    t.nonNull.field('count', { type: 'Int' })
+    t.field('id', { type: 'Int' })
     t.nonNull.field('stageId', { type: 'Int' })
+    t.field('flag', { type: 'Int' })
   },
 })
 
@@ -6114,7 +6099,6 @@ export const ScorelistCreateWithoutScoreboardInput = inputObjectType({
   },
   name: 'ScorelistCreateWithoutScoreboardInput',
   definition(t) {
-    t.field('id', { type: 'String' })
     t.field('createAt', { type: 'DateTime' })
     t.field('lastUpdate', { type: 'DateTime' })
     t.field('stage', { type: 'StageCreateNestedOneWithoutScorelistInput' })
@@ -6128,7 +6112,7 @@ export const ScorelistUncheckedCreateWithoutScoreboardInput = inputObjectType({
   },
   name: 'ScorelistUncheckedCreateWithoutScoreboardInput',
   definition(t) {
-    t.field('id', { type: 'String' })
+    t.field('id', { type: 'Int' })
     t.field('createAt', { type: 'DateTime' })
     t.field('lastUpdate', { type: 'DateTime' })
     t.field('stageId', { type: 'Int' })
@@ -6269,7 +6253,6 @@ export const ScoreCreateWithoutScorelistInput = inputObjectType({
   },
   name: 'ScoreCreateWithoutScorelistInput',
   definition(t) {
-    t.nonNull.field('id', { type: 'Int' })
     t.nonNull.field('alphas', { type: 'Int' })
     t.nonNull.field('charlies', { type: 'Int' })
     t.nonNull.field('deltas', { type: 'Int' })
@@ -6293,7 +6276,7 @@ export const ScoreUncheckedCreateWithoutScorelistInput = inputObjectType({
   },
   name: 'ScoreUncheckedCreateWithoutScorelistInput',
   definition(t) {
-    t.nonNull.field('id', { type: 'Int' })
+    t.field('id', { type: 'Int' })
     t.nonNull.field('alphas', { type: 'Int' })
     t.nonNull.field('charlies', { type: 'Int' })
     t.nonNull.field('deltas', { type: 'Int' })
@@ -6580,7 +6563,6 @@ export const ProErrorsStoreCreateWithoutScoreInput = inputObjectType({
   },
   name: 'ProErrorsStoreCreateWithoutScoreInput',
   definition(t) {
-    t.nonNull.field('id', { type: 'Int' })
     t.nonNull.field('count', { type: 'Int' })
     t.nonNull.field('proError', {
       type: 'ProErrorObjectsCreateNestedOneWithoutProErrorsStoreInput',
@@ -6594,7 +6576,7 @@ export const ProErrorsStoreUncheckedCreateWithoutScoreInput = inputObjectType({
   },
   name: 'ProErrorsStoreUncheckedCreateWithoutScoreInput',
   definition(t) {
-    t.nonNull.field('id', { type: 'Int' })
+    t.field('id', { type: 'Int' })
     t.nonNull.field('count', { type: 'Int' })
     t.nonNull.field('proErrorObjectsId', { type: 'Int' })
   },
@@ -6628,7 +6610,6 @@ export const ScorelistCreateWithoutScoresInput = inputObjectType({
   },
   name: 'ScorelistCreateWithoutScoresInput',
   definition(t) {
-    t.field('id', { type: 'String' })
     t.field('createAt', { type: 'DateTime' })
     t.field('lastUpdate', { type: 'DateTime' })
     t.field('stage', { type: 'StageCreateNestedOneWithoutScorelistInput' })
@@ -6644,7 +6625,7 @@ export const ScorelistUncheckedCreateWithoutScoresInput = inputObjectType({
   },
   name: 'ScorelistUncheckedCreateWithoutScoresInput',
   definition(t) {
-    t.field('id', { type: 'String' })
+    t.field('id', { type: 'Int' })
     t.field('createAt', { type: 'DateTime' })
     t.field('lastUpdate', { type: 'DateTime' })
     t.field('scoreboardId', { type: 'Int' })
@@ -6803,7 +6784,6 @@ export const ScorelistUpdateWithoutScoresInput = inputObjectType({
   },
   name: 'ScorelistUpdateWithoutScoresInput',
   definition(t) {
-    t.field('id', { type: 'StringFieldUpdateOperationsInput' })
     t.field('createAt', { type: 'DateTimeFieldUpdateOperationsInput' })
     t.field('lastUpdate', { type: 'DateTimeFieldUpdateOperationsInput' })
     t.field('stage', { type: 'StageUpdateOneWithoutScorelistNestedInput' })
@@ -6819,7 +6799,7 @@ export const ScorelistUncheckedUpdateWithoutScoresInput = inputObjectType({
   },
   name: 'ScorelistUncheckedUpdateWithoutScoresInput',
   definition(t) {
-    t.field('id', { type: 'StringFieldUpdateOperationsInput' })
+    t.field('id', { type: 'IntFieldUpdateOperationsInput' })
     t.field('createAt', { type: 'DateTimeFieldUpdateOperationsInput' })
     t.field('lastUpdate', { type: 'DateTimeFieldUpdateOperationsInput' })
     t.field('scoreboardId', { type: 'NullableIntFieldUpdateOperationsInput' })
@@ -6833,7 +6813,6 @@ export const ProErrorsStoreCreateWithoutProErrorInput = inputObjectType({
   },
   name: 'ProErrorsStoreCreateWithoutProErrorInput',
   definition(t) {
-    t.nonNull.field('id', { type: 'Int' })
     t.nonNull.field('count', { type: 'Int' })
     t.field('score', { type: 'ScoreCreateNestedOneWithoutProErrorsInput' })
   },
@@ -6846,7 +6825,7 @@ export const ProErrorsStoreUncheckedCreateWithoutProErrorInput =
     },
     name: 'ProErrorsStoreUncheckedCreateWithoutProErrorInput',
     definition(t) {
-      t.nonNull.field('id', { type: 'Int' })
+      t.field('id', { type: 'Int' })
       t.nonNull.field('count', { type: 'Int' })
       t.field('scoreId', { type: 'Int' })
     },
@@ -6926,7 +6905,6 @@ export const ProErrorObjectsCreateWithoutProErrorsStoreInput = inputObjectType({
   },
   name: 'ProErrorObjectsCreateWithoutProErrorsStoreInput',
   definition(t) {
-    t.nonNull.field('id', { type: 'Int' })
     t.nonNull.field('index', { type: 'String' })
     t.nonNull.field('title', { type: 'String' })
     t.nonNull.field('description', { type: 'String' })
@@ -6940,7 +6918,7 @@ export const ProErrorObjectsUncheckedCreateWithoutProErrorsStoreInput =
     },
     name: 'ProErrorObjectsUncheckedCreateWithoutProErrorsStoreInput',
     definition(t) {
-      t.nonNull.field('id', { type: 'Int' })
+      t.field('id', { type: 'Int' })
       t.nonNull.field('index', { type: 'String' })
       t.nonNull.field('title', { type: 'String' })
       t.nonNull.field('description', { type: 'String' })
@@ -6967,7 +6945,6 @@ export const ScoreCreateWithoutProErrorsInput = inputObjectType({
   },
   name: 'ScoreCreateWithoutProErrorsInput',
   definition(t) {
-    t.nonNull.field('id', { type: 'Int' })
     t.nonNull.field('alphas', { type: 'Int' })
     t.nonNull.field('charlies', { type: 'Int' })
     t.nonNull.field('deltas', { type: 'Int' })
@@ -6989,7 +6966,7 @@ export const ScoreUncheckedCreateWithoutProErrorsInput = inputObjectType({
   },
   name: 'ScoreUncheckedCreateWithoutProErrorsInput',
   definition(t) {
-    t.nonNull.field('id', { type: 'Int' })
+    t.field('id', { type: 'Int' })
     t.nonNull.field('alphas', { type: 'Int' })
     t.nonNull.field('charlies', { type: 'Int' })
     t.nonNull.field('deltas', { type: 'Int' })
@@ -6997,7 +6974,7 @@ export const ScoreUncheckedCreateWithoutProErrorsInput = inputObjectType({
     t.nonNull.field('noshoots', { type: 'Int' })
     t.field('poppers', { type: 'Int' })
     t.nonNull.field('time', { type: 'Float' })
-    t.field('scorelistId', { type: 'String' })
+    t.field('scorelistId', { type: 'Int' })
     t.nonNull.field('shooterId', { type: 'Int' })
     t.nonNull.field('round', { type: 'Int' })
   },
@@ -7050,7 +7027,6 @@ export const ProErrorObjectsUpdateWithoutProErrorsStoreInput = inputObjectType({
   },
   name: 'ProErrorObjectsUpdateWithoutProErrorsStoreInput',
   definition(t) {
-    t.field('id', { type: 'IntFieldUpdateOperationsInput' })
     t.field('index', { type: 'StringFieldUpdateOperationsInput' })
     t.field('title', { type: 'StringFieldUpdateOperationsInput' })
     t.field('description', { type: 'StringFieldUpdateOperationsInput' })
@@ -7100,7 +7076,6 @@ export const ScoreUpdateWithoutProErrorsInput = inputObjectType({
   },
   name: 'ScoreUpdateWithoutProErrorsInput',
   definition(t) {
-    t.field('id', { type: 'IntFieldUpdateOperationsInput' })
     t.field('alphas', { type: 'IntFieldUpdateOperationsInput' })
     t.field('charlies', { type: 'IntFieldUpdateOperationsInput' })
     t.field('deltas', { type: 'IntFieldUpdateOperationsInput' })
@@ -7130,7 +7105,7 @@ export const ScoreUncheckedUpdateWithoutProErrorsInput = inputObjectType({
     t.field('noshoots', { type: 'IntFieldUpdateOperationsInput' })
     t.field('poppers', { type: 'NullableIntFieldUpdateOperationsInput' })
     t.field('time', { type: 'FloatFieldUpdateOperationsInput' })
-    t.field('scorelistId', { type: 'NullableStringFieldUpdateOperationsInput' })
+    t.field('scorelistId', { type: 'NullableIntFieldUpdateOperationsInput' })
     t.field('shooterId', { type: 'IntFieldUpdateOperationsInput' })
     t.field('round', { type: 'IntFieldUpdateOperationsInput' })
   },
@@ -7273,7 +7248,7 @@ export const ScoreCreateManyShooterInput = inputObjectType({
   },
   name: 'ScoreCreateManyShooterInput',
   definition(t) {
-    t.nonNull.field('id', { type: 'Int' })
+    t.field('id', { type: 'Int' })
     t.nonNull.field('alphas', { type: 'Int' })
     t.nonNull.field('charlies', { type: 'Int' })
     t.nonNull.field('deltas', { type: 'Int' })
@@ -7281,7 +7256,7 @@ export const ScoreCreateManyShooterInput = inputObjectType({
     t.nonNull.field('noshoots', { type: 'Int' })
     t.field('poppers', { type: 'Int' })
     t.nonNull.field('time', { type: 'Float' })
-    t.field('scorelistId', { type: 'String' })
+    t.field('scorelistId', { type: 'Int' })
     t.nonNull.field('round', { type: 'Int' })
   },
 })
@@ -7365,7 +7340,6 @@ export const ScoreUpdateWithoutShooterInput = inputObjectType({
   },
   name: 'ScoreUpdateWithoutShooterInput',
   definition(t) {
-    t.field('id', { type: 'IntFieldUpdateOperationsInput' })
     t.field('alphas', { type: 'IntFieldUpdateOperationsInput' })
     t.field('charlies', { type: 'IntFieldUpdateOperationsInput' })
     t.field('deltas', { type: 'IntFieldUpdateOperationsInput' })
@@ -7395,7 +7369,7 @@ export const ScoreUncheckedUpdateWithoutShooterInput = inputObjectType({
     t.field('noshoots', { type: 'IntFieldUpdateOperationsInput' })
     t.field('poppers', { type: 'NullableIntFieldUpdateOperationsInput' })
     t.field('time', { type: 'FloatFieldUpdateOperationsInput' })
-    t.field('scorelistId', { type: 'NullableStringFieldUpdateOperationsInput' })
+    t.field('scorelistId', { type: 'NullableIntFieldUpdateOperationsInput' })
     t.field('round', { type: 'IntFieldUpdateOperationsInput' })
     t.field('proErrors', {
       type: 'ProErrorsStoreUncheckedUpdateManyWithoutScoreNestedInput',
@@ -7417,7 +7391,7 @@ export const ScoreUncheckedUpdateManyWithoutShooterInput = inputObjectType({
     t.field('noshoots', { type: 'IntFieldUpdateOperationsInput' })
     t.field('poppers', { type: 'NullableIntFieldUpdateOperationsInput' })
     t.field('time', { type: 'FloatFieldUpdateOperationsInput' })
-    t.field('scorelistId', { type: 'NullableStringFieldUpdateOperationsInput' })
+    t.field('scorelistId', { type: 'NullableIntFieldUpdateOperationsInput' })
     t.field('round', { type: 'IntFieldUpdateOperationsInput' })
   },
 })
@@ -7428,7 +7402,7 @@ export const ScorelistCreateManyStageInput = inputObjectType({
   },
   name: 'ScorelistCreateManyStageInput',
   definition(t) {
-    t.field('id', { type: 'String' })
+    t.field('id', { type: 'Int' })
     t.field('createAt', { type: 'DateTime' })
     t.field('lastUpdate', { type: 'DateTime' })
     t.field('scoreboardId', { type: 'Int' })
@@ -7441,9 +7415,9 @@ export const TagOnStageCreateManyStageInput = inputObjectType({
   },
   name: 'TagOnStageCreateManyStageInput',
   definition(t) {
-    t.nonNull.field('id', { type: 'Int' })
-    t.nonNull.field('count', { type: 'Int' })
+    t.field('id', { type: 'Int' })
     t.nonNull.field('tagId', { type: 'Int' })
+    t.field('flag', { type: 'Int' })
   },
 })
 
@@ -7453,7 +7427,6 @@ export const ScorelistUpdateWithoutStageInput = inputObjectType({
   },
   name: 'ScorelistUpdateWithoutStageInput',
   definition(t) {
-    t.field('id', { type: 'StringFieldUpdateOperationsInput' })
     t.field('createAt', { type: 'DateTimeFieldUpdateOperationsInput' })
     t.field('lastUpdate', { type: 'DateTimeFieldUpdateOperationsInput' })
     t.field('scores', { type: 'ScoreUpdateManyWithoutScorelistNestedInput' })
@@ -7469,7 +7442,7 @@ export const ScorelistUncheckedUpdateWithoutStageInput = inputObjectType({
   },
   name: 'ScorelistUncheckedUpdateWithoutStageInput',
   definition(t) {
-    t.field('id', { type: 'StringFieldUpdateOperationsInput' })
+    t.field('id', { type: 'IntFieldUpdateOperationsInput' })
     t.field('createAt', { type: 'DateTimeFieldUpdateOperationsInput' })
     t.field('lastUpdate', { type: 'DateTimeFieldUpdateOperationsInput' })
     t.field('scoreboardId', { type: 'NullableIntFieldUpdateOperationsInput' })
@@ -7485,7 +7458,7 @@ export const ScorelistUncheckedUpdateManyWithoutStageInput = inputObjectType({
   },
   name: 'ScorelistUncheckedUpdateManyWithoutStageInput',
   definition(t) {
-    t.field('id', { type: 'StringFieldUpdateOperationsInput' })
+    t.field('id', { type: 'IntFieldUpdateOperationsInput' })
     t.field('createAt', { type: 'DateTimeFieldUpdateOperationsInput' })
     t.field('lastUpdate', { type: 'DateTimeFieldUpdateOperationsInput' })
     t.field('scoreboardId', { type: 'NullableIntFieldUpdateOperationsInput' })
@@ -7498,8 +7471,7 @@ export const TagOnStageUpdateWithoutStageInput = inputObjectType({
   },
   name: 'TagOnStageUpdateWithoutStageInput',
   definition(t) {
-    t.field('id', { type: 'IntFieldUpdateOperationsInput' })
-    t.field('count', { type: 'IntFieldUpdateOperationsInput' })
+    t.field('flag', { type: 'NullableIntFieldUpdateOperationsInput' })
     t.field('tag', {
       type: 'StageTagUpdateOneRequiredWithoutTagOnStageNestedInput',
     })
@@ -7513,8 +7485,8 @@ export const TagOnStageUncheckedUpdateWithoutStageInput = inputObjectType({
   name: 'TagOnStageUncheckedUpdateWithoutStageInput',
   definition(t) {
     t.field('id', { type: 'IntFieldUpdateOperationsInput' })
-    t.field('count', { type: 'IntFieldUpdateOperationsInput' })
     t.field('tagId', { type: 'IntFieldUpdateOperationsInput' })
+    t.field('flag', { type: 'NullableIntFieldUpdateOperationsInput' })
   },
 })
 
@@ -7525,8 +7497,8 @@ export const TagOnStageUncheckedUpdateManyWithoutStageInput = inputObjectType({
   name: 'TagOnStageUncheckedUpdateManyWithoutStageInput',
   definition(t) {
     t.field('id', { type: 'IntFieldUpdateOperationsInput' })
-    t.field('count', { type: 'IntFieldUpdateOperationsInput' })
     t.field('tagId', { type: 'IntFieldUpdateOperationsInput' })
+    t.field('flag', { type: 'NullableIntFieldUpdateOperationsInput' })
   },
 })
 
@@ -7536,9 +7508,9 @@ export const TagOnStageCreateManyTagInput = inputObjectType({
   },
   name: 'TagOnStageCreateManyTagInput',
   definition(t) {
-    t.nonNull.field('id', { type: 'Int' })
-    t.nonNull.field('count', { type: 'Int' })
+    t.field('id', { type: 'Int' })
     t.nonNull.field('stageId', { type: 'Int' })
+    t.field('flag', { type: 'Int' })
   },
 })
 
@@ -7548,8 +7520,7 @@ export const TagOnStageUpdateWithoutTagInput = inputObjectType({
   },
   name: 'TagOnStageUpdateWithoutTagInput',
   definition(t) {
-    t.field('id', { type: 'IntFieldUpdateOperationsInput' })
-    t.field('count', { type: 'IntFieldUpdateOperationsInput' })
+    t.field('flag', { type: 'NullableIntFieldUpdateOperationsInput' })
     t.field('stage', { type: 'StageUpdateOneRequiredWithoutTagsNestedInput' })
   },
 })
@@ -7561,8 +7532,8 @@ export const TagOnStageUncheckedUpdateWithoutTagInput = inputObjectType({
   name: 'TagOnStageUncheckedUpdateWithoutTagInput',
   definition(t) {
     t.field('id', { type: 'IntFieldUpdateOperationsInput' })
-    t.field('count', { type: 'IntFieldUpdateOperationsInput' })
     t.field('stageId', { type: 'IntFieldUpdateOperationsInput' })
+    t.field('flag', { type: 'NullableIntFieldUpdateOperationsInput' })
   },
 })
 
@@ -7573,8 +7544,8 @@ export const TagOnStageUncheckedUpdateManyWithoutTagInput = inputObjectType({
   name: 'TagOnStageUncheckedUpdateManyWithoutTagInput',
   definition(t) {
     t.field('id', { type: 'IntFieldUpdateOperationsInput' })
-    t.field('count', { type: 'IntFieldUpdateOperationsInput' })
     t.field('stageId', { type: 'IntFieldUpdateOperationsInput' })
+    t.field('flag', { type: 'NullableIntFieldUpdateOperationsInput' })
   },
 })
 
@@ -7584,7 +7555,7 @@ export const ScorelistCreateManyScoreboardInput = inputObjectType({
   },
   name: 'ScorelistCreateManyScoreboardInput',
   definition(t) {
-    t.field('id', { type: 'String' })
+    t.field('id', { type: 'Int' })
     t.field('createAt', { type: 'DateTime' })
     t.field('lastUpdate', { type: 'DateTime' })
     t.field('stageId', { type: 'Int' })
@@ -7597,7 +7568,6 @@ export const ScorelistUpdateWithoutScoreboardInput = inputObjectType({
   },
   name: 'ScorelistUpdateWithoutScoreboardInput',
   definition(t) {
-    t.field('id', { type: 'StringFieldUpdateOperationsInput' })
     t.field('createAt', { type: 'DateTimeFieldUpdateOperationsInput' })
     t.field('lastUpdate', { type: 'DateTimeFieldUpdateOperationsInput' })
     t.field('stage', { type: 'StageUpdateOneWithoutScorelistNestedInput' })
@@ -7611,7 +7581,7 @@ export const ScorelistUncheckedUpdateWithoutScoreboardInput = inputObjectType({
   },
   name: 'ScorelistUncheckedUpdateWithoutScoreboardInput',
   definition(t) {
-    t.field('id', { type: 'StringFieldUpdateOperationsInput' })
+    t.field('id', { type: 'IntFieldUpdateOperationsInput' })
     t.field('createAt', { type: 'DateTimeFieldUpdateOperationsInput' })
     t.field('lastUpdate', { type: 'DateTimeFieldUpdateOperationsInput' })
     t.field('stageId', { type: 'NullableIntFieldUpdateOperationsInput' })
@@ -7628,7 +7598,7 @@ export const ScorelistUncheckedUpdateManyWithoutScoreboardInput =
     },
     name: 'ScorelistUncheckedUpdateManyWithoutScoreboardInput',
     definition(t) {
-      t.field('id', { type: 'StringFieldUpdateOperationsInput' })
+      t.field('id', { type: 'IntFieldUpdateOperationsInput' })
       t.field('createAt', { type: 'DateTimeFieldUpdateOperationsInput' })
       t.field('lastUpdate', { type: 'DateTimeFieldUpdateOperationsInput' })
       t.field('stageId', { type: 'NullableIntFieldUpdateOperationsInput' })
@@ -7641,7 +7611,7 @@ export const ScoreCreateManyScorelistInput = inputObjectType({
   },
   name: 'ScoreCreateManyScorelistInput',
   definition(t) {
-    t.nonNull.field('id', { type: 'Int' })
+    t.field('id', { type: 'Int' })
     t.nonNull.field('alphas', { type: 'Int' })
     t.nonNull.field('charlies', { type: 'Int' })
     t.nonNull.field('deltas', { type: 'Int' })
@@ -7660,7 +7630,6 @@ export const ScoreUpdateWithoutScorelistInput = inputObjectType({
   },
   name: 'ScoreUpdateWithoutScorelistInput',
   definition(t) {
-    t.field('id', { type: 'IntFieldUpdateOperationsInput' })
     t.field('alphas', { type: 'IntFieldUpdateOperationsInput' })
     t.field('charlies', { type: 'IntFieldUpdateOperationsInput' })
     t.field('deltas', { type: 'IntFieldUpdateOperationsInput' })
@@ -7725,7 +7694,7 @@ export const ProErrorsStoreCreateManyScoreInput = inputObjectType({
   },
   name: 'ProErrorsStoreCreateManyScoreInput',
   definition(t) {
-    t.nonNull.field('id', { type: 'Int' })
+    t.field('id', { type: 'Int' })
     t.nonNull.field('count', { type: 'Int' })
     t.nonNull.field('proErrorObjectsId', { type: 'Int' })
   },
@@ -7737,7 +7706,6 @@ export const ProErrorsStoreUpdateWithoutScoreInput = inputObjectType({
   },
   name: 'ProErrorsStoreUpdateWithoutScoreInput',
   definition(t) {
-    t.field('id', { type: 'IntFieldUpdateOperationsInput' })
     t.field('count', { type: 'IntFieldUpdateOperationsInput' })
     t.field('proError', {
       type: 'ProErrorObjectsUpdateOneRequiredWithoutProErrorsStoreNestedInput',
@@ -7776,7 +7744,7 @@ export const ProErrorsStoreCreateManyProErrorInput = inputObjectType({
   },
   name: 'ProErrorsStoreCreateManyProErrorInput',
   definition(t) {
-    t.nonNull.field('id', { type: 'Int' })
+    t.field('id', { type: 'Int' })
     t.nonNull.field('count', { type: 'Int' })
     t.field('scoreId', { type: 'Int' })
   },
@@ -7788,7 +7756,6 @@ export const ProErrorsStoreUpdateWithoutProErrorInput = inputObjectType({
   },
   name: 'ProErrorsStoreUpdateWithoutProErrorInput',
   definition(t) {
-    t.field('id', { type: 'IntFieldUpdateOperationsInput' })
     t.field('count', { type: 'IntFieldUpdateOperationsInput' })
     t.field('score', { type: 'ScoreUpdateOneWithoutProErrorsNestedInput' })
   },
@@ -8324,9 +8291,9 @@ export const TagOnStageCountAggregateOutputType = objectType({
   name: 'TagOnStageCountAggregateOutputType',
   definition(t) {
     t.field('id', { type: 'Int' })
-    t.field('count', { type: 'Int' })
     t.field('tagId', { type: 'Int' })
     t.field('stageId', { type: 'Int' })
+    t.field('flag', { type: 'Int' })
     t.field('_all', { type: 'Int' })
   },
 })
@@ -8338,9 +8305,9 @@ export const TagOnStageAvgAggregateOutputType = objectType({
   name: 'TagOnStageAvgAggregateOutputType',
   definition(t) {
     t.nullable.field('id', { type: 'Float' })
-    t.nullable.field('count', { type: 'Float' })
     t.nullable.field('tagId', { type: 'Float' })
     t.nullable.field('stageId', { type: 'Float' })
+    t.nullable.field('flag', { type: 'Float' })
   },
 })
 
@@ -8351,9 +8318,9 @@ export const TagOnStageSumAggregateOutputType = objectType({
   name: 'TagOnStageSumAggregateOutputType',
   definition(t) {
     t.nullable.field('id', { type: 'Int' })
-    t.nullable.field('count', { type: 'Int' })
     t.nullable.field('tagId', { type: 'Int' })
     t.nullable.field('stageId', { type: 'Int' })
+    t.nullable.field('flag', { type: 'Int' })
   },
 })
 
@@ -8364,9 +8331,9 @@ export const TagOnStageMinAggregateOutputType = objectType({
   name: 'TagOnStageMinAggregateOutputType',
   definition(t) {
     t.nullable.field('id', { type: 'Int' })
-    t.nullable.field('count', { type: 'Int' })
     t.nullable.field('tagId', { type: 'Int' })
     t.nullable.field('stageId', { type: 'Int' })
+    t.nullable.field('flag', { type: 'Int' })
   },
 })
 
@@ -8377,9 +8344,9 @@ export const TagOnStageMaxAggregateOutputType = objectType({
   name: 'TagOnStageMaxAggregateOutputType',
   definition(t) {
     t.nullable.field('id', { type: 'Int' })
-    t.nullable.field('count', { type: 'Int' })
     t.nullable.field('tagId', { type: 'Int' })
     t.nullable.field('stageId', { type: 'Int' })
+    t.nullable.field('flag', { type: 'Int' })
   },
 })
 
@@ -8484,6 +8451,7 @@ export const ScorelistAvgAggregateOutputType = objectType({
   },
   name: 'ScorelistAvgAggregateOutputType',
   definition(t) {
+    t.nullable.field('id', { type: 'Float' })
     t.nullable.field('scoreboardId', { type: 'Float' })
     t.nullable.field('stageId', { type: 'Float' })
   },
@@ -8495,6 +8463,7 @@ export const ScorelistSumAggregateOutputType = objectType({
   },
   name: 'ScorelistSumAggregateOutputType',
   definition(t) {
+    t.nullable.field('id', { type: 'Int' })
     t.nullable.field('scoreboardId', { type: 'Int' })
     t.nullable.field('stageId', { type: 'Int' })
   },
@@ -8506,7 +8475,7 @@ export const ScorelistMinAggregateOutputType = objectType({
   },
   name: 'ScorelistMinAggregateOutputType',
   definition(t) {
-    t.nullable.field('id', { type: 'String' })
+    t.nullable.field('id', { type: 'Int' })
     t.nullable.field('createAt', { type: 'DateTime' })
     t.nullable.field('lastUpdate', { type: 'DateTime' })
     t.nullable.field('scoreboardId', { type: 'Int' })
@@ -8520,7 +8489,7 @@ export const ScorelistMaxAggregateOutputType = objectType({
   },
   name: 'ScorelistMaxAggregateOutputType',
   definition(t) {
-    t.nullable.field('id', { type: 'String' })
+    t.nullable.field('id', { type: 'Int' })
     t.nullable.field('createAt', { type: 'DateTime' })
     t.nullable.field('lastUpdate', { type: 'DateTime' })
     t.nullable.field('scoreboardId', { type: 'Int' })
@@ -8573,6 +8542,7 @@ export const ScoreAvgAggregateOutputType = objectType({
     t.nullable.field('noshoots', { type: 'Float' })
     t.nullable.field('poppers', { type: 'Float' })
     t.nullable.field('time', { type: 'Float' })
+    t.nullable.field('scorelistId', { type: 'Float' })
     t.nullable.field('shooterId', { type: 'Float' })
     t.nullable.field('round', { type: 'Float' })
   },
@@ -8592,6 +8562,7 @@ export const ScoreSumAggregateOutputType = objectType({
     t.nullable.field('noshoots', { type: 'Int' })
     t.nullable.field('poppers', { type: 'Int' })
     t.nullable.field('time', { type: 'Float' })
+    t.nullable.field('scorelistId', { type: 'Int' })
     t.nullable.field('shooterId', { type: 'Int' })
     t.nullable.field('round', { type: 'Int' })
   },
@@ -8611,7 +8582,7 @@ export const ScoreMinAggregateOutputType = objectType({
     t.nullable.field('noshoots', { type: 'Int' })
     t.nullable.field('poppers', { type: 'Int' })
     t.nullable.field('time', { type: 'Float' })
-    t.nullable.field('scorelistId', { type: 'String' })
+    t.nullable.field('scorelistId', { type: 'Int' })
     t.nullable.field('shooterId', { type: 'Int' })
     t.nullable.field('round', { type: 'Int' })
   },
@@ -8631,7 +8602,7 @@ export const ScoreMaxAggregateOutputType = objectType({
     t.nullable.field('noshoots', { type: 'Int' })
     t.nullable.field('poppers', { type: 'Int' })
     t.nullable.field('time', { type: 'Float' })
-    t.nullable.field('scorelistId', { type: 'String' })
+    t.nullable.field('scorelistId', { type: 'Int' })
     t.nullable.field('shooterId', { type: 'Int' })
     t.nullable.field('round', { type: 'Int' })
   },

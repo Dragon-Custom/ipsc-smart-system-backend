@@ -7,7 +7,7 @@ export const Scorelist = objectType({
   },
   name: 'Scorelist',
   definition(t) {
-    t.string('id')
+    t.int('id')
     t.field('createAt', { type: 'DateTime' })
     t.field('lastUpdate', { type: 'DateTime' })
     t.nullable.int('scoreboardId')
