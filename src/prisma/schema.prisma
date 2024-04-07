@@ -62,9 +62,9 @@ model StageTag {
 
 model TagOnStage {
     id      Int      @id @unique @default(autoincrement())
-    tag     StageTag @relation(fields: [tagId], references: [id])
+    tag     StageTag @relation(fields: [tagId], references: [id], onDelete: Cascade)
     tagId   Int
-    stage   Stage    @relation(fields: [stageId], references: [id])
+    stage   Stage    @relation(fields: [stageId], references: [id], onDelete: Cascade)
     stageId Int
     flag    Int?     @default(0)
 }
