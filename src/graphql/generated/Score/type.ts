@@ -13,10 +13,12 @@ export const Score = objectType({
     t.int('deltas')
     t.int('misses')
     t.int('noshoots')
-    t.nullable.int('poppers')
+    t.int('poppers')
     t.float('time')
-    t.nullable.int('scorelistId')
+    t.int('proErrorCount')
+    t.int('scorelistId')
     t.int('shooterId')
+    t.decimal('hitFactor')
     t.int('round')
     t.field('shooter', {
       type: 'Shooter',
@@ -38,11 +40,8 @@ export const Score = objectType({
         return root.proErrors
       },
     })
-    t.nullable.field('scorelist', {
+    t.field('scorelist', {
       type: 'Scorelist',
-      args: {
-        where: 'ScorelistWhereInput',
-      },
       resolve(root: any) {
         return root.scorelist
       },

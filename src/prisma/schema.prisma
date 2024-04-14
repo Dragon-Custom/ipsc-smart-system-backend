@@ -90,20 +90,22 @@ model Scorelist {
 }
 
 model Score {
-    id          Int              @id @unique @default(autoincrement())
-    shooter     Shooter          @relation(fields: [shooterId], references: [id])
-    alphas      Int
-    charlies    Int
-    deltas      Int
-    misses      Int
-    noshoots    Int
-    poppers     Int?
-    time        Float
-    proErrors   ProErrorsStore[]
-    scorelist   Scorelist?       @relation(fields: [scorelistId], references: [id])
-    scorelistId Int?
-    shooterId   Int
-    round       Int
+    id            Int              @id @unique @default(autoincrement())
+    shooter       Shooter          @relation(fields: [shooterId], references: [id])
+    alphas        Int
+    charlies      Int
+    deltas        Int
+    misses        Int
+    noshoots      Int
+    poppers       Int
+    time          Float
+    proErrors     ProErrorsStore[]
+    proErrorCount Int
+    scorelist     Scorelist       @relation(fields: [scorelistId], references: [id])
+    scorelistId   Int
+    shooterId     Int
+    hitFactor     Decimal          @default(dbgenerated("Remove this line from sql while migration"))
+    round         Int
 }
 
 model ProErrorObjects {
