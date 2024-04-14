@@ -89,22 +89,29 @@ model Scorelist {
     rounds       Int         @default(0)
 }
 
+enum ScoreState {
+    DidNotScore
+    DidNotFinish
+    DQ
+}
+
 model Score {
     id            Int              @id @unique @default(autoincrement())
     shooter       Shooter          @relation(fields: [shooterId], references: [id])
-    alphas        Int
-    charlies      Int
-    deltas        Int
-    misses        Int
-    noshoots      Int
-    poppers       Int
-    time          Float
+    alphas        Int              @default(0)
+    charlies      Int              @default(0)
+    deltas        Int              @default(0)
+    misses        Int              @default(0)
+    noshoots      Int              @default(0)
+    poppers       Int              @default(0)
+    time          Float            @default(0)
     proErrors     ProErrorsStore[]
-    proErrorCount Int
-    scorelist     Scorelist       @relation(fields: [scorelistId], references: [id])
+    proErrorCount Int              @default(0)
+    scorelist     Scorelist        @relation(fields: [scorelistId], references: [id])
     scorelistId   Int
     shooterId     Int
     hitFactor     Decimal          @default(dbgenerated("Remove this line from sql while migration"))
+    state         ScoreState       @default(DidNotScore)
     round         Int
 }
 

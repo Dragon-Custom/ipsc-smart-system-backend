@@ -19,6 +19,7 @@ export const Score = objectType({
     t.int('scorelistId')
     t.int('shooterId')
     t.decimal('hitFactor')
+    t.field('state', { type: 'ScoreState' })
     t.int('round')
     t.field('shooter', {
       type: 'Shooter',
