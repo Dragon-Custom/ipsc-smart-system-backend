@@ -12,6 +12,7 @@ export const Scorelist = objectType({
     t.field('lastUpdate', { type: 'DateTime' })
     t.nullable.int('scoreboardId')
     t.nullable.int('stageId')
+    t.int('rounds')
     t.nullable.field('stage', {
       type: 'Stage',
       args: {

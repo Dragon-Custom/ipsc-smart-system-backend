@@ -52,7 +52,14 @@ export const ScoreboardScalarFieldEnum = enumType({
 
 export const ScorelistScalarFieldEnum = enumType({
   name: 'ScorelistScalarFieldEnum',
-  members: ['id', 'createAt', 'lastUpdate', 'scoreboardId', 'stageId'],
+  members: [
+    'id',
+    'createAt',
+    'lastUpdate',
+    'scoreboardId',
+    'stageId',
+    'rounds',
+  ],
 })
 
 export const ScoreScalarFieldEnum = enumType({
@@ -601,6 +608,7 @@ export const ScorelistWhereInput = inputObjectType({
     t.field('lastUpdate', { type: 'DateTimeFilter' })
     t.field('scoreboardId', { type: 'IntNullableFilter' })
     t.field('stageId', { type: 'IntNullableFilter' })
+    t.field('rounds', { type: 'IntFilter' })
     t.field('stage', { type: 'StageNullableRelationFilter' })
     t.field('scores', { type: 'ScoreListRelationFilter' })
     t.field('scoreboard', { type: 'ScoreboardNullableRelationFilter' })
@@ -618,6 +626,7 @@ export const ScorelistOrderByWithRelationInput = inputObjectType({
     t.field('lastUpdate', { type: 'SortOrder' })
     t.field('scoreboardId', { type: 'SortOrderInput' })
     t.field('stageId', { type: 'SortOrderInput' })
+    t.field('rounds', { type: 'SortOrder' })
     t.field('stage', { type: 'StageOrderByWithRelationInput' })
     t.field('scores', { type: 'ScoreOrderByRelationAggregateInput' })
     t.field('scoreboard', { type: 'ScoreboardOrderByWithRelationInput' })
@@ -638,6 +647,7 @@ export const ScorelistWhereUniqueInput = inputObjectType({
     t.field('lastUpdate', { type: 'DateTimeFilter' })
     t.field('scoreboardId', { type: 'IntNullableFilter' })
     t.field('stageId', { type: 'IntNullableFilter' })
+    t.field('rounds', { type: 'IntFilter' })
     t.field('stage', { type: 'StageNullableRelationFilter' })
     t.field('scores', { type: 'ScoreListRelationFilter' })
     t.field('scoreboard', { type: 'ScoreboardNullableRelationFilter' })
@@ -655,6 +665,7 @@ export const ScorelistOrderByWithAggregationInput = inputObjectType({
     t.field('lastUpdate', { type: 'SortOrder' })
     t.field('scoreboardId', { type: 'SortOrderInput' })
     t.field('stageId', { type: 'SortOrderInput' })
+    t.field('rounds', { type: 'SortOrder' })
     t.field('_count', { type: 'ScorelistCountOrderByAggregateInput' })
     t.field('_avg', { type: 'ScorelistAvgOrderByAggregateInput' })
     t.field('_max', { type: 'ScorelistMaxOrderByAggregateInput' })
@@ -677,6 +688,7 @@ export const ScorelistScalarWhereWithAggregatesInput = inputObjectType({
     t.field('lastUpdate', { type: 'DateTimeWithAggregatesFilter' })
     t.field('scoreboardId', { type: 'IntNullableWithAggregatesFilter' })
     t.field('stageId', { type: 'IntNullableWithAggregatesFilter' })
+    t.field('rounds', { type: 'IntWithAggregatesFilter' })
   },
 })
 
@@ -1628,6 +1640,7 @@ export const ScorelistCreateInput = inputObjectType({
   definition(t) {
     t.field('createAt', { type: 'DateTime' })
     t.field('lastUpdate', { type: 'DateTime' })
+    t.field('rounds', { type: 'Int' })
     t.field('stage', { type: 'StageCreateNestedOneWithoutScorelistInput' })
     t.field('scores', { type: 'ScoreCreateNestedManyWithoutScorelistInput' })
     t.field('scoreboard', {
@@ -1647,6 +1660,7 @@ export const ScorelistUncheckedCreateInput = inputObjectType({
     t.field('lastUpdate', { type: 'DateTime' })
     t.field('scoreboardId', { type: 'Int' })
     t.field('stageId', { type: 'Int' })
+    t.field('rounds', { type: 'Int' })
     t.field('scores', {
       type: 'ScoreUncheckedCreateNestedManyWithoutScorelistInput',
     })
@@ -1661,6 +1675,7 @@ export const ScorelistUpdateInput = inputObjectType({
   definition(t) {
     t.field('createAt', { type: 'DateTimeFieldUpdateOperationsInput' })
     t.field('lastUpdate', { type: 'DateTimeFieldUpdateOperationsInput' })
+    t.field('rounds', { type: 'IntFieldUpdateOperationsInput' })
     t.field('stage', { type: 'StageUpdateOneWithoutScorelistNestedInput' })
     t.field('scores', { type: 'ScoreUpdateManyWithoutScorelistNestedInput' })
     t.field('scoreboard', {
@@ -1680,6 +1695,7 @@ export const ScorelistUncheckedUpdateInput = inputObjectType({
     t.field('lastUpdate', { type: 'DateTimeFieldUpdateOperationsInput' })
     t.field('scoreboardId', { type: 'NullableIntFieldUpdateOperationsInput' })
     t.field('stageId', { type: 'NullableIntFieldUpdateOperationsInput' })
+    t.field('rounds', { type: 'IntFieldUpdateOperationsInput' })
     t.field('scores', {
       type: 'ScoreUncheckedUpdateManyWithoutScorelistNestedInput',
     })
@@ -1697,6 +1713,7 @@ export const ScorelistCreateManyInput = inputObjectType({
     t.field('lastUpdate', { type: 'DateTime' })
     t.field('scoreboardId', { type: 'Int' })
     t.field('stageId', { type: 'Int' })
+    t.field('rounds', { type: 'Int' })
   },
 })
 
@@ -1708,6 +1725,7 @@ export const ScorelistUpdateManyMutationInput = inputObjectType({
   definition(t) {
     t.field('createAt', { type: 'DateTimeFieldUpdateOperationsInput' })
     t.field('lastUpdate', { type: 'DateTimeFieldUpdateOperationsInput' })
+    t.field('rounds', { type: 'IntFieldUpdateOperationsInput' })
   },
 })
 
@@ -1722,6 +1740,7 @@ export const ScorelistUncheckedUpdateManyInput = inputObjectType({
     t.field('lastUpdate', { type: 'DateTimeFieldUpdateOperationsInput' })
     t.field('scoreboardId', { type: 'NullableIntFieldUpdateOperationsInput' })
     t.field('stageId', { type: 'NullableIntFieldUpdateOperationsInput' })
+    t.field('rounds', { type: 'IntFieldUpdateOperationsInput' })
   },
 })
 
@@ -3013,6 +3032,7 @@ export const ScorelistCountOrderByAggregateInput = inputObjectType({
     t.field('lastUpdate', { type: 'SortOrder' })
     t.field('scoreboardId', { type: 'SortOrder' })
     t.field('stageId', { type: 'SortOrder' })
+    t.field('rounds', { type: 'SortOrder' })
   },
 })
 
@@ -3025,6 +3045,7 @@ export const ScorelistAvgOrderByAggregateInput = inputObjectType({
     t.field('id', { type: 'SortOrder' })
     t.field('scoreboardId', { type: 'SortOrder' })
     t.field('stageId', { type: 'SortOrder' })
+    t.field('rounds', { type: 'SortOrder' })
   },
 })
 
@@ -3039,6 +3060,7 @@ export const ScorelistMaxOrderByAggregateInput = inputObjectType({
     t.field('lastUpdate', { type: 'SortOrder' })
     t.field('scoreboardId', { type: 'SortOrder' })
     t.field('stageId', { type: 'SortOrder' })
+    t.field('rounds', { type: 'SortOrder' })
   },
 })
 
@@ -3053,6 +3075,7 @@ export const ScorelistMinOrderByAggregateInput = inputObjectType({
     t.field('lastUpdate', { type: 'SortOrder' })
     t.field('scoreboardId', { type: 'SortOrder' })
     t.field('stageId', { type: 'SortOrder' })
+    t.field('rounds', { type: 'SortOrder' })
   },
 })
 
@@ -3065,6 +3088,7 @@ export const ScorelistSumOrderByAggregateInput = inputObjectType({
     t.field('id', { type: 'SortOrder' })
     t.field('scoreboardId', { type: 'SortOrder' })
     t.field('stageId', { type: 'SortOrder' })
+    t.field('rounds', { type: 'SortOrder' })
   },
 })
 
@@ -5501,6 +5525,7 @@ export const ScorelistCreateWithoutStageInput = inputObjectType({
   definition(t) {
     t.field('createAt', { type: 'DateTime' })
     t.field('lastUpdate', { type: 'DateTime' })
+    t.field('rounds', { type: 'Int' })
     t.field('scores', { type: 'ScoreCreateNestedManyWithoutScorelistInput' })
     t.field('scoreboard', {
       type: 'ScoreboardCreateNestedOneWithoutScorelistsInput',
@@ -5518,6 +5543,7 @@ export const ScorelistUncheckedCreateWithoutStageInput = inputObjectType({
     t.field('createAt', { type: 'DateTime' })
     t.field('lastUpdate', { type: 'DateTime' })
     t.field('scoreboardId', { type: 'Int' })
+    t.field('rounds', { type: 'Int' })
     t.field('scores', {
       type: 'ScoreUncheckedCreateNestedManyWithoutScorelistInput',
     })
@@ -5740,6 +5766,7 @@ export const ScorelistScalarWhereInput = inputObjectType({
     t.field('lastUpdate', { type: 'DateTimeFilter' })
     t.field('scoreboardId', { type: 'IntNullableFilter' })
     t.field('stageId', { type: 'IntNullableFilter' })
+    t.field('rounds', { type: 'IntFilter' })
   },
 })
 
@@ -6101,6 +6128,7 @@ export const ScorelistCreateWithoutScoreboardInput = inputObjectType({
   definition(t) {
     t.field('createAt', { type: 'DateTime' })
     t.field('lastUpdate', { type: 'DateTime' })
+    t.field('rounds', { type: 'Int' })
     t.field('stage', { type: 'StageCreateNestedOneWithoutScorelistInput' })
     t.field('scores', { type: 'ScoreCreateNestedManyWithoutScorelistInput' })
   },
@@ -6116,6 +6144,7 @@ export const ScorelistUncheckedCreateWithoutScoreboardInput = inputObjectType({
     t.field('createAt', { type: 'DateTime' })
     t.field('lastUpdate', { type: 'DateTime' })
     t.field('stageId', { type: 'Int' })
+    t.field('rounds', { type: 'Int' })
     t.field('scores', {
       type: 'ScoreUncheckedCreateNestedManyWithoutScorelistInput',
     })
@@ -6612,6 +6641,7 @@ export const ScorelistCreateWithoutScoresInput = inputObjectType({
   definition(t) {
     t.field('createAt', { type: 'DateTime' })
     t.field('lastUpdate', { type: 'DateTime' })
+    t.field('rounds', { type: 'Int' })
     t.field('stage', { type: 'StageCreateNestedOneWithoutScorelistInput' })
     t.field('scoreboard', {
       type: 'ScoreboardCreateNestedOneWithoutScorelistsInput',
@@ -6630,6 +6660,7 @@ export const ScorelistUncheckedCreateWithoutScoresInput = inputObjectType({
     t.field('lastUpdate', { type: 'DateTime' })
     t.field('scoreboardId', { type: 'Int' })
     t.field('stageId', { type: 'Int' })
+    t.field('rounds', { type: 'Int' })
   },
 })
 
@@ -6786,6 +6817,7 @@ export const ScorelistUpdateWithoutScoresInput = inputObjectType({
   definition(t) {
     t.field('createAt', { type: 'DateTimeFieldUpdateOperationsInput' })
     t.field('lastUpdate', { type: 'DateTimeFieldUpdateOperationsInput' })
+    t.field('rounds', { type: 'IntFieldUpdateOperationsInput' })
     t.field('stage', { type: 'StageUpdateOneWithoutScorelistNestedInput' })
     t.field('scoreboard', {
       type: 'ScoreboardUpdateOneWithoutScorelistsNestedInput',
@@ -6804,6 +6836,7 @@ export const ScorelistUncheckedUpdateWithoutScoresInput = inputObjectType({
     t.field('lastUpdate', { type: 'DateTimeFieldUpdateOperationsInput' })
     t.field('scoreboardId', { type: 'NullableIntFieldUpdateOperationsInput' })
     t.field('stageId', { type: 'NullableIntFieldUpdateOperationsInput' })
+    t.field('rounds', { type: 'IntFieldUpdateOperationsInput' })
   },
 })
 
@@ -7406,6 +7439,7 @@ export const ScorelistCreateManyStageInput = inputObjectType({
     t.field('createAt', { type: 'DateTime' })
     t.field('lastUpdate', { type: 'DateTime' })
     t.field('scoreboardId', { type: 'Int' })
+    t.field('rounds', { type: 'Int' })
   },
 })
 
@@ -7429,6 +7463,7 @@ export const ScorelistUpdateWithoutStageInput = inputObjectType({
   definition(t) {
     t.field('createAt', { type: 'DateTimeFieldUpdateOperationsInput' })
     t.field('lastUpdate', { type: 'DateTimeFieldUpdateOperationsInput' })
+    t.field('rounds', { type: 'IntFieldUpdateOperationsInput' })
     t.field('scores', { type: 'ScoreUpdateManyWithoutScorelistNestedInput' })
     t.field('scoreboard', {
       type: 'ScoreboardUpdateOneWithoutScorelistsNestedInput',
@@ -7446,6 +7481,7 @@ export const ScorelistUncheckedUpdateWithoutStageInput = inputObjectType({
     t.field('createAt', { type: 'DateTimeFieldUpdateOperationsInput' })
     t.field('lastUpdate', { type: 'DateTimeFieldUpdateOperationsInput' })
     t.field('scoreboardId', { type: 'NullableIntFieldUpdateOperationsInput' })
+    t.field('rounds', { type: 'IntFieldUpdateOperationsInput' })
     t.field('scores', {
       type: 'ScoreUncheckedUpdateManyWithoutScorelistNestedInput',
     })
@@ -7462,6 +7498,7 @@ export const ScorelistUncheckedUpdateManyWithoutStageInput = inputObjectType({
     t.field('createAt', { type: 'DateTimeFieldUpdateOperationsInput' })
     t.field('lastUpdate', { type: 'DateTimeFieldUpdateOperationsInput' })
     t.field('scoreboardId', { type: 'NullableIntFieldUpdateOperationsInput' })
+    t.field('rounds', { type: 'IntFieldUpdateOperationsInput' })
   },
 })
 
@@ -7559,6 +7596,7 @@ export const ScorelistCreateManyScoreboardInput = inputObjectType({
     t.field('createAt', { type: 'DateTime' })
     t.field('lastUpdate', { type: 'DateTime' })
     t.field('stageId', { type: 'Int' })
+    t.field('rounds', { type: 'Int' })
   },
 })
 
@@ -7570,6 +7608,7 @@ export const ScorelistUpdateWithoutScoreboardInput = inputObjectType({
   definition(t) {
     t.field('createAt', { type: 'DateTimeFieldUpdateOperationsInput' })
     t.field('lastUpdate', { type: 'DateTimeFieldUpdateOperationsInput' })
+    t.field('rounds', { type: 'IntFieldUpdateOperationsInput' })
     t.field('stage', { type: 'StageUpdateOneWithoutScorelistNestedInput' })
     t.field('scores', { type: 'ScoreUpdateManyWithoutScorelistNestedInput' })
   },
@@ -7585,6 +7624,7 @@ export const ScorelistUncheckedUpdateWithoutScoreboardInput = inputObjectType({
     t.field('createAt', { type: 'DateTimeFieldUpdateOperationsInput' })
     t.field('lastUpdate', { type: 'DateTimeFieldUpdateOperationsInput' })
     t.field('stageId', { type: 'NullableIntFieldUpdateOperationsInput' })
+    t.field('rounds', { type: 'IntFieldUpdateOperationsInput' })
     t.field('scores', {
       type: 'ScoreUncheckedUpdateManyWithoutScorelistNestedInput',
     })
@@ -7602,6 +7642,7 @@ export const ScorelistUncheckedUpdateManyWithoutScoreboardInput =
       t.field('createAt', { type: 'DateTimeFieldUpdateOperationsInput' })
       t.field('lastUpdate', { type: 'DateTimeFieldUpdateOperationsInput' })
       t.field('stageId', { type: 'NullableIntFieldUpdateOperationsInput' })
+      t.field('rounds', { type: 'IntFieldUpdateOperationsInput' })
     },
   })
 
@@ -8441,6 +8482,7 @@ export const ScorelistCountAggregateOutputType = objectType({
     t.field('lastUpdate', { type: 'Int' })
     t.field('scoreboardId', { type: 'Int' })
     t.field('stageId', { type: 'Int' })
+    t.field('rounds', { type: 'Int' })
     t.field('_all', { type: 'Int' })
   },
 })
@@ -8454,6 +8496,7 @@ export const ScorelistAvgAggregateOutputType = objectType({
     t.nullable.field('id', { type: 'Float' })
     t.nullable.field('scoreboardId', { type: 'Float' })
     t.nullable.field('stageId', { type: 'Float' })
+    t.nullable.field('rounds', { type: 'Float' })
   },
 })
 
@@ -8466,6 +8509,7 @@ export const ScorelistSumAggregateOutputType = objectType({
     t.nullable.field('id', { type: 'Int' })
     t.nullable.field('scoreboardId', { type: 'Int' })
     t.nullable.field('stageId', { type: 'Int' })
+    t.nullable.field('rounds', { type: 'Int' })
   },
 })
 
@@ -8480,6 +8524,7 @@ export const ScorelistMinAggregateOutputType = objectType({
     t.nullable.field('lastUpdate', { type: 'DateTime' })
     t.nullable.field('scoreboardId', { type: 'Int' })
     t.nullable.field('stageId', { type: 'Int' })
+    t.nullable.field('rounds', { type: 'Int' })
   },
 })
 
@@ -8494,6 +8539,7 @@ export const ScorelistMaxAggregateOutputType = objectType({
     t.nullable.field('lastUpdate', { type: 'DateTime' })
     t.nullable.field('scoreboardId', { type: 'Int' })
     t.nullable.field('stageId', { type: 'Int' })
+    t.nullable.field('rounds', { type: 'Int' })
   },
 })
 
