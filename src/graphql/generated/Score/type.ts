@@ -21,6 +21,7 @@ export const Score = objectType({
     t.decimal('hitFactor')
     t.field('state', { type: 'ScoreState' })
     t.int('round')
+    t.nullable.int('dqObjectsId')
     t.field('shooter', {
       type: 'Shooter',
       resolve(root: any) {
@@ -45,6 +46,15 @@ export const Score = objectType({
       type: 'Scorelist',
       resolve(root: any) {
         return root.scorelist
+      },
+    })
+    t.nullable.field('dqReason', {
+      type: 'DqObjects',
+      args: {
+        where: 'DqObjectsWhereInput',
+      },
+      resolve(root: any) {
+        return root.dqReason
       },
     })
     t.field('_count', {

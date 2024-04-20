@@ -1,5 +1,6 @@
 export * from './InputTypes'
 export * from './Image'
+export * from './DqObjects'
 export * from './ProErrorsStore'
 export * from './ProErrorObjects'
 export * from './Score'

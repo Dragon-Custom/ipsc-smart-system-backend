@@ -93,11 +93,12 @@ enum ScoreState {
     DidNotScore
     DidNotFinish
     DQ
+    Scored
 }
 
 model Score {
     id            Int              @id @unique @default(autoincrement())
-    shooter       Shooter          @relation(fields: [shooterId], references: [id])
+    shooter       Shooter          @relation(fields: [shooterId], references: [id], onUpdate: Cascade)
     alphas        Int              @default(0)
     charlies      Int              @default(0)
     deltas        Int              @default(0)
@@ -107,12 +108,14 @@ model Score {
     time          Float            @default(0)
     proErrors     ProErrorsStore[]
     proErrorCount Int              @default(0)
-    scorelist     Scorelist        @relation(fields: [scorelistId], references: [id])
+    scorelist     Scorelist        @relation(fields: [scorelistId], references: [id], onUpdate: Cascade)
     scorelistId   Int
     shooterId     Int
     hitFactor     Decimal          @default(dbgenerated("Remove this line from sql while migration"))
     state         ScoreState       @default(DidNotScore)
+    dqReason      DqObjects?       @relation(fields: [dqObjectsId], references: [id])
     round         Int
+    dqObjectsId   Int?
 }
 
 model ProErrorObjects {
@@ -130,6 +133,15 @@ model ProErrorsStore {
     score             Score?          @relation(fields: [scoreId], references: [id])
     scoreId           Int?
     proErrorObjectsId Int
+}
+
+model DqObjects {
+    id          Int     @id @unique @default(autoincrement())
+    index       String  @unique
+    category    String
+    title       String
+    description String
+    Score       Score[]
 }
 
 enum Division {

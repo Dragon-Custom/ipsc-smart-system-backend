@@ -79,6 +79,7 @@ export const ScoreScalarFieldEnum = enumType({
     'hitFactor',
     'state',
     'round',
+    'dqObjectsId',
   ],
 })
 
@@ -90,6 +91,11 @@ export const ProErrorObjectsScalarFieldEnum = enumType({
 export const ProErrorsStoreScalarFieldEnum = enumType({
   name: 'ProErrorsStoreScalarFieldEnum',
   members: ['id', 'count', 'scoreId', 'proErrorObjectsId'],
+})
+
+export const DqObjectsScalarFieldEnum = enumType({
+  name: 'DqObjectsScalarFieldEnum',
+  members: ['id', 'index', 'category', 'title', 'description'],
 })
 
 export const ImageScalarFieldEnum = enumType({
@@ -124,7 +130,7 @@ export const StageType = enumType({
 
 export const ScoreState = enumType({
   name: 'ScoreState',
-  members: ['DidNotScore', 'DidNotFinish', 'DQ'],
+  members: ['DidNotScore', 'DidNotFinish', 'DQ', 'Scored'],
 })
 
 export const ShooterWhereInput = inputObjectType({
@@ -723,9 +729,11 @@ export const ScoreWhereInput = inputObjectType({
     t.field('hitFactor', { type: 'DecimalFilter' })
     t.field('state', { type: 'EnumScoreStateFilter' })
     t.field('round', { type: 'IntFilter' })
+    t.field('dqObjectsId', { type: 'IntNullableFilter' })
     t.field('shooter', { type: 'ShooterRelationFilter' })
     t.field('proErrors', { type: 'ProErrorsStoreListRelationFilter' })
     t.field('scorelist', { type: 'ScorelistRelationFilter' })
+    t.field('dqReason', { type: 'DqObjectsNullableRelationFilter' })
   },
 })
 
@@ -749,11 +757,13 @@ export const ScoreOrderByWithRelationInput = inputObjectType({
     t.field('hitFactor', { type: 'SortOrder' })
     t.field('state', { type: 'SortOrder' })
     t.field('round', { type: 'SortOrder' })
+    t.field('dqObjectsId', { type: 'SortOrderInput' })
     t.field('shooter', { type: 'ShooterOrderByWithRelationInput' })
     t.field('proErrors', {
       type: 'ProErrorsStoreOrderByRelationAggregateInput',
     })
     t.field('scorelist', { type: 'ScorelistOrderByWithRelationInput' })
+    t.field('dqReason', { type: 'DqObjectsOrderByWithRelationInput' })
   },
 })
 
@@ -780,9 +790,11 @@ export const ScoreWhereUniqueInput = inputObjectType({
     t.field('hitFactor', { type: 'DecimalFilter' })
     t.field('state', { type: 'EnumScoreStateFilter' })
     t.field('round', { type: 'IntFilter' })
+    t.field('dqObjectsId', { type: 'IntNullableFilter' })
     t.field('shooter', { type: 'ShooterRelationFilter' })
     t.field('proErrors', { type: 'ProErrorsStoreListRelationFilter' })
     t.field('scorelist', { type: 'ScorelistRelationFilter' })
+    t.field('dqReason', { type: 'DqObjectsNullableRelationFilter' })
   },
 })
 
@@ -806,6 +818,7 @@ export const ScoreOrderByWithAggregationInput = inputObjectType({
     t.field('hitFactor', { type: 'SortOrder' })
     t.field('state', { type: 'SortOrder' })
     t.field('round', { type: 'SortOrder' })
+    t.field('dqObjectsId', { type: 'SortOrderInput' })
     t.field('_count', { type: 'ScoreCountOrderByAggregateInput' })
     t.field('_avg', { type: 'ScoreAvgOrderByAggregateInput' })
     t.field('_max', { type: 'ScoreMaxOrderByAggregateInput' })
@@ -837,6 +850,7 @@ export const ScoreScalarWhereWithAggregatesInput = inputObjectType({
     t.field('hitFactor', { type: 'DecimalWithAggregatesFilter' })
     t.field('state', { type: 'EnumScoreStateWithAggregatesFilter' })
     t.field('round', { type: 'IntWithAggregatesFilter' })
+    t.field('dqObjectsId', { type: 'IntNullableWithAggregatesFilter' })
   },
 })
 
@@ -1016,6 +1030,93 @@ export const ProErrorsStoreScalarWhereWithAggregatesInput = inputObjectType({
     t.field('count', { type: 'IntWithAggregatesFilter' })
     t.field('scoreId', { type: 'IntNullableWithAggregatesFilter' })
     t.field('proErrorObjectsId', { type: 'IntWithAggregatesFilter' })
+  },
+})
+
+export const DqObjectsWhereInput = inputObjectType({
+  nonNullDefaults: {
+    input: false,
+  },
+  name: 'DqObjectsWhereInput',
+  definition(t) {
+    t.list.field('AND', { type: 'DqObjectsWhereInput' })
+    t.list.field('OR', { type: 'DqObjectsWhereInput' })
+    t.list.field('NOT', { type: 'DqObjectsWhereInput' })
+    t.field('id', { type: 'IntFilter' })
+    t.field('index', { type: 'StringFilter' })
+    t.field('category', { type: 'StringFilter' })
+    t.field('title', { type: 'StringFilter' })
+    t.field('description', { type: 'StringFilter' })
+    t.field('Score', { type: 'ScoreListRelationFilter' })
+  },
+})
+
+export const DqObjectsOrderByWithRelationInput = inputObjectType({
+  nonNullDefaults: {
+    input: false,
+  },
+  name: 'DqObjectsOrderByWithRelationInput',
+  definition(t) {
+    t.field('id', { type: 'SortOrder' })
+    t.field('index', { type: 'SortOrder' })
+    t.field('category', { type: 'SortOrder' })
+    t.field('title', { type: 'SortOrder' })
+    t.field('description', { type: 'SortOrder' })
+    t.field('Score', { type: 'ScoreOrderByRelationAggregateInput' })
+  },
+})
+
+export const DqObjectsWhereUniqueInput = inputObjectType({
+  nonNullDefaults: {
+    input: false,
+  },
+  name: 'DqObjectsWhereUniqueInput',
+  definition(t) {
+    t.field('id', { type: 'Int' })
+    t.field('index', { type: 'String' })
+    t.list.field('AND', { type: 'DqObjectsWhereInput' })
+    t.list.field('OR', { type: 'DqObjectsWhereInput' })
+    t.list.field('NOT', { type: 'DqObjectsWhereInput' })
+    t.field('category', { type: 'StringFilter' })
+    t.field('title', { type: 'StringFilter' })
+    t.field('description', { type: 'StringFilter' })
+    t.field('Score', { type: 'ScoreListRelationFilter' })
+  },
+})
+
+export const DqObjectsOrderByWithAggregationInput = inputObjectType({
+  nonNullDefaults: {
+    input: false,
+  },
+  name: 'DqObjectsOrderByWithAggregationInput',
+  definition(t) {
+    t.field('id', { type: 'SortOrder' })
+    t.field('index', { type: 'SortOrder' })
+    t.field('category', { type: 'SortOrder' })
+    t.field('title', { type: 'SortOrder' })
+    t.field('description', { type: 'SortOrder' })
+    t.field('_count', { type: 'DqObjectsCountOrderByAggregateInput' })
+    t.field('_avg', { type: 'DqObjectsAvgOrderByAggregateInput' })
+    t.field('_max', { type: 'DqObjectsMaxOrderByAggregateInput' })
+    t.field('_min', { type: 'DqObjectsMinOrderByAggregateInput' })
+    t.field('_sum', { type: 'DqObjectsSumOrderByAggregateInput' })
+  },
+})
+
+export const DqObjectsScalarWhereWithAggregatesInput = inputObjectType({
+  nonNullDefaults: {
+    input: false,
+  },
+  name: 'DqObjectsScalarWhereWithAggregatesInput',
+  definition(t) {
+    t.list.field('AND', { type: 'DqObjectsScalarWhereWithAggregatesInput' })
+    t.list.field('OR', { type: 'DqObjectsScalarWhereWithAggregatesInput' })
+    t.list.field('NOT', { type: 'DqObjectsScalarWhereWithAggregatesInput' })
+    t.field('id', { type: 'IntWithAggregatesFilter' })
+    t.field('index', { type: 'StringWithAggregatesFilter' })
+    t.field('category', { type: 'StringWithAggregatesFilter' })
+    t.field('title', { type: 'StringWithAggregatesFilter' })
+    t.field('description', { type: 'StringWithAggregatesFilter' })
   },
 })
 
@@ -1793,6 +1894,7 @@ export const ScoreCreateInput = inputObjectType({
     t.nonNull.field('scorelist', {
       type: 'ScorelistCreateNestedOneWithoutScoresInput',
     })
+    t.field('dqReason', { type: 'DqObjectsCreateNestedOneWithoutScoreInput' })
   },
 })
 
@@ -1816,6 +1918,7 @@ export const ScoreUncheckedCreateInput = inputObjectType({
     t.field('hitFactor', { type: 'Decimal' })
     t.field('state', { type: 'ScoreState' })
     t.nonNull.field('round', { type: 'Int' })
+    t.field('dqObjectsId', { type: 'Int' })
     t.field('proErrors', {
       type: 'ProErrorsStoreUncheckedCreateNestedManyWithoutScoreInput',
     })
@@ -1848,6 +1951,7 @@ export const ScoreUpdateInput = inputObjectType({
     t.field('scorelist', {
       type: 'ScorelistUpdateOneRequiredWithoutScoresNestedInput',
     })
+    t.field('dqReason', { type: 'DqObjectsUpdateOneWithoutScoreNestedInput' })
   },
 })
 
@@ -1871,6 +1975,7 @@ export const ScoreUncheckedUpdateInput = inputObjectType({
     t.field('hitFactor', { type: 'DecimalFieldUpdateOperationsInput' })
     t.field('state', { type: 'EnumScoreStateFieldUpdateOperationsInput' })
     t.field('round', { type: 'IntFieldUpdateOperationsInput' })
+    t.field('dqObjectsId', { type: 'NullableIntFieldUpdateOperationsInput' })
     t.field('proErrors', {
       type: 'ProErrorsStoreUncheckedUpdateManyWithoutScoreNestedInput',
     })
@@ -1897,6 +2002,7 @@ export const ScoreCreateManyInput = inputObjectType({
     t.field('hitFactor', { type: 'Decimal' })
     t.field('state', { type: 'ScoreState' })
     t.nonNull.field('round', { type: 'Int' })
+    t.field('dqObjectsId', { type: 'Int' })
   },
 })
 
@@ -1940,6 +2046,7 @@ export const ScoreUncheckedUpdateManyInput = inputObjectType({
     t.field('hitFactor', { type: 'DecimalFieldUpdateOperationsInput' })
     t.field('state', { type: 'EnumScoreStateFieldUpdateOperationsInput' })
     t.field('round', { type: 'IntFieldUpdateOperationsInput' })
+    t.field('dqObjectsId', { type: 'NullableIntFieldUpdateOperationsInput' })
   },
 })
 
@@ -2130,6 +2237,109 @@ export const ProErrorsStoreUncheckedUpdateManyInput = inputObjectType({
     t.field('count', { type: 'IntFieldUpdateOperationsInput' })
     t.field('scoreId', { type: 'NullableIntFieldUpdateOperationsInput' })
     t.field('proErrorObjectsId', { type: 'IntFieldUpdateOperationsInput' })
+  },
+})
+
+export const DqObjectsCreateInput = inputObjectType({
+  nonNullDefaults: {
+    input: false,
+  },
+  name: 'DqObjectsCreateInput',
+  definition(t) {
+    t.nonNull.field('index', { type: 'String' })
+    t.nonNull.field('category', { type: 'String' })
+    t.nonNull.field('title', { type: 'String' })
+    t.nonNull.field('description', { type: 'String' })
+    t.field('Score', { type: 'ScoreCreateNestedManyWithoutDqReasonInput' })
+  },
+})
+
+export const DqObjectsUncheckedCreateInput = inputObjectType({
+  nonNullDefaults: {
+    input: false,
+  },
+  name: 'DqObjectsUncheckedCreateInput',
+  definition(t) {
+    t.field('id', { type: 'Int' })
+    t.nonNull.field('index', { type: 'String' })
+    t.nonNull.field('category', { type: 'String' })
+    t.nonNull.field('title', { type: 'String' })
+    t.nonNull.field('description', { type: 'String' })
+    t.field('Score', {
+      type: 'ScoreUncheckedCreateNestedManyWithoutDqReasonInput',
+    })
+  },
+})
+
+export const DqObjectsUpdateInput = inputObjectType({
+  nonNullDefaults: {
+    input: false,
+  },
+  name: 'DqObjectsUpdateInput',
+  definition(t) {
+    t.field('index', { type: 'StringFieldUpdateOperationsInput' })
+    t.field('category', { type: 'StringFieldUpdateOperationsInput' })
+    t.field('title', { type: 'StringFieldUpdateOperationsInput' })
+    t.field('description', { type: 'StringFieldUpdateOperationsInput' })
+    t.field('Score', { type: 'ScoreUpdateManyWithoutDqReasonNestedInput' })
+  },
+})
+
+export const DqObjectsUncheckedUpdateInput = inputObjectType({
+  nonNullDefaults: {
+    input: false,
+  },
+  name: 'DqObjectsUncheckedUpdateInput',
+  definition(t) {
+    t.field('id', { type: 'IntFieldUpdateOperationsInput' })
+    t.field('index', { type: 'StringFieldUpdateOperationsInput' })
+    t.field('category', { type: 'StringFieldUpdateOperationsInput' })
+    t.field('title', { type: 'StringFieldUpdateOperationsInput' })
+    t.field('description', { type: 'StringFieldUpdateOperationsInput' })
+    t.field('Score', {
+      type: 'ScoreUncheckedUpdateManyWithoutDqReasonNestedInput',
+    })
+  },
+})
+
+export const DqObjectsCreateManyInput = inputObjectType({
+  nonNullDefaults: {
+    input: false,
+  },
+  name: 'DqObjectsCreateManyInput',
+  definition(t) {
+    t.field('id', { type: 'Int' })
+    t.nonNull.field('index', { type: 'String' })
+    t.nonNull.field('category', { type: 'String' })
+    t.nonNull.field('title', { type: 'String' })
+    t.nonNull.field('description', { type: 'String' })
+  },
+})
+
+export const DqObjectsUpdateManyMutationInput = inputObjectType({
+  nonNullDefaults: {
+    input: false,
+  },
+  name: 'DqObjectsUpdateManyMutationInput',
+  definition(t) {
+    t.field('index', { type: 'StringFieldUpdateOperationsInput' })
+    t.field('category', { type: 'StringFieldUpdateOperationsInput' })
+    t.field('title', { type: 'StringFieldUpdateOperationsInput' })
+    t.field('description', { type: 'StringFieldUpdateOperationsInput' })
+  },
+})
+
+export const DqObjectsUncheckedUpdateManyInput = inputObjectType({
+  nonNullDefaults: {
+    input: false,
+  },
+  name: 'DqObjectsUncheckedUpdateManyInput',
+  definition(t) {
+    t.field('id', { type: 'IntFieldUpdateOperationsInput' })
+    t.field('index', { type: 'StringFieldUpdateOperationsInput' })
+    t.field('category', { type: 'StringFieldUpdateOperationsInput' })
+    t.field('title', { type: 'StringFieldUpdateOperationsInput' })
+    t.field('description', { type: 'StringFieldUpdateOperationsInput' })
   },
 })
 
@@ -3193,6 +3403,17 @@ export const ScorelistRelationFilter = inputObjectType({
   },
 })
 
+export const DqObjectsNullableRelationFilter = inputObjectType({
+  nonNullDefaults: {
+    input: false,
+  },
+  name: 'DqObjectsNullableRelationFilter',
+  definition(t) {
+    t.field('is', { type: 'DqObjectsWhereInput' })
+    t.field('isNot', { type: 'DqObjectsWhereInput' })
+  },
+})
+
 export const ProErrorsStoreOrderByRelationAggregateInput = inputObjectType({
   nonNullDefaults: {
     input: false,
@@ -3223,6 +3444,7 @@ export const ScoreCountOrderByAggregateInput = inputObjectType({
     t.field('hitFactor', { type: 'SortOrder' })
     t.field('state', { type: 'SortOrder' })
     t.field('round', { type: 'SortOrder' })
+    t.field('dqObjectsId', { type: 'SortOrder' })
   },
 })
 
@@ -3245,6 +3467,7 @@ export const ScoreAvgOrderByAggregateInput = inputObjectType({
     t.field('shooterId', { type: 'SortOrder' })
     t.field('hitFactor', { type: 'SortOrder' })
     t.field('round', { type: 'SortOrder' })
+    t.field('dqObjectsId', { type: 'SortOrder' })
   },
 })
 
@@ -3268,6 +3491,7 @@ export const ScoreMaxOrderByAggregateInput = inputObjectType({
     t.field('hitFactor', { type: 'SortOrder' })
     t.field('state', { type: 'SortOrder' })
     t.field('round', { type: 'SortOrder' })
+    t.field('dqObjectsId', { type: 'SortOrder' })
   },
 })
 
@@ -3291,6 +3515,7 @@ export const ScoreMinOrderByAggregateInput = inputObjectType({
     t.field('hitFactor', { type: 'SortOrder' })
     t.field('state', { type: 'SortOrder' })
     t.field('round', { type: 'SortOrder' })
+    t.field('dqObjectsId', { type: 'SortOrder' })
   },
 })
 
@@ -3313,6 +3538,7 @@ export const ScoreSumOrderByAggregateInput = inputObjectType({
     t.field('shooterId', { type: 'SortOrder' })
     t.field('hitFactor', { type: 'SortOrder' })
     t.field('round', { type: 'SortOrder' })
+    t.field('dqObjectsId', { type: 'SortOrder' })
   },
 })
 
@@ -3497,6 +3723,68 @@ export const ProErrorsStoreSumOrderByAggregateInput = inputObjectType({
     t.field('count', { type: 'SortOrder' })
     t.field('scoreId', { type: 'SortOrder' })
     t.field('proErrorObjectsId', { type: 'SortOrder' })
+  },
+})
+
+export const DqObjectsCountOrderByAggregateInput = inputObjectType({
+  nonNullDefaults: {
+    input: false,
+  },
+  name: 'DqObjectsCountOrderByAggregateInput',
+  definition(t) {
+    t.field('id', { type: 'SortOrder' })
+    t.field('index', { type: 'SortOrder' })
+    t.field('category', { type: 'SortOrder' })
+    t.field('title', { type: 'SortOrder' })
+    t.field('description', { type: 'SortOrder' })
+  },
+})
+
+export const DqObjectsAvgOrderByAggregateInput = inputObjectType({
+  nonNullDefaults: {
+    input: false,
+  },
+  name: 'DqObjectsAvgOrderByAggregateInput',
+  definition(t) {
+    t.field('id', { type: 'SortOrder' })
+  },
+})
+
+export const DqObjectsMaxOrderByAggregateInput = inputObjectType({
+  nonNullDefaults: {
+    input: false,
+  },
+  name: 'DqObjectsMaxOrderByAggregateInput',
+  definition(t) {
+    t.field('id', { type: 'SortOrder' })
+    t.field('index', { type: 'SortOrder' })
+    t.field('category', { type: 'SortOrder' })
+    t.field('title', { type: 'SortOrder' })
+    t.field('description', { type: 'SortOrder' })
+  },
+})
+
+export const DqObjectsMinOrderByAggregateInput = inputObjectType({
+  nonNullDefaults: {
+    input: false,
+  },
+  name: 'DqObjectsMinOrderByAggregateInput',
+  definition(t) {
+    t.field('id', { type: 'SortOrder' })
+    t.field('index', { type: 'SortOrder' })
+    t.field('category', { type: 'SortOrder' })
+    t.field('title', { type: 'SortOrder' })
+    t.field('description', { type: 'SortOrder' })
+  },
+})
+
+export const DqObjectsSumOrderByAggregateInput = inputObjectType({
+  nonNullDefaults: {
+    input: false,
+  },
+  name: 'DqObjectsSumOrderByAggregateInput',
+  definition(t) {
+    t.field('id', { type: 'SortOrder' })
   },
 })
 
@@ -4491,6 +4779,20 @@ export const ScorelistCreateNestedOneWithoutScoresInput = inputObjectType({
   },
 })
 
+export const DqObjectsCreateNestedOneWithoutScoreInput = inputObjectType({
+  nonNullDefaults: {
+    input: false,
+  },
+  name: 'DqObjectsCreateNestedOneWithoutScoreInput',
+  definition(t) {
+    t.field('create', { type: 'DqObjectsCreateWithoutScoreInput' })
+    t.field('connectOrCreate', {
+      type: 'DqObjectsCreateOrConnectWithoutScoreInput',
+    })
+    t.field('connect', { type: 'DqObjectsWhereUniqueInput' })
+  },
+})
+
 export const ProErrorsStoreUncheckedCreateNestedManyWithoutScoreInput =
   inputObjectType({
     nonNullDefaults: {
@@ -4597,6 +4899,26 @@ export const ScorelistUpdateOneRequiredWithoutScoresNestedInput =
       })
     },
   })
+
+export const DqObjectsUpdateOneWithoutScoreNestedInput = inputObjectType({
+  nonNullDefaults: {
+    input: false,
+  },
+  name: 'DqObjectsUpdateOneWithoutScoreNestedInput',
+  definition(t) {
+    t.field('create', { type: 'DqObjectsCreateWithoutScoreInput' })
+    t.field('connectOrCreate', {
+      type: 'DqObjectsCreateOrConnectWithoutScoreInput',
+    })
+    t.field('upsert', { type: 'DqObjectsUpsertWithoutScoreInput' })
+    t.field('disconnect', { type: 'DqObjectsWhereInput' })
+    t.field('delete', { type: 'DqObjectsWhereInput' })
+    t.field('connect', { type: 'DqObjectsWhereUniqueInput' })
+    t.field('update', {
+      type: 'DqObjectsUpdateToOneWithWhereWithoutScoreInput',
+    })
+  },
+})
 
 export const ProErrorsStoreUncheckedUpdateManyWithoutScoreNestedInput =
   inputObjectType({
@@ -4808,6 +5130,94 @@ export const ScoreUpdateOneWithoutProErrorsNestedInput = inputObjectType({
     })
   },
 })
+
+export const ScoreCreateNestedManyWithoutDqReasonInput = inputObjectType({
+  nonNullDefaults: {
+    input: false,
+  },
+  name: 'ScoreCreateNestedManyWithoutDqReasonInput',
+  definition(t) {
+    t.list.field('create', { type: 'ScoreCreateWithoutDqReasonInput' })
+    t.list.field('connectOrCreate', {
+      type: 'ScoreCreateOrConnectWithoutDqReasonInput',
+    })
+    t.field('createMany', { type: 'ScoreCreateManyDqReasonInputEnvelope' })
+    t.list.field('connect', { type: 'ScoreWhereUniqueInput' })
+  },
+})
+
+export const ScoreUncheckedCreateNestedManyWithoutDqReasonInput =
+  inputObjectType({
+    nonNullDefaults: {
+      input: false,
+    },
+    name: 'ScoreUncheckedCreateNestedManyWithoutDqReasonInput',
+    definition(t) {
+      t.list.field('create', { type: 'ScoreCreateWithoutDqReasonInput' })
+      t.list.field('connectOrCreate', {
+        type: 'ScoreCreateOrConnectWithoutDqReasonInput',
+      })
+      t.field('createMany', { type: 'ScoreCreateManyDqReasonInputEnvelope' })
+      t.list.field('connect', { type: 'ScoreWhereUniqueInput' })
+    },
+  })
+
+export const ScoreUpdateManyWithoutDqReasonNestedInput = inputObjectType({
+  nonNullDefaults: {
+    input: false,
+  },
+  name: 'ScoreUpdateManyWithoutDqReasonNestedInput',
+  definition(t) {
+    t.list.field('create', { type: 'ScoreCreateWithoutDqReasonInput' })
+    t.list.field('connectOrCreate', {
+      type: 'ScoreCreateOrConnectWithoutDqReasonInput',
+    })
+    t.list.field('upsert', {
+      type: 'ScoreUpsertWithWhereUniqueWithoutDqReasonInput',
+    })
+    t.field('createMany', { type: 'ScoreCreateManyDqReasonInputEnvelope' })
+    t.list.field('set', { type: 'ScoreWhereUniqueInput' })
+    t.list.field('disconnect', { type: 'ScoreWhereUniqueInput' })
+    t.list.field('delete', { type: 'ScoreWhereUniqueInput' })
+    t.list.field('connect', { type: 'ScoreWhereUniqueInput' })
+    t.list.field('update', {
+      type: 'ScoreUpdateWithWhereUniqueWithoutDqReasonInput',
+    })
+    t.list.field('updateMany', {
+      type: 'ScoreUpdateManyWithWhereWithoutDqReasonInput',
+    })
+    t.list.field('deleteMany', { type: 'ScoreScalarWhereInput' })
+  },
+})
+
+export const ScoreUncheckedUpdateManyWithoutDqReasonNestedInput =
+  inputObjectType({
+    nonNullDefaults: {
+      input: false,
+    },
+    name: 'ScoreUncheckedUpdateManyWithoutDqReasonNestedInput',
+    definition(t) {
+      t.list.field('create', { type: 'ScoreCreateWithoutDqReasonInput' })
+      t.list.field('connectOrCreate', {
+        type: 'ScoreCreateOrConnectWithoutDqReasonInput',
+      })
+      t.list.field('upsert', {
+        type: 'ScoreUpsertWithWhereUniqueWithoutDqReasonInput',
+      })
+      t.field('createMany', { type: 'ScoreCreateManyDqReasonInputEnvelope' })
+      t.list.field('set', { type: 'ScoreWhereUniqueInput' })
+      t.list.field('disconnect', { type: 'ScoreWhereUniqueInput' })
+      t.list.field('delete', { type: 'ScoreWhereUniqueInput' })
+      t.list.field('connect', { type: 'ScoreWhereUniqueInput' })
+      t.list.field('update', {
+        type: 'ScoreUpdateWithWhereUniqueWithoutDqReasonInput',
+      })
+      t.list.field('updateMany', {
+        type: 'ScoreUpdateManyWithWhereWithoutDqReasonInput',
+      })
+      t.list.field('deleteMany', { type: 'ScoreScalarWhereInput' })
+    },
+  })
 
 export const StageCreateNestedManyWithoutImageInput = inputObjectType({
   nonNullDefaults: {
@@ -5411,6 +5821,7 @@ export const ScoreCreateWithoutShooterInput = inputObjectType({
     t.nonNull.field('scorelist', {
       type: 'ScorelistCreateNestedOneWithoutScoresInput',
     })
+    t.field('dqReason', { type: 'DqObjectsCreateNestedOneWithoutScoreInput' })
   },
 })
 
@@ -5433,6 +5844,7 @@ export const ScoreUncheckedCreateWithoutShooterInput = inputObjectType({
     t.field('hitFactor', { type: 'Decimal' })
     t.field('state', { type: 'ScoreState' })
     t.nonNull.field('round', { type: 'Int' })
+    t.field('dqObjectsId', { type: 'Int' })
     t.field('proErrors', {
       type: 'ProErrorsStoreUncheckedCreateNestedManyWithoutScoreInput',
     })
@@ -5578,6 +5990,7 @@ export const ScoreScalarWhereInput = inputObjectType({
     t.field('hitFactor', { type: 'DecimalFilter' })
     t.field('state', { type: 'EnumScoreStateFilter' })
     t.field('round', { type: 'IntFilter' })
+    t.field('dqObjectsId', { type: 'IntNullableFilter' })
   },
 })
 
@@ -6438,6 +6851,7 @@ export const ScoreCreateWithoutScorelistInput = inputObjectType({
     t.field('proErrors', {
       type: 'ProErrorsStoreCreateNestedManyWithoutScoreInput',
     })
+    t.field('dqReason', { type: 'DqObjectsCreateNestedOneWithoutScoreInput' })
   },
 })
 
@@ -6460,6 +6874,7 @@ export const ScoreUncheckedCreateWithoutScorelistInput = inputObjectType({
     t.field('hitFactor', { type: 'Decimal' })
     t.field('state', { type: 'ScoreState' })
     t.nonNull.field('round', { type: 'Int' })
+    t.field('dqObjectsId', { type: 'Int' })
     t.field('proErrors', {
       type: 'ProErrorsStoreUncheckedCreateNestedManyWithoutScoreInput',
     })
@@ -6820,6 +7235,44 @@ export const ScorelistCreateOrConnectWithoutScoresInput = inputObjectType({
   },
 })
 
+export const DqObjectsCreateWithoutScoreInput = inputObjectType({
+  nonNullDefaults: {
+    input: false,
+  },
+  name: 'DqObjectsCreateWithoutScoreInput',
+  definition(t) {
+    t.nonNull.field('index', { type: 'String' })
+    t.nonNull.field('category', { type: 'String' })
+    t.nonNull.field('title', { type: 'String' })
+    t.nonNull.field('description', { type: 'String' })
+  },
+})
+
+export const DqObjectsUncheckedCreateWithoutScoreInput = inputObjectType({
+  nonNullDefaults: {
+    input: false,
+  },
+  name: 'DqObjectsUncheckedCreateWithoutScoreInput',
+  definition(t) {
+    t.field('id', { type: 'Int' })
+    t.nonNull.field('index', { type: 'String' })
+    t.nonNull.field('category', { type: 'String' })
+    t.nonNull.field('title', { type: 'String' })
+    t.nonNull.field('description', { type: 'String' })
+  },
+})
+
+export const DqObjectsCreateOrConnectWithoutScoreInput = inputObjectType({
+  nonNullDefaults: {
+    input: false,
+  },
+  name: 'DqObjectsCreateOrConnectWithoutScoreInput',
+  definition(t) {
+    t.nonNull.field('where', { type: 'DqObjectsWhereUniqueInput' })
+    t.nonNull.field('create', { type: 'DqObjectsCreateWithoutScoreInput' })
+  },
+})
+
 export const ShooterUpsertWithoutScoreInput = inputObjectType({
   nonNullDefaults: {
     input: false,
@@ -6985,6 +7438,56 @@ export const ScorelistUncheckedUpdateWithoutScoresInput = inputObjectType({
   },
 })
 
+export const DqObjectsUpsertWithoutScoreInput = inputObjectType({
+  nonNullDefaults: {
+    input: false,
+  },
+  name: 'DqObjectsUpsertWithoutScoreInput',
+  definition(t) {
+    t.nonNull.field('update', { type: 'DqObjectsUpdateWithoutScoreInput' })
+    t.nonNull.field('create', { type: 'DqObjectsCreateWithoutScoreInput' })
+    t.field('where', { type: 'DqObjectsWhereInput' })
+  },
+})
+
+export const DqObjectsUpdateToOneWithWhereWithoutScoreInput = inputObjectType({
+  nonNullDefaults: {
+    input: false,
+  },
+  name: 'DqObjectsUpdateToOneWithWhereWithoutScoreInput',
+  definition(t) {
+    t.field('where', { type: 'DqObjectsWhereInput' })
+    t.nonNull.field('data', { type: 'DqObjectsUpdateWithoutScoreInput' })
+  },
+})
+
+export const DqObjectsUpdateWithoutScoreInput = inputObjectType({
+  nonNullDefaults: {
+    input: false,
+  },
+  name: 'DqObjectsUpdateWithoutScoreInput',
+  definition(t) {
+    t.field('index', { type: 'StringFieldUpdateOperationsInput' })
+    t.field('category', { type: 'StringFieldUpdateOperationsInput' })
+    t.field('title', { type: 'StringFieldUpdateOperationsInput' })
+    t.field('description', { type: 'StringFieldUpdateOperationsInput' })
+  },
+})
+
+export const DqObjectsUncheckedUpdateWithoutScoreInput = inputObjectType({
+  nonNullDefaults: {
+    input: false,
+  },
+  name: 'DqObjectsUncheckedUpdateWithoutScoreInput',
+  definition(t) {
+    t.field('id', { type: 'IntFieldUpdateOperationsInput' })
+    t.field('index', { type: 'StringFieldUpdateOperationsInput' })
+    t.field('category', { type: 'StringFieldUpdateOperationsInput' })
+    t.field('title', { type: 'StringFieldUpdateOperationsInput' })
+    t.field('description', { type: 'StringFieldUpdateOperationsInput' })
+  },
+})
+
 export const ProErrorsStoreCreateWithoutProErrorInput = inputObjectType({
   nonNullDefaults: {
     input: false,
@@ -7140,6 +7643,7 @@ export const ScoreCreateWithoutProErrorsInput = inputObjectType({
     t.nonNull.field('scorelist', {
       type: 'ScorelistCreateNestedOneWithoutScoresInput',
     })
+    t.field('dqReason', { type: 'DqObjectsCreateNestedOneWithoutScoreInput' })
   },
 })
 
@@ -7163,6 +7667,7 @@ export const ScoreUncheckedCreateWithoutProErrorsInput = inputObjectType({
     t.field('hitFactor', { type: 'Decimal' })
     t.field('state', { type: 'ScoreState' })
     t.nonNull.field('round', { type: 'Int' })
+    t.field('dqObjectsId', { type: 'Int' })
   },
 })
 
@@ -7279,6 +7784,7 @@ export const ScoreUpdateWithoutProErrorsInput = inputObjectType({
     t.field('scorelist', {
       type: 'ScorelistUpdateOneRequiredWithoutScoresNestedInput',
     })
+    t.field('dqReason', { type: 'DqObjectsUpdateOneWithoutScoreNestedInput' })
   },
 })
 
@@ -7302,6 +7808,118 @@ export const ScoreUncheckedUpdateWithoutProErrorsInput = inputObjectType({
     t.field('hitFactor', { type: 'DecimalFieldUpdateOperationsInput' })
     t.field('state', { type: 'EnumScoreStateFieldUpdateOperationsInput' })
     t.field('round', { type: 'IntFieldUpdateOperationsInput' })
+    t.field('dqObjectsId', { type: 'NullableIntFieldUpdateOperationsInput' })
+  },
+})
+
+export const ScoreCreateWithoutDqReasonInput = inputObjectType({
+  nonNullDefaults: {
+    input: false,
+  },
+  name: 'ScoreCreateWithoutDqReasonInput',
+  definition(t) {
+    t.field('alphas', { type: 'Int' })
+    t.field('charlies', { type: 'Int' })
+    t.field('deltas', { type: 'Int' })
+    t.field('misses', { type: 'Int' })
+    t.field('noshoots', { type: 'Int' })
+    t.field('poppers', { type: 'Int' })
+    t.field('time', { type: 'Float' })
+    t.field('proErrorCount', { type: 'Int' })
+    t.field('hitFactor', { type: 'Decimal' })
+    t.field('state', { type: 'ScoreState' })
+    t.nonNull.field('round', { type: 'Int' })
+    t.nonNull.field('shooter', {
+      type: 'ShooterCreateNestedOneWithoutScoreInput',
+    })
+    t.field('proErrors', {
+      type: 'ProErrorsStoreCreateNestedManyWithoutScoreInput',
+    })
+    t.nonNull.field('scorelist', {
+      type: 'ScorelistCreateNestedOneWithoutScoresInput',
+    })
+  },
+})
+
+export const ScoreUncheckedCreateWithoutDqReasonInput = inputObjectType({
+  nonNullDefaults: {
+    input: false,
+  },
+  name: 'ScoreUncheckedCreateWithoutDqReasonInput',
+  definition(t) {
+    t.field('id', { type: 'Int' })
+    t.field('alphas', { type: 'Int' })
+    t.field('charlies', { type: 'Int' })
+    t.field('deltas', { type: 'Int' })
+    t.field('misses', { type: 'Int' })
+    t.field('noshoots', { type: 'Int' })
+    t.field('poppers', { type: 'Int' })
+    t.field('time', { type: 'Float' })
+    t.field('proErrorCount', { type: 'Int' })
+    t.nonNull.field('scorelistId', { type: 'Int' })
+    t.nonNull.field('shooterId', { type: 'Int' })
+    t.field('hitFactor', { type: 'Decimal' })
+    t.field('state', { type: 'ScoreState' })
+    t.nonNull.field('round', { type: 'Int' })
+    t.field('proErrors', {
+      type: 'ProErrorsStoreUncheckedCreateNestedManyWithoutScoreInput',
+    })
+  },
+})
+
+export const ScoreCreateOrConnectWithoutDqReasonInput = inputObjectType({
+  nonNullDefaults: {
+    input: false,
+  },
+  name: 'ScoreCreateOrConnectWithoutDqReasonInput',
+  definition(t) {
+    t.nonNull.field('where', { type: 'ScoreWhereUniqueInput' })
+    t.nonNull.field('create', { type: 'ScoreCreateWithoutDqReasonInput' })
+  },
+})
+
+export const ScoreCreateManyDqReasonInputEnvelope = inputObjectType({
+  nonNullDefaults: {
+    input: false,
+  },
+  name: 'ScoreCreateManyDqReasonInputEnvelope',
+  definition(t) {
+    t.nonNull.field('data', { type: 'ScoreCreateManyDqReasonInput' })
+    t.field('skipDuplicates', { type: 'Boolean' })
+  },
+})
+
+export const ScoreUpsertWithWhereUniqueWithoutDqReasonInput = inputObjectType({
+  nonNullDefaults: {
+    input: false,
+  },
+  name: 'ScoreUpsertWithWhereUniqueWithoutDqReasonInput',
+  definition(t) {
+    t.nonNull.field('where', { type: 'ScoreWhereUniqueInput' })
+    t.nonNull.field('update', { type: 'ScoreUpdateWithoutDqReasonInput' })
+    t.nonNull.field('create', { type: 'ScoreCreateWithoutDqReasonInput' })
+  },
+})
+
+export const ScoreUpdateWithWhereUniqueWithoutDqReasonInput = inputObjectType({
+  nonNullDefaults: {
+    input: false,
+  },
+  name: 'ScoreUpdateWithWhereUniqueWithoutDqReasonInput',
+  definition(t) {
+    t.nonNull.field('where', { type: 'ScoreWhereUniqueInput' })
+    t.nonNull.field('data', { type: 'ScoreUpdateWithoutDqReasonInput' })
+  },
+})
+
+export const ScoreUpdateManyWithWhereWithoutDqReasonInput = inputObjectType({
+  nonNullDefaults: {
+    input: false,
+  },
+  name: 'ScoreUpdateManyWithWhereWithoutDqReasonInput',
+  definition(t) {
+    t.nonNull.field('where', { type: 'ScoreScalarWhereInput' })
+    t.nonNull.field('data', { type: 'ScoreUpdateManyMutationInput' })
   },
 })
 
@@ -7455,6 +8073,7 @@ export const ScoreCreateManyShooterInput = inputObjectType({
     t.field('hitFactor', { type: 'Decimal' })
     t.field('state', { type: 'ScoreState' })
     t.nonNull.field('round', { type: 'Int' })
+    t.field('dqObjectsId', { type: 'Int' })
   },
 })
 
@@ -7554,6 +8173,7 @@ export const ScoreUpdateWithoutShooterInput = inputObjectType({
     t.field('scorelist', {
       type: 'ScorelistUpdateOneRequiredWithoutScoresNestedInput',
     })
+    t.field('dqReason', { type: 'DqObjectsUpdateOneWithoutScoreNestedInput' })
   },
 })
 
@@ -7576,6 +8196,7 @@ export const ScoreUncheckedUpdateWithoutShooterInput = inputObjectType({
     t.field('hitFactor', { type: 'DecimalFieldUpdateOperationsInput' })
     t.field('state', { type: 'EnumScoreStateFieldUpdateOperationsInput' })
     t.field('round', { type: 'IntFieldUpdateOperationsInput' })
+    t.field('dqObjectsId', { type: 'NullableIntFieldUpdateOperationsInput' })
     t.field('proErrors', {
       type: 'ProErrorsStoreUncheckedUpdateManyWithoutScoreNestedInput',
     })
@@ -7601,6 +8222,7 @@ export const ScoreUncheckedUpdateManyWithoutShooterInput = inputObjectType({
     t.field('hitFactor', { type: 'DecimalFieldUpdateOperationsInput' })
     t.field('state', { type: 'EnumScoreStateFieldUpdateOperationsInput' })
     t.field('round', { type: 'IntFieldUpdateOperationsInput' })
+    t.field('dqObjectsId', { type: 'NullableIntFieldUpdateOperationsInput' })
   },
 })
 
@@ -7840,6 +8462,7 @@ export const ScoreCreateManyScorelistInput = inputObjectType({
     t.field('hitFactor', { type: 'Decimal' })
     t.field('state', { type: 'ScoreState' })
     t.nonNull.field('round', { type: 'Int' })
+    t.field('dqObjectsId', { type: 'Int' })
   },
 })
 
@@ -7866,6 +8489,7 @@ export const ScoreUpdateWithoutScorelistInput = inputObjectType({
     t.field('proErrors', {
       type: 'ProErrorsStoreUpdateManyWithoutScoreNestedInput',
     })
+    t.field('dqReason', { type: 'DqObjectsUpdateOneWithoutScoreNestedInput' })
   },
 })
 
@@ -7888,6 +8512,7 @@ export const ScoreUncheckedUpdateWithoutScorelistInput = inputObjectType({
     t.field('hitFactor', { type: 'DecimalFieldUpdateOperationsInput' })
     t.field('state', { type: 'EnumScoreStateFieldUpdateOperationsInput' })
     t.field('round', { type: 'IntFieldUpdateOperationsInput' })
+    t.field('dqObjectsId', { type: 'NullableIntFieldUpdateOperationsInput' })
     t.field('proErrors', {
       type: 'ProErrorsStoreUncheckedUpdateManyWithoutScoreNestedInput',
     })
@@ -7913,6 +8538,7 @@ export const ScoreUncheckedUpdateManyWithoutScorelistInput = inputObjectType({
     t.field('hitFactor', { type: 'DecimalFieldUpdateOperationsInput' })
     t.field('state', { type: 'EnumScoreStateFieldUpdateOperationsInput' })
     t.field('round', { type: 'IntFieldUpdateOperationsInput' })
+    t.field('dqObjectsId', { type: 'NullableIntFieldUpdateOperationsInput' })
   },
 })
 
@@ -8014,6 +8640,107 @@ export const ProErrorsStoreUncheckedUpdateManyWithoutProErrorInput =
       t.field('scoreId', { type: 'NullableIntFieldUpdateOperationsInput' })
     },
   })
+
+export const ScoreCreateManyDqReasonInput = inputObjectType({
+  nonNullDefaults: {
+    input: false,
+  },
+  name: 'ScoreCreateManyDqReasonInput',
+  definition(t) {
+    t.field('id', { type: 'Int' })
+    t.field('alphas', { type: 'Int' })
+    t.field('charlies', { type: 'Int' })
+    t.field('deltas', { type: 'Int' })
+    t.field('misses', { type: 'Int' })
+    t.field('noshoots', { type: 'Int' })
+    t.field('poppers', { type: 'Int' })
+    t.field('time', { type: 'Float' })
+    t.field('proErrorCount', { type: 'Int' })
+    t.nonNull.field('scorelistId', { type: 'Int' })
+    t.nonNull.field('shooterId', { type: 'Int' })
+    t.field('hitFactor', { type: 'Decimal' })
+    t.field('state', { type: 'ScoreState' })
+    t.nonNull.field('round', { type: 'Int' })
+  },
+})
+
+export const ScoreUpdateWithoutDqReasonInput = inputObjectType({
+  nonNullDefaults: {
+    input: false,
+  },
+  name: 'ScoreUpdateWithoutDqReasonInput',
+  definition(t) {
+    t.field('alphas', { type: 'IntFieldUpdateOperationsInput' })
+    t.field('charlies', { type: 'IntFieldUpdateOperationsInput' })
+    t.field('deltas', { type: 'IntFieldUpdateOperationsInput' })
+    t.field('misses', { type: 'IntFieldUpdateOperationsInput' })
+    t.field('noshoots', { type: 'IntFieldUpdateOperationsInput' })
+    t.field('poppers', { type: 'IntFieldUpdateOperationsInput' })
+    t.field('time', { type: 'FloatFieldUpdateOperationsInput' })
+    t.field('proErrorCount', { type: 'IntFieldUpdateOperationsInput' })
+    t.field('hitFactor', { type: 'DecimalFieldUpdateOperationsInput' })
+    t.field('state', { type: 'EnumScoreStateFieldUpdateOperationsInput' })
+    t.field('round', { type: 'IntFieldUpdateOperationsInput' })
+    t.field('shooter', {
+      type: 'ShooterUpdateOneRequiredWithoutScoreNestedInput',
+    })
+    t.field('proErrors', {
+      type: 'ProErrorsStoreUpdateManyWithoutScoreNestedInput',
+    })
+    t.field('scorelist', {
+      type: 'ScorelistUpdateOneRequiredWithoutScoresNestedInput',
+    })
+  },
+})
+
+export const ScoreUncheckedUpdateWithoutDqReasonInput = inputObjectType({
+  nonNullDefaults: {
+    input: false,
+  },
+  name: 'ScoreUncheckedUpdateWithoutDqReasonInput',
+  definition(t) {
+    t.field('id', { type: 'IntFieldUpdateOperationsInput' })
+    t.field('alphas', { type: 'IntFieldUpdateOperationsInput' })
+    t.field('charlies', { type: 'IntFieldUpdateOperationsInput' })
+    t.field('deltas', { type: 'IntFieldUpdateOperationsInput' })
+    t.field('misses', { type: 'IntFieldUpdateOperationsInput' })
+    t.field('noshoots', { type: 'IntFieldUpdateOperationsInput' })
+    t.field('poppers', { type: 'IntFieldUpdateOperationsInput' })
+    t.field('time', { type: 'FloatFieldUpdateOperationsInput' })
+    t.field('proErrorCount', { type: 'IntFieldUpdateOperationsInput' })
+    t.field('scorelistId', { type: 'IntFieldUpdateOperationsInput' })
+    t.field('shooterId', { type: 'IntFieldUpdateOperationsInput' })
+    t.field('hitFactor', { type: 'DecimalFieldUpdateOperationsInput' })
+    t.field('state', { type: 'EnumScoreStateFieldUpdateOperationsInput' })
+    t.field('round', { type: 'IntFieldUpdateOperationsInput' })
+    t.field('proErrors', {
+      type: 'ProErrorsStoreUncheckedUpdateManyWithoutScoreNestedInput',
+    })
+  },
+})
+
+export const ScoreUncheckedUpdateManyWithoutDqReasonInput = inputObjectType({
+  nonNullDefaults: {
+    input: false,
+  },
+  name: 'ScoreUncheckedUpdateManyWithoutDqReasonInput',
+  definition(t) {
+    t.field('id', { type: 'IntFieldUpdateOperationsInput' })
+    t.field('alphas', { type: 'IntFieldUpdateOperationsInput' })
+    t.field('charlies', { type: 'IntFieldUpdateOperationsInput' })
+    t.field('deltas', { type: 'IntFieldUpdateOperationsInput' })
+    t.field('misses', { type: 'IntFieldUpdateOperationsInput' })
+    t.field('noshoots', { type: 'IntFieldUpdateOperationsInput' })
+    t.field('poppers', { type: 'IntFieldUpdateOperationsInput' })
+    t.field('time', { type: 'FloatFieldUpdateOperationsInput' })
+    t.field('proErrorCount', { type: 'IntFieldUpdateOperationsInput' })
+    t.field('scorelistId', { type: 'IntFieldUpdateOperationsInput' })
+    t.field('shooterId', { type: 'IntFieldUpdateOperationsInput' })
+    t.field('hitFactor', { type: 'DecimalFieldUpdateOperationsInput' })
+    t.field('state', { type: 'EnumScoreStateFieldUpdateOperationsInput' })
+    t.field('round', { type: 'IntFieldUpdateOperationsInput' })
+  },
+})
 
 export const StageCreateManyImageInput = inputObjectType({
   nonNullDefaults: {
@@ -8239,6 +8966,20 @@ export const AggregateProErrorsStore = objectType({
     t.nullable.field('_sum', { type: 'ProErrorsStoreSumAggregateOutputType' })
     t.nullable.field('_min', { type: 'ProErrorsStoreMinAggregateOutputType' })
     t.nullable.field('_max', { type: 'ProErrorsStoreMaxAggregateOutputType' })
+  },
+})
+
+export const AggregateDqObjects = objectType({
+  nonNullDefaults: {
+    output: true,
+  },
+  name: 'AggregateDqObjects',
+  definition(t) {
+    t.nullable.field('_count', { type: 'DqObjectsCountAggregateOutputType' })
+    t.nullable.field('_avg', { type: 'DqObjectsAvgAggregateOutputType' })
+    t.nullable.field('_sum', { type: 'DqObjectsSumAggregateOutputType' })
+    t.nullable.field('_min', { type: 'DqObjectsMinAggregateOutputType' })
+    t.nullable.field('_max', { type: 'DqObjectsMaxAggregateOutputType' })
   },
 })
 
@@ -8760,6 +9501,7 @@ export const ScoreCountAggregateOutputType = objectType({
     t.field('hitFactor', { type: 'Int' })
     t.field('state', { type: 'Int' })
     t.field('round', { type: 'Int' })
+    t.field('dqObjectsId', { type: 'Int' })
     t.field('_all', { type: 'Int' })
   },
 })
@@ -8783,6 +9525,7 @@ export const ScoreAvgAggregateOutputType = objectType({
     t.nullable.field('shooterId', { type: 'Float' })
     t.nullable.field('hitFactor', { type: 'Decimal' })
     t.nullable.field('round', { type: 'Float' })
+    t.nullable.field('dqObjectsId', { type: 'Float' })
   },
 })
 
@@ -8805,6 +9548,7 @@ export const ScoreSumAggregateOutputType = objectType({
     t.nullable.field('shooterId', { type: 'Int' })
     t.nullable.field('hitFactor', { type: 'Decimal' })
     t.nullable.field('round', { type: 'Int' })
+    t.nullable.field('dqObjectsId', { type: 'Int' })
   },
 })
 
@@ -8828,6 +9572,7 @@ export const ScoreMinAggregateOutputType = objectType({
     t.nullable.field('hitFactor', { type: 'Decimal' })
     t.nullable.field('state', { type: 'ScoreState' })
     t.nullable.field('round', { type: 'Int' })
+    t.nullable.field('dqObjectsId', { type: 'Int' })
   },
 })
 
@@ -8851,6 +9596,7 @@ export const ScoreMaxAggregateOutputType = objectType({
     t.nullable.field('hitFactor', { type: 'Decimal' })
     t.nullable.field('state', { type: 'ScoreState' })
     t.nullable.field('round', { type: 'Int' })
+    t.nullable.field('dqObjectsId', { type: 'Int' })
   },
 })
 
@@ -8987,6 +9733,79 @@ export const ProErrorsStoreMaxAggregateOutputType = objectType({
     t.nullable.field('count', { type: 'Int' })
     t.nullable.field('scoreId', { type: 'Int' })
     t.nullable.field('proErrorObjectsId', { type: 'Int' })
+  },
+})
+
+export const DqObjectsCountOutputType = objectType({
+  nonNullDefaults: {
+    output: true,
+  },
+  name: 'DqObjectsCountOutputType',
+  definition(t) {
+    t.field('Score', { type: 'Int' })
+  },
+})
+
+export const DqObjectsCountAggregateOutputType = objectType({
+  nonNullDefaults: {
+    output: true,
+  },
+  name: 'DqObjectsCountAggregateOutputType',
+  definition(t) {
+    t.field('id', { type: 'Int' })
+    t.field('index', { type: 'Int' })
+    t.field('category', { type: 'Int' })
+    t.field('title', { type: 'Int' })
+    t.field('description', { type: 'Int' })
+    t.field('_all', { type: 'Int' })
+  },
+})
+
+export const DqObjectsAvgAggregateOutputType = objectType({
+  nonNullDefaults: {
+    output: true,
+  },
+  name: 'DqObjectsAvgAggregateOutputType',
+  definition(t) {
+    t.nullable.field('id', { type: 'Float' })
+  },
+})
+
+export const DqObjectsSumAggregateOutputType = objectType({
+  nonNullDefaults: {
+    output: true,
+  },
+  name: 'DqObjectsSumAggregateOutputType',
+  definition(t) {
+    t.nullable.field('id', { type: 'Int' })
+  },
+})
+
+export const DqObjectsMinAggregateOutputType = objectType({
+  nonNullDefaults: {
+    output: true,
+  },
+  name: 'DqObjectsMinAggregateOutputType',
+  definition(t) {
+    t.nullable.field('id', { type: 'Int' })
+    t.nullable.field('index', { type: 'String' })
+    t.nullable.field('category', { type: 'String' })
+    t.nullable.field('title', { type: 'String' })
+    t.nullable.field('description', { type: 'String' })
+  },
+})
+
+export const DqObjectsMaxAggregateOutputType = objectType({
+  nonNullDefaults: {
+    output: true,
+  },
+  name: 'DqObjectsMaxAggregateOutputType',
+  definition(t) {
+    t.nullable.field('id', { type: 'Int' })
+    t.nullable.field('index', { type: 'String' })
+    t.nullable.field('category', { type: 'String' })
+    t.nullable.field('title', { type: 'String' })
+    t.nullable.field('description', { type: 'String' })
   },
 })
 
