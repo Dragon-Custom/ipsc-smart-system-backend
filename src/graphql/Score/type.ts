@@ -62,36 +62,95 @@ export const ScoreMutation = extendType({
 						id: true,
 					},
 				})).id;
-				await ctx.prisma.score.update({
+				try {
+					await ctx.prisma.$transaction([
+						ctx.prisma.score.update({
+							where: {
+								id: args.id1,
+							},
+							data: {
+								id: {
+									set: biggestId + 1,
+								},
+							},
+						}),
+						ctx.prisma.score.update({
+							where: {
+								id: args.id2,
+							},
+							data: {
+								id: {
+									set: args.id1,
+								},
+							},
+						}),
+						ctx.prisma.score.update({
+							where: {
+								id: biggestId + 1,
+							},
+							data: {
+								id: {
+									set: args.id2,
+								},
+							},
+						}),
+					], {
+						isolationLevel: "Serializable",
+					});
+				} catch (e) {
+					return false;
+				}
+				return true;
+			},
+		});
+		t.boolean("copyShootersFromRoundToRound", {
+			args: {
+				scorelistId: nonNull(intArg()),
+				fromRound: nonNull(intArg()),
+				toRound: nonNull(intArg()),
+			},
+			async resolve(src, args, ctx) {
+				const srcScores = (await ctx.prisma.score.findMany({
 					where: {
-						id: args.id1,
+						scorelistId: args.scorelistId,
+						round: args.fromRound,
 					},
-					data: {
-						id: {
-							set: biggestId + 1,
+					select: {
+						shooterId: true,
+					},
+				}));
+				for (const v of srcScores) {
+					console.log(
+						{
+							round: args.toRound,
+							shooter: {
+								connect: {
+									id: v.shooterId,
+								},
+							},
+							scorelist: {
+								connect: {
+									id: args.scorelistId,
+								},
+							},
 						},
-					},
-				});
-				await ctx.prisma.score.update({
-					where: {
-						id: args.id2,
-					},
-					data: {
-						id: {
-							set: args.id1,
+					);
+					await ctx.prisma.score.create({
+						data: {
+							round: args.toRound,
+							shooter: {
+								connect: {
+									id: v.shooterId,
+								},
+							},
+							scorelist: {
+								connect: {
+									id: args.scorelistId,
+								},
+							},
 						},
-					},
-				});
-				await ctx.prisma.score.update({
-					where: {
-						id: biggestId + 1,
-					},
-					data: {
-						id: {
-							set: args.id2,
-						},
-					},
-				});
+					});
+				}
 				return true;
 			},
 		});
