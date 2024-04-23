@@ -120,21 +120,7 @@ export const ScoreMutation = extendType({
 					},
 				}));
 				for (const v of srcScores) {
-					console.log(
-						{
-							round: args.toRound,
-							shooter: {
-								connect: {
-									id: v.shooterId,
-								},
-							},
-							scorelist: {
-								connect: {
-									id: args.scorelistId,
-								},
-							},
-						},
-					);
+
 					await ctx.prisma.score.create({
 						data: {
 							round: args.toRound,
