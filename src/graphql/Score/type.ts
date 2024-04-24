@@ -18,9 +18,9 @@ export const ScoreExtend = extendType({
 					},
 				});
 				const high = Highest.hitFactor;
-				if (high.toNumber() == 0)
+				if (high == 0)
 					return 0;
-				return (1 - (Highest.hitFactor.abs().toNumber() - src.hitFactor) / Highest.hitFactor.abs().toNumber()) * 100;
+				return (1 - (Math.abs(Highest.hitFactor) - src.hitFactor) / Math.abs(Highest.hitFactor)) * 100;
 			},
 		});
 		t.float("scorelistOverallPrecentage", {
@@ -37,9 +37,9 @@ export const ScoreExtend = extendType({
 					},
 				});
 				const high = Highest.hitFactor;
-				if (high.toNumber() == 0)
+				if (high == 0)
 					return 0;
-				return (1 - (Highest.hitFactor.toNumber() - src.hitFactor) / Highest.hitFactor.toNumber()) * 100;
+				return (1 - (Highest.hitFactor - src.hitFactor) / Highest.hitFactor) * 100;
 			},
 		});
 	},
@@ -138,6 +138,38 @@ export const ScoreMutation = extendType({
 					});
 				}
 				return true;
+			},
+		});
+		t.float("updateAccuracy", {
+			args: {
+				scoreId: nonNull(intArg()),
+			},
+			async resolve(src, args, ctx) {
+				const score = (await ctx.prisma.score.findUniqueOrThrow({
+					where: {
+						id: args.scoreId,
+					},
+					select: {
+						scorelist: {
+							include: {
+								stage: true,
+							},
+						},
+						score: true,
+					},
+				}));
+				const acc = (score.score / (score.scorelist.stage?.maxScore ?? 1))*100;
+				await ctx.prisma.score.update({
+					where: {
+						id: args.scoreId,
+					},
+					data: {
+						accuracy: {
+							set: acc,
+						},
+					},
+				});
+				return acc;
 			},
 		});
 	},

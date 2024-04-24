@@ -8,6 +8,7 @@ export const Score = objectType({
   name: 'Score',
   definition(t) {
     t.int('id')
+    t.field('createAt', { type: 'DateTime' })
     t.int('alphas')
     t.int('charlies')
     t.int('deltas')
@@ -18,9 +19,11 @@ export const Score = objectType({
     t.int('proErrorCount')
     t.int('scorelistId')
     t.int('shooterId')
-    t.decimal('hitFactor')
+    t.int('score')
+    t.float('hitFactor')
     t.field('state', { type: 'ScoreState' })
     t.int('round')
+    t.nullable.float('accuracy')
     t.nullable.int('dqObjectsId')
     t.field('shooter', {
       type: 'Shooter',

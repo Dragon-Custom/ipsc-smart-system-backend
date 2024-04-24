@@ -98,6 +98,7 @@ enum ScoreState {
 
 model Score {
     id            Int              @id @unique @default(autoincrement())
+    createAt      DateTime         @default(now())
     shooter       Shooter          @relation(fields: [shooterId], references: [id], onUpdate: Cascade)
     alphas        Int              @default(0)
     charlies      Int              @default(0)
@@ -111,10 +112,12 @@ model Score {
     scorelist     Scorelist        @relation(fields: [scorelistId], references: [id], onUpdate: Cascade)
     scorelistId   Int
     shooterId     Int
-    hitFactor     Decimal          @default(dbgenerated("Remove this line from sql while migration"))
+    score         Int              @default(dbgenerated("Remove this line from sql while migration"))
+    hitFactor     Float            @default(dbgenerated("Remove this line from sql while migration"))
     state         ScoreState       @default(DidNotScore)
     dqReason      DqObjects?       @relation(fields: [dqObjectsId], references: [id])
     round         Int
+    accuracy      Float?           @default(0)
     dqObjectsId   Int?
 }
 

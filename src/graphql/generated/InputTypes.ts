@@ -66,6 +66,7 @@ export const ScoreScalarFieldEnum = enumType({
   name: 'ScoreScalarFieldEnum',
   members: [
     'id',
+    'createAt',
     'alphas',
     'charlies',
     'deltas',
@@ -76,9 +77,11 @@ export const ScoreScalarFieldEnum = enumType({
     'proErrorCount',
     'scorelistId',
     'shooterId',
+    'score',
     'hitFactor',
     'state',
     'round',
+    'accuracy',
     'dqObjectsId',
   ],
 })
@@ -716,6 +719,7 @@ export const ScoreWhereInput = inputObjectType({
     t.list.field('OR', { type: 'ScoreWhereInput' })
     t.list.field('NOT', { type: 'ScoreWhereInput' })
     t.field('id', { type: 'IntFilter' })
+    t.field('createAt', { type: 'DateTimeFilter' })
     t.field('alphas', { type: 'IntFilter' })
     t.field('charlies', { type: 'IntFilter' })
     t.field('deltas', { type: 'IntFilter' })
@@ -726,9 +730,11 @@ export const ScoreWhereInput = inputObjectType({
     t.field('proErrorCount', { type: 'IntFilter' })
     t.field('scorelistId', { type: 'IntFilter' })
     t.field('shooterId', { type: 'IntFilter' })
-    t.field('hitFactor', { type: 'DecimalFilter' })
+    t.field('score', { type: 'IntFilter' })
+    t.field('hitFactor', { type: 'FloatFilter' })
     t.field('state', { type: 'EnumScoreStateFilter' })
     t.field('round', { type: 'IntFilter' })
+    t.field('accuracy', { type: 'FloatNullableFilter' })
     t.field('dqObjectsId', { type: 'IntNullableFilter' })
     t.field('shooter', { type: 'ShooterRelationFilter' })
     t.field('proErrors', { type: 'ProErrorsStoreListRelationFilter' })
@@ -744,6 +750,7 @@ export const ScoreOrderByWithRelationInput = inputObjectType({
   name: 'ScoreOrderByWithRelationInput',
   definition(t) {
     t.field('id', { type: 'SortOrder' })
+    t.field('createAt', { type: 'SortOrder' })
     t.field('alphas', { type: 'SortOrder' })
     t.field('charlies', { type: 'SortOrder' })
     t.field('deltas', { type: 'SortOrder' })
@@ -754,9 +761,11 @@ export const ScoreOrderByWithRelationInput = inputObjectType({
     t.field('proErrorCount', { type: 'SortOrder' })
     t.field('scorelistId', { type: 'SortOrder' })
     t.field('shooterId', { type: 'SortOrder' })
+    t.field('score', { type: 'SortOrder' })
     t.field('hitFactor', { type: 'SortOrder' })
     t.field('state', { type: 'SortOrder' })
     t.field('round', { type: 'SortOrder' })
+    t.field('accuracy', { type: 'SortOrderInput' })
     t.field('dqObjectsId', { type: 'SortOrderInput' })
     t.field('shooter', { type: 'ShooterOrderByWithRelationInput' })
     t.field('proErrors', {
@@ -777,6 +786,7 @@ export const ScoreWhereUniqueInput = inputObjectType({
     t.list.field('AND', { type: 'ScoreWhereInput' })
     t.list.field('OR', { type: 'ScoreWhereInput' })
     t.list.field('NOT', { type: 'ScoreWhereInput' })
+    t.field('createAt', { type: 'DateTimeFilter' })
     t.field('alphas', { type: 'IntFilter' })
     t.field('charlies', { type: 'IntFilter' })
     t.field('deltas', { type: 'IntFilter' })
@@ -787,9 +797,11 @@ export const ScoreWhereUniqueInput = inputObjectType({
     t.field('proErrorCount', { type: 'IntFilter' })
     t.field('scorelistId', { type: 'IntFilter' })
     t.field('shooterId', { type: 'IntFilter' })
-    t.field('hitFactor', { type: 'DecimalFilter' })
+    t.field('score', { type: 'IntFilter' })
+    t.field('hitFactor', { type: 'FloatFilter' })
     t.field('state', { type: 'EnumScoreStateFilter' })
     t.field('round', { type: 'IntFilter' })
+    t.field('accuracy', { type: 'FloatNullableFilter' })
     t.field('dqObjectsId', { type: 'IntNullableFilter' })
     t.field('shooter', { type: 'ShooterRelationFilter' })
     t.field('proErrors', { type: 'ProErrorsStoreListRelationFilter' })
@@ -805,6 +817,7 @@ export const ScoreOrderByWithAggregationInput = inputObjectType({
   name: 'ScoreOrderByWithAggregationInput',
   definition(t) {
     t.field('id', { type: 'SortOrder' })
+    t.field('createAt', { type: 'SortOrder' })
     t.field('alphas', { type: 'SortOrder' })
     t.field('charlies', { type: 'SortOrder' })
     t.field('deltas', { type: 'SortOrder' })
@@ -815,9 +828,11 @@ export const ScoreOrderByWithAggregationInput = inputObjectType({
     t.field('proErrorCount', { type: 'SortOrder' })
     t.field('scorelistId', { type: 'SortOrder' })
     t.field('shooterId', { type: 'SortOrder' })
+    t.field('score', { type: 'SortOrder' })
     t.field('hitFactor', { type: 'SortOrder' })
     t.field('state', { type: 'SortOrder' })
     t.field('round', { type: 'SortOrder' })
+    t.field('accuracy', { type: 'SortOrderInput' })
     t.field('dqObjectsId', { type: 'SortOrderInput' })
     t.field('_count', { type: 'ScoreCountOrderByAggregateInput' })
     t.field('_avg', { type: 'ScoreAvgOrderByAggregateInput' })
@@ -837,6 +852,7 @@ export const ScoreScalarWhereWithAggregatesInput = inputObjectType({
     t.list.field('OR', { type: 'ScoreScalarWhereWithAggregatesInput' })
     t.list.field('NOT', { type: 'ScoreScalarWhereWithAggregatesInput' })
     t.field('id', { type: 'IntWithAggregatesFilter' })
+    t.field('createAt', { type: 'DateTimeWithAggregatesFilter' })
     t.field('alphas', { type: 'IntWithAggregatesFilter' })
     t.field('charlies', { type: 'IntWithAggregatesFilter' })
     t.field('deltas', { type: 'IntWithAggregatesFilter' })
@@ -847,9 +863,11 @@ export const ScoreScalarWhereWithAggregatesInput = inputObjectType({
     t.field('proErrorCount', { type: 'IntWithAggregatesFilter' })
     t.field('scorelistId', { type: 'IntWithAggregatesFilter' })
     t.field('shooterId', { type: 'IntWithAggregatesFilter' })
-    t.field('hitFactor', { type: 'DecimalWithAggregatesFilter' })
+    t.field('score', { type: 'IntWithAggregatesFilter' })
+    t.field('hitFactor', { type: 'FloatWithAggregatesFilter' })
     t.field('state', { type: 'EnumScoreStateWithAggregatesFilter' })
     t.field('round', { type: 'IntWithAggregatesFilter' })
+    t.field('accuracy', { type: 'FloatNullableWithAggregatesFilter' })
     t.field('dqObjectsId', { type: 'IntNullableWithAggregatesFilter' })
   },
 })
@@ -1874,6 +1892,7 @@ export const ScoreCreateInput = inputObjectType({
   },
   name: 'ScoreCreateInput',
   definition(t) {
+    t.field('createAt', { type: 'DateTime' })
     t.field('alphas', { type: 'Int' })
     t.field('charlies', { type: 'Int' })
     t.field('deltas', { type: 'Int' })
@@ -1882,9 +1901,11 @@ export const ScoreCreateInput = inputObjectType({
     t.field('poppers', { type: 'Int' })
     t.field('time', { type: 'Float' })
     t.field('proErrorCount', { type: 'Int' })
-    t.field('hitFactor', { type: 'Decimal' })
+    t.field('score', { type: 'Int' })
+    t.field('hitFactor', { type: 'Float' })
     t.field('state', { type: 'ScoreState' })
     t.nonNull.field('round', { type: 'Int' })
+    t.field('accuracy', { type: 'Float' })
     t.nonNull.field('shooter', {
       type: 'ShooterCreateNestedOneWithoutScoreInput',
     })
@@ -1905,6 +1926,7 @@ export const ScoreUncheckedCreateInput = inputObjectType({
   name: 'ScoreUncheckedCreateInput',
   definition(t) {
     t.field('id', { type: 'Int' })
+    t.field('createAt', { type: 'DateTime' })
     t.field('alphas', { type: 'Int' })
     t.field('charlies', { type: 'Int' })
     t.field('deltas', { type: 'Int' })
@@ -1915,9 +1937,11 @@ export const ScoreUncheckedCreateInput = inputObjectType({
     t.field('proErrorCount', { type: 'Int' })
     t.nonNull.field('scorelistId', { type: 'Int' })
     t.nonNull.field('shooterId', { type: 'Int' })
-    t.field('hitFactor', { type: 'Decimal' })
+    t.field('score', { type: 'Int' })
+    t.field('hitFactor', { type: 'Float' })
     t.field('state', { type: 'ScoreState' })
     t.nonNull.field('round', { type: 'Int' })
+    t.field('accuracy', { type: 'Float' })
     t.field('dqObjectsId', { type: 'Int' })
     t.field('proErrors', {
       type: 'ProErrorsStoreUncheckedCreateNestedManyWithoutScoreInput',
@@ -1931,6 +1955,7 @@ export const ScoreUpdateInput = inputObjectType({
   },
   name: 'ScoreUpdateInput',
   definition(t) {
+    t.field('createAt', { type: 'DateTimeFieldUpdateOperationsInput' })
     t.field('alphas', { type: 'IntFieldUpdateOperationsInput' })
     t.field('charlies', { type: 'IntFieldUpdateOperationsInput' })
     t.field('deltas', { type: 'IntFieldUpdateOperationsInput' })
@@ -1939,9 +1964,11 @@ export const ScoreUpdateInput = inputObjectType({
     t.field('poppers', { type: 'IntFieldUpdateOperationsInput' })
     t.field('time', { type: 'FloatFieldUpdateOperationsInput' })
     t.field('proErrorCount', { type: 'IntFieldUpdateOperationsInput' })
-    t.field('hitFactor', { type: 'DecimalFieldUpdateOperationsInput' })
+    t.field('score', { type: 'IntFieldUpdateOperationsInput' })
+    t.field('hitFactor', { type: 'FloatFieldUpdateOperationsInput' })
     t.field('state', { type: 'EnumScoreStateFieldUpdateOperationsInput' })
     t.field('round', { type: 'IntFieldUpdateOperationsInput' })
+    t.field('accuracy', { type: 'NullableFloatFieldUpdateOperationsInput' })
     t.field('shooter', {
       type: 'ShooterUpdateOneRequiredWithoutScoreNestedInput',
     })
@@ -1962,6 +1989,7 @@ export const ScoreUncheckedUpdateInput = inputObjectType({
   name: 'ScoreUncheckedUpdateInput',
   definition(t) {
     t.field('id', { type: 'IntFieldUpdateOperationsInput' })
+    t.field('createAt', { type: 'DateTimeFieldUpdateOperationsInput' })
     t.field('alphas', { type: 'IntFieldUpdateOperationsInput' })
     t.field('charlies', { type: 'IntFieldUpdateOperationsInput' })
     t.field('deltas', { type: 'IntFieldUpdateOperationsInput' })
@@ -1972,9 +2000,11 @@ export const ScoreUncheckedUpdateInput = inputObjectType({
     t.field('proErrorCount', { type: 'IntFieldUpdateOperationsInput' })
     t.field('scorelistId', { type: 'IntFieldUpdateOperationsInput' })
     t.field('shooterId', { type: 'IntFieldUpdateOperationsInput' })
-    t.field('hitFactor', { type: 'DecimalFieldUpdateOperationsInput' })
+    t.field('score', { type: 'IntFieldUpdateOperationsInput' })
+    t.field('hitFactor', { type: 'FloatFieldUpdateOperationsInput' })
     t.field('state', { type: 'EnumScoreStateFieldUpdateOperationsInput' })
     t.field('round', { type: 'IntFieldUpdateOperationsInput' })
+    t.field('accuracy', { type: 'NullableFloatFieldUpdateOperationsInput' })
     t.field('dqObjectsId', { type: 'NullableIntFieldUpdateOperationsInput' })
     t.field('proErrors', {
       type: 'ProErrorsStoreUncheckedUpdateManyWithoutScoreNestedInput',
@@ -1989,6 +2019,7 @@ export const ScoreCreateManyInput = inputObjectType({
   name: 'ScoreCreateManyInput',
   definition(t) {
     t.field('id', { type: 'Int' })
+    t.field('createAt', { type: 'DateTime' })
     t.field('alphas', { type: 'Int' })
     t.field('charlies', { type: 'Int' })
     t.field('deltas', { type: 'Int' })
@@ -1999,9 +2030,11 @@ export const ScoreCreateManyInput = inputObjectType({
     t.field('proErrorCount', { type: 'Int' })
     t.nonNull.field('scorelistId', { type: 'Int' })
     t.nonNull.field('shooterId', { type: 'Int' })
-    t.field('hitFactor', { type: 'Decimal' })
+    t.field('score', { type: 'Int' })
+    t.field('hitFactor', { type: 'Float' })
     t.field('state', { type: 'ScoreState' })
     t.nonNull.field('round', { type: 'Int' })
+    t.field('accuracy', { type: 'Float' })
     t.field('dqObjectsId', { type: 'Int' })
   },
 })
@@ -2012,6 +2045,7 @@ export const ScoreUpdateManyMutationInput = inputObjectType({
   },
   name: 'ScoreUpdateManyMutationInput',
   definition(t) {
+    t.field('createAt', { type: 'DateTimeFieldUpdateOperationsInput' })
     t.field('alphas', { type: 'IntFieldUpdateOperationsInput' })
     t.field('charlies', { type: 'IntFieldUpdateOperationsInput' })
     t.field('deltas', { type: 'IntFieldUpdateOperationsInput' })
@@ -2020,9 +2054,11 @@ export const ScoreUpdateManyMutationInput = inputObjectType({
     t.field('poppers', { type: 'IntFieldUpdateOperationsInput' })
     t.field('time', { type: 'FloatFieldUpdateOperationsInput' })
     t.field('proErrorCount', { type: 'IntFieldUpdateOperationsInput' })
-    t.field('hitFactor', { type: 'DecimalFieldUpdateOperationsInput' })
+    t.field('score', { type: 'IntFieldUpdateOperationsInput' })
+    t.field('hitFactor', { type: 'FloatFieldUpdateOperationsInput' })
     t.field('state', { type: 'EnumScoreStateFieldUpdateOperationsInput' })
     t.field('round', { type: 'IntFieldUpdateOperationsInput' })
+    t.field('accuracy', { type: 'NullableFloatFieldUpdateOperationsInput' })
   },
 })
 
@@ -2033,6 +2069,7 @@ export const ScoreUncheckedUpdateManyInput = inputObjectType({
   name: 'ScoreUncheckedUpdateManyInput',
   definition(t) {
     t.field('id', { type: 'IntFieldUpdateOperationsInput' })
+    t.field('createAt', { type: 'DateTimeFieldUpdateOperationsInput' })
     t.field('alphas', { type: 'IntFieldUpdateOperationsInput' })
     t.field('charlies', { type: 'IntFieldUpdateOperationsInput' })
     t.field('deltas', { type: 'IntFieldUpdateOperationsInput' })
@@ -2043,9 +2080,11 @@ export const ScoreUncheckedUpdateManyInput = inputObjectType({
     t.field('proErrorCount', { type: 'IntFieldUpdateOperationsInput' })
     t.field('scorelistId', { type: 'IntFieldUpdateOperationsInput' })
     t.field('shooterId', { type: 'IntFieldUpdateOperationsInput' })
-    t.field('hitFactor', { type: 'DecimalFieldUpdateOperationsInput' })
+    t.field('score', { type: 'IntFieldUpdateOperationsInput' })
+    t.field('hitFactor', { type: 'FloatFieldUpdateOperationsInput' })
     t.field('state', { type: 'EnumScoreStateFieldUpdateOperationsInput' })
     t.field('round', { type: 'IntFieldUpdateOperationsInput' })
+    t.field('accuracy', { type: 'NullableFloatFieldUpdateOperationsInput' })
     t.field('dqObjectsId', { type: 'NullableIntFieldUpdateOperationsInput' })
   },
 })
@@ -3380,6 +3419,23 @@ export const EnumScoreStateFilter = inputObjectType({
   },
 })
 
+export const FloatNullableFilter = inputObjectType({
+  nonNullDefaults: {
+    input: false,
+  },
+  name: 'FloatNullableFilter',
+  definition(t) {
+    t.field('equals', { type: 'Float' })
+    t.list.field('in', { type: 'Float' })
+    t.list.field('notIn', { type: 'Float' })
+    t.field('lt', { type: 'Float' })
+    t.field('lte', { type: 'Float' })
+    t.field('gt', { type: 'Float' })
+    t.field('gte', { type: 'Float' })
+    t.field('not', { type: 'NestedFloatNullableFilter' })
+  },
+})
+
 export const ProErrorsStoreListRelationFilter = inputObjectType({
   nonNullDefaults: {
     input: false,
@@ -3431,6 +3487,7 @@ export const ScoreCountOrderByAggregateInput = inputObjectType({
   name: 'ScoreCountOrderByAggregateInput',
   definition(t) {
     t.field('id', { type: 'SortOrder' })
+    t.field('createAt', { type: 'SortOrder' })
     t.field('alphas', { type: 'SortOrder' })
     t.field('charlies', { type: 'SortOrder' })
     t.field('deltas', { type: 'SortOrder' })
@@ -3441,9 +3498,11 @@ export const ScoreCountOrderByAggregateInput = inputObjectType({
     t.field('proErrorCount', { type: 'SortOrder' })
     t.field('scorelistId', { type: 'SortOrder' })
     t.field('shooterId', { type: 'SortOrder' })
+    t.field('score', { type: 'SortOrder' })
     t.field('hitFactor', { type: 'SortOrder' })
     t.field('state', { type: 'SortOrder' })
     t.field('round', { type: 'SortOrder' })
+    t.field('accuracy', { type: 'SortOrder' })
     t.field('dqObjectsId', { type: 'SortOrder' })
   },
 })
@@ -3465,8 +3524,10 @@ export const ScoreAvgOrderByAggregateInput = inputObjectType({
     t.field('proErrorCount', { type: 'SortOrder' })
     t.field('scorelistId', { type: 'SortOrder' })
     t.field('shooterId', { type: 'SortOrder' })
+    t.field('score', { type: 'SortOrder' })
     t.field('hitFactor', { type: 'SortOrder' })
     t.field('round', { type: 'SortOrder' })
+    t.field('accuracy', { type: 'SortOrder' })
     t.field('dqObjectsId', { type: 'SortOrder' })
   },
 })
@@ -3478,6 +3539,7 @@ export const ScoreMaxOrderByAggregateInput = inputObjectType({
   name: 'ScoreMaxOrderByAggregateInput',
   definition(t) {
     t.field('id', { type: 'SortOrder' })
+    t.field('createAt', { type: 'SortOrder' })
     t.field('alphas', { type: 'SortOrder' })
     t.field('charlies', { type: 'SortOrder' })
     t.field('deltas', { type: 'SortOrder' })
@@ -3488,9 +3550,11 @@ export const ScoreMaxOrderByAggregateInput = inputObjectType({
     t.field('proErrorCount', { type: 'SortOrder' })
     t.field('scorelistId', { type: 'SortOrder' })
     t.field('shooterId', { type: 'SortOrder' })
+    t.field('score', { type: 'SortOrder' })
     t.field('hitFactor', { type: 'SortOrder' })
     t.field('state', { type: 'SortOrder' })
     t.field('round', { type: 'SortOrder' })
+    t.field('accuracy', { type: 'SortOrder' })
     t.field('dqObjectsId', { type: 'SortOrder' })
   },
 })
@@ -3502,6 +3566,7 @@ export const ScoreMinOrderByAggregateInput = inputObjectType({
   name: 'ScoreMinOrderByAggregateInput',
   definition(t) {
     t.field('id', { type: 'SortOrder' })
+    t.field('createAt', { type: 'SortOrder' })
     t.field('alphas', { type: 'SortOrder' })
     t.field('charlies', { type: 'SortOrder' })
     t.field('deltas', { type: 'SortOrder' })
@@ -3512,9 +3577,11 @@ export const ScoreMinOrderByAggregateInput = inputObjectType({
     t.field('proErrorCount', { type: 'SortOrder' })
     t.field('scorelistId', { type: 'SortOrder' })
     t.field('shooterId', { type: 'SortOrder' })
+    t.field('score', { type: 'SortOrder' })
     t.field('hitFactor', { type: 'SortOrder' })
     t.field('state', { type: 'SortOrder' })
     t.field('round', { type: 'SortOrder' })
+    t.field('accuracy', { type: 'SortOrder' })
     t.field('dqObjectsId', { type: 'SortOrder' })
   },
 })
@@ -3536,8 +3603,10 @@ export const ScoreSumOrderByAggregateInput = inputObjectType({
     t.field('proErrorCount', { type: 'SortOrder' })
     t.field('scorelistId', { type: 'SortOrder' })
     t.field('shooterId', { type: 'SortOrder' })
+    t.field('score', { type: 'SortOrder' })
     t.field('hitFactor', { type: 'SortOrder' })
     t.field('round', { type: 'SortOrder' })
+    t.field('accuracy', { type: 'SortOrder' })
     t.field('dqObjectsId', { type: 'SortOrder' })
   },
 })
@@ -3577,6 +3646,28 @@ export const EnumScoreStateWithAggregatesFilter = inputObjectType({
     t.field('_count', { type: 'NestedIntFilter' })
     t.field('_min', { type: 'NestedEnumScoreStateFilter' })
     t.field('_max', { type: 'NestedEnumScoreStateFilter' })
+  },
+})
+
+export const FloatNullableWithAggregatesFilter = inputObjectType({
+  nonNullDefaults: {
+    input: false,
+  },
+  name: 'FloatNullableWithAggregatesFilter',
+  definition(t) {
+    t.field('equals', { type: 'Float' })
+    t.list.field('in', { type: 'Float' })
+    t.list.field('notIn', { type: 'Float' })
+    t.field('lt', { type: 'Float' })
+    t.field('lte', { type: 'Float' })
+    t.field('gt', { type: 'Float' })
+    t.field('gte', { type: 'Float' })
+    t.field('not', { type: 'NestedFloatNullableWithAggregatesFilter' })
+    t.field('_count', { type: 'NestedIntNullableFilter' })
+    t.field('_avg', { type: 'NestedFloatNullableFilter' })
+    t.field('_sum', { type: 'NestedFloatNullableFilter' })
+    t.field('_min', { type: 'NestedFloatNullableFilter' })
+    t.field('_max', { type: 'NestedFloatNullableFilter' })
   },
 })
 
@@ -4835,6 +4926,20 @@ export const EnumScoreStateFieldUpdateOperationsInput = inputObjectType({
   },
 })
 
+export const NullableFloatFieldUpdateOperationsInput = inputObjectType({
+  nonNullDefaults: {
+    input: false,
+  },
+  name: 'NullableFloatFieldUpdateOperationsInput',
+  definition(t) {
+    t.field('set', { type: 'Float' })
+    t.field('increment', { type: 'Float' })
+    t.field('decrement', { type: 'Float' })
+    t.field('multiply', { type: 'Float' })
+    t.field('divide', { type: 'Float' })
+  },
+})
+
 export const ShooterUpdateOneRequiredWithoutScoreNestedInput = inputObjectType({
   nonNullDefaults: {
     input: false,
@@ -5725,6 +5830,28 @@ export const NestedEnumScoreStateWithAggregatesFilter = inputObjectType({
   },
 })
 
+export const NestedFloatNullableWithAggregatesFilter = inputObjectType({
+  nonNullDefaults: {
+    input: false,
+  },
+  name: 'NestedFloatNullableWithAggregatesFilter',
+  definition(t) {
+    t.field('equals', { type: 'Float' })
+    t.list.field('in', { type: 'Float' })
+    t.list.field('notIn', { type: 'Float' })
+    t.field('lt', { type: 'Float' })
+    t.field('lte', { type: 'Float' })
+    t.field('gt', { type: 'Float' })
+    t.field('gte', { type: 'Float' })
+    t.field('not', { type: 'NestedFloatNullableWithAggregatesFilter' })
+    t.field('_count', { type: 'NestedIntNullableFilter' })
+    t.field('_avg', { type: 'NestedFloatNullableFilter' })
+    t.field('_sum', { type: 'NestedFloatNullableFilter' })
+    t.field('_min', { type: 'NestedFloatNullableFilter' })
+    t.field('_max', { type: 'NestedFloatNullableFilter' })
+  },
+})
+
 export const StageCreateWithoutDesignerInput = inputObjectType({
   nonNullDefaults: {
     input: false,
@@ -5804,6 +5931,7 @@ export const ScoreCreateWithoutShooterInput = inputObjectType({
   },
   name: 'ScoreCreateWithoutShooterInput',
   definition(t) {
+    t.field('createAt', { type: 'DateTime' })
     t.field('alphas', { type: 'Int' })
     t.field('charlies', { type: 'Int' })
     t.field('deltas', { type: 'Int' })
@@ -5812,9 +5940,11 @@ export const ScoreCreateWithoutShooterInput = inputObjectType({
     t.field('poppers', { type: 'Int' })
     t.field('time', { type: 'Float' })
     t.field('proErrorCount', { type: 'Int' })
-    t.field('hitFactor', { type: 'Decimal' })
+    t.field('score', { type: 'Int' })
+    t.field('hitFactor', { type: 'Float' })
     t.field('state', { type: 'ScoreState' })
     t.nonNull.field('round', { type: 'Int' })
+    t.field('accuracy', { type: 'Float' })
     t.field('proErrors', {
       type: 'ProErrorsStoreCreateNestedManyWithoutScoreInput',
     })
@@ -5832,6 +5962,7 @@ export const ScoreUncheckedCreateWithoutShooterInput = inputObjectType({
   name: 'ScoreUncheckedCreateWithoutShooterInput',
   definition(t) {
     t.field('id', { type: 'Int' })
+    t.field('createAt', { type: 'DateTime' })
     t.field('alphas', { type: 'Int' })
     t.field('charlies', { type: 'Int' })
     t.field('deltas', { type: 'Int' })
@@ -5841,9 +5972,11 @@ export const ScoreUncheckedCreateWithoutShooterInput = inputObjectType({
     t.field('time', { type: 'Float' })
     t.field('proErrorCount', { type: 'Int' })
     t.nonNull.field('scorelistId', { type: 'Int' })
-    t.field('hitFactor', { type: 'Decimal' })
+    t.field('score', { type: 'Int' })
+    t.field('hitFactor', { type: 'Float' })
     t.field('state', { type: 'ScoreState' })
     t.nonNull.field('round', { type: 'Int' })
+    t.field('accuracy', { type: 'Float' })
     t.field('dqObjectsId', { type: 'Int' })
     t.field('proErrors', {
       type: 'ProErrorsStoreUncheckedCreateNestedManyWithoutScoreInput',
@@ -5977,6 +6110,7 @@ export const ScoreScalarWhereInput = inputObjectType({
     t.list.field('OR', { type: 'ScoreScalarWhereInput' })
     t.list.field('NOT', { type: 'ScoreScalarWhereInput' })
     t.field('id', { type: 'IntFilter' })
+    t.field('createAt', { type: 'DateTimeFilter' })
     t.field('alphas', { type: 'IntFilter' })
     t.field('charlies', { type: 'IntFilter' })
     t.field('deltas', { type: 'IntFilter' })
@@ -5987,9 +6121,11 @@ export const ScoreScalarWhereInput = inputObjectType({
     t.field('proErrorCount', { type: 'IntFilter' })
     t.field('scorelistId', { type: 'IntFilter' })
     t.field('shooterId', { type: 'IntFilter' })
-    t.field('hitFactor', { type: 'DecimalFilter' })
+    t.field('score', { type: 'IntFilter' })
+    t.field('hitFactor', { type: 'FloatFilter' })
     t.field('state', { type: 'EnumScoreStateFilter' })
     t.field('round', { type: 'IntFilter' })
+    t.field('accuracy', { type: 'FloatNullableFilter' })
     t.field('dqObjectsId', { type: 'IntNullableFilter' })
   },
 })
@@ -6834,6 +6970,7 @@ export const ScoreCreateWithoutScorelistInput = inputObjectType({
   },
   name: 'ScoreCreateWithoutScorelistInput',
   definition(t) {
+    t.field('createAt', { type: 'DateTime' })
     t.field('alphas', { type: 'Int' })
     t.field('charlies', { type: 'Int' })
     t.field('deltas', { type: 'Int' })
@@ -6842,9 +6979,11 @@ export const ScoreCreateWithoutScorelistInput = inputObjectType({
     t.field('poppers', { type: 'Int' })
     t.field('time', { type: 'Float' })
     t.field('proErrorCount', { type: 'Int' })
-    t.field('hitFactor', { type: 'Decimal' })
+    t.field('score', { type: 'Int' })
+    t.field('hitFactor', { type: 'Float' })
     t.field('state', { type: 'ScoreState' })
     t.nonNull.field('round', { type: 'Int' })
+    t.field('accuracy', { type: 'Float' })
     t.nonNull.field('shooter', {
       type: 'ShooterCreateNestedOneWithoutScoreInput',
     })
@@ -6862,6 +7001,7 @@ export const ScoreUncheckedCreateWithoutScorelistInput = inputObjectType({
   name: 'ScoreUncheckedCreateWithoutScorelistInput',
   definition(t) {
     t.field('id', { type: 'Int' })
+    t.field('createAt', { type: 'DateTime' })
     t.field('alphas', { type: 'Int' })
     t.field('charlies', { type: 'Int' })
     t.field('deltas', { type: 'Int' })
@@ -6871,9 +7011,11 @@ export const ScoreUncheckedCreateWithoutScorelistInput = inputObjectType({
     t.field('time', { type: 'Float' })
     t.field('proErrorCount', { type: 'Int' })
     t.nonNull.field('shooterId', { type: 'Int' })
-    t.field('hitFactor', { type: 'Decimal' })
+    t.field('score', { type: 'Int' })
+    t.field('hitFactor', { type: 'Float' })
     t.field('state', { type: 'ScoreState' })
     t.nonNull.field('round', { type: 'Int' })
+    t.field('accuracy', { type: 'Float' })
     t.field('dqObjectsId', { type: 'Int' })
     t.field('proErrors', {
       type: 'ProErrorsStoreUncheckedCreateNestedManyWithoutScoreInput',
@@ -7626,6 +7768,7 @@ export const ScoreCreateWithoutProErrorsInput = inputObjectType({
   },
   name: 'ScoreCreateWithoutProErrorsInput',
   definition(t) {
+    t.field('createAt', { type: 'DateTime' })
     t.field('alphas', { type: 'Int' })
     t.field('charlies', { type: 'Int' })
     t.field('deltas', { type: 'Int' })
@@ -7634,9 +7777,11 @@ export const ScoreCreateWithoutProErrorsInput = inputObjectType({
     t.field('poppers', { type: 'Int' })
     t.field('time', { type: 'Float' })
     t.field('proErrorCount', { type: 'Int' })
-    t.field('hitFactor', { type: 'Decimal' })
+    t.field('score', { type: 'Int' })
+    t.field('hitFactor', { type: 'Float' })
     t.field('state', { type: 'ScoreState' })
     t.nonNull.field('round', { type: 'Int' })
+    t.field('accuracy', { type: 'Float' })
     t.nonNull.field('shooter', {
       type: 'ShooterCreateNestedOneWithoutScoreInput',
     })
@@ -7654,6 +7799,7 @@ export const ScoreUncheckedCreateWithoutProErrorsInput = inputObjectType({
   name: 'ScoreUncheckedCreateWithoutProErrorsInput',
   definition(t) {
     t.field('id', { type: 'Int' })
+    t.field('createAt', { type: 'DateTime' })
     t.field('alphas', { type: 'Int' })
     t.field('charlies', { type: 'Int' })
     t.field('deltas', { type: 'Int' })
@@ -7664,9 +7810,11 @@ export const ScoreUncheckedCreateWithoutProErrorsInput = inputObjectType({
     t.field('proErrorCount', { type: 'Int' })
     t.nonNull.field('scorelistId', { type: 'Int' })
     t.nonNull.field('shooterId', { type: 'Int' })
-    t.field('hitFactor', { type: 'Decimal' })
+    t.field('score', { type: 'Int' })
+    t.field('hitFactor', { type: 'Float' })
     t.field('state', { type: 'ScoreState' })
     t.nonNull.field('round', { type: 'Int' })
+    t.field('accuracy', { type: 'Float' })
     t.field('dqObjectsId', { type: 'Int' })
   },
 })
@@ -7767,6 +7915,7 @@ export const ScoreUpdateWithoutProErrorsInput = inputObjectType({
   },
   name: 'ScoreUpdateWithoutProErrorsInput',
   definition(t) {
+    t.field('createAt', { type: 'DateTimeFieldUpdateOperationsInput' })
     t.field('alphas', { type: 'IntFieldUpdateOperationsInput' })
     t.field('charlies', { type: 'IntFieldUpdateOperationsInput' })
     t.field('deltas', { type: 'IntFieldUpdateOperationsInput' })
@@ -7775,9 +7924,11 @@ export const ScoreUpdateWithoutProErrorsInput = inputObjectType({
     t.field('poppers', { type: 'IntFieldUpdateOperationsInput' })
     t.field('time', { type: 'FloatFieldUpdateOperationsInput' })
     t.field('proErrorCount', { type: 'IntFieldUpdateOperationsInput' })
-    t.field('hitFactor', { type: 'DecimalFieldUpdateOperationsInput' })
+    t.field('score', { type: 'IntFieldUpdateOperationsInput' })
+    t.field('hitFactor', { type: 'FloatFieldUpdateOperationsInput' })
     t.field('state', { type: 'EnumScoreStateFieldUpdateOperationsInput' })
     t.field('round', { type: 'IntFieldUpdateOperationsInput' })
+    t.field('accuracy', { type: 'NullableFloatFieldUpdateOperationsInput' })
     t.field('shooter', {
       type: 'ShooterUpdateOneRequiredWithoutScoreNestedInput',
     })
@@ -7795,6 +7946,7 @@ export const ScoreUncheckedUpdateWithoutProErrorsInput = inputObjectType({
   name: 'ScoreUncheckedUpdateWithoutProErrorsInput',
   definition(t) {
     t.field('id', { type: 'IntFieldUpdateOperationsInput' })
+    t.field('createAt', { type: 'DateTimeFieldUpdateOperationsInput' })
     t.field('alphas', { type: 'IntFieldUpdateOperationsInput' })
     t.field('charlies', { type: 'IntFieldUpdateOperationsInput' })
     t.field('deltas', { type: 'IntFieldUpdateOperationsInput' })
@@ -7805,9 +7957,11 @@ export const ScoreUncheckedUpdateWithoutProErrorsInput = inputObjectType({
     t.field('proErrorCount', { type: 'IntFieldUpdateOperationsInput' })
     t.field('scorelistId', { type: 'IntFieldUpdateOperationsInput' })
     t.field('shooterId', { type: 'IntFieldUpdateOperationsInput' })
-    t.field('hitFactor', { type: 'DecimalFieldUpdateOperationsInput' })
+    t.field('score', { type: 'IntFieldUpdateOperationsInput' })
+    t.field('hitFactor', { type: 'FloatFieldUpdateOperationsInput' })
     t.field('state', { type: 'EnumScoreStateFieldUpdateOperationsInput' })
     t.field('round', { type: 'IntFieldUpdateOperationsInput' })
+    t.field('accuracy', { type: 'NullableFloatFieldUpdateOperationsInput' })
     t.field('dqObjectsId', { type: 'NullableIntFieldUpdateOperationsInput' })
   },
 })
@@ -7818,6 +7972,7 @@ export const ScoreCreateWithoutDqReasonInput = inputObjectType({
   },
   name: 'ScoreCreateWithoutDqReasonInput',
   definition(t) {
+    t.field('createAt', { type: 'DateTime' })
     t.field('alphas', { type: 'Int' })
     t.field('charlies', { type: 'Int' })
     t.field('deltas', { type: 'Int' })
@@ -7826,9 +7981,11 @@ export const ScoreCreateWithoutDqReasonInput = inputObjectType({
     t.field('poppers', { type: 'Int' })
     t.field('time', { type: 'Float' })
     t.field('proErrorCount', { type: 'Int' })
-    t.field('hitFactor', { type: 'Decimal' })
+    t.field('score', { type: 'Int' })
+    t.field('hitFactor', { type: 'Float' })
     t.field('state', { type: 'ScoreState' })
     t.nonNull.field('round', { type: 'Int' })
+    t.field('accuracy', { type: 'Float' })
     t.nonNull.field('shooter', {
       type: 'ShooterCreateNestedOneWithoutScoreInput',
     })
@@ -7848,6 +8005,7 @@ export const ScoreUncheckedCreateWithoutDqReasonInput = inputObjectType({
   name: 'ScoreUncheckedCreateWithoutDqReasonInput',
   definition(t) {
     t.field('id', { type: 'Int' })
+    t.field('createAt', { type: 'DateTime' })
     t.field('alphas', { type: 'Int' })
     t.field('charlies', { type: 'Int' })
     t.field('deltas', { type: 'Int' })
@@ -7858,9 +8016,11 @@ export const ScoreUncheckedCreateWithoutDqReasonInput = inputObjectType({
     t.field('proErrorCount', { type: 'Int' })
     t.nonNull.field('scorelistId', { type: 'Int' })
     t.nonNull.field('shooterId', { type: 'Int' })
-    t.field('hitFactor', { type: 'Decimal' })
+    t.field('score', { type: 'Int' })
+    t.field('hitFactor', { type: 'Float' })
     t.field('state', { type: 'ScoreState' })
     t.nonNull.field('round', { type: 'Int' })
+    t.field('accuracy', { type: 'Float' })
     t.field('proErrors', {
       type: 'ProErrorsStoreUncheckedCreateNestedManyWithoutScoreInput',
     })
@@ -8061,6 +8221,7 @@ export const ScoreCreateManyShooterInput = inputObjectType({
   name: 'ScoreCreateManyShooterInput',
   definition(t) {
     t.field('id', { type: 'Int' })
+    t.field('createAt', { type: 'DateTime' })
     t.field('alphas', { type: 'Int' })
     t.field('charlies', { type: 'Int' })
     t.field('deltas', { type: 'Int' })
@@ -8070,9 +8231,11 @@ export const ScoreCreateManyShooterInput = inputObjectType({
     t.field('time', { type: 'Float' })
     t.field('proErrorCount', { type: 'Int' })
     t.nonNull.field('scorelistId', { type: 'Int' })
-    t.field('hitFactor', { type: 'Decimal' })
+    t.field('score', { type: 'Int' })
+    t.field('hitFactor', { type: 'Float' })
     t.field('state', { type: 'ScoreState' })
     t.nonNull.field('round', { type: 'Int' })
+    t.field('accuracy', { type: 'Float' })
     t.field('dqObjectsId', { type: 'Int' })
   },
 })
@@ -8156,6 +8319,7 @@ export const ScoreUpdateWithoutShooterInput = inputObjectType({
   },
   name: 'ScoreUpdateWithoutShooterInput',
   definition(t) {
+    t.field('createAt', { type: 'DateTimeFieldUpdateOperationsInput' })
     t.field('alphas', { type: 'IntFieldUpdateOperationsInput' })
     t.field('charlies', { type: 'IntFieldUpdateOperationsInput' })
     t.field('deltas', { type: 'IntFieldUpdateOperationsInput' })
@@ -8164,9 +8328,11 @@ export const ScoreUpdateWithoutShooterInput = inputObjectType({
     t.field('poppers', { type: 'IntFieldUpdateOperationsInput' })
     t.field('time', { type: 'FloatFieldUpdateOperationsInput' })
     t.field('proErrorCount', { type: 'IntFieldUpdateOperationsInput' })
-    t.field('hitFactor', { type: 'DecimalFieldUpdateOperationsInput' })
+    t.field('score', { type: 'IntFieldUpdateOperationsInput' })
+    t.field('hitFactor', { type: 'FloatFieldUpdateOperationsInput' })
     t.field('state', { type: 'EnumScoreStateFieldUpdateOperationsInput' })
     t.field('round', { type: 'IntFieldUpdateOperationsInput' })
+    t.field('accuracy', { type: 'NullableFloatFieldUpdateOperationsInput' })
     t.field('proErrors', {
       type: 'ProErrorsStoreUpdateManyWithoutScoreNestedInput',
     })
@@ -8184,6 +8350,7 @@ export const ScoreUncheckedUpdateWithoutShooterInput = inputObjectType({
   name: 'ScoreUncheckedUpdateWithoutShooterInput',
   definition(t) {
     t.field('id', { type: 'IntFieldUpdateOperationsInput' })
+    t.field('createAt', { type: 'DateTimeFieldUpdateOperationsInput' })
     t.field('alphas', { type: 'IntFieldUpdateOperationsInput' })
     t.field('charlies', { type: 'IntFieldUpdateOperationsInput' })
     t.field('deltas', { type: 'IntFieldUpdateOperationsInput' })
@@ -8193,9 +8360,11 @@ export const ScoreUncheckedUpdateWithoutShooterInput = inputObjectType({
     t.field('time', { type: 'FloatFieldUpdateOperationsInput' })
     t.field('proErrorCount', { type: 'IntFieldUpdateOperationsInput' })
     t.field('scorelistId', { type: 'IntFieldUpdateOperationsInput' })
-    t.field('hitFactor', { type: 'DecimalFieldUpdateOperationsInput' })
+    t.field('score', { type: 'IntFieldUpdateOperationsInput' })
+    t.field('hitFactor', { type: 'FloatFieldUpdateOperationsInput' })
     t.field('state', { type: 'EnumScoreStateFieldUpdateOperationsInput' })
     t.field('round', { type: 'IntFieldUpdateOperationsInput' })
+    t.field('accuracy', { type: 'NullableFloatFieldUpdateOperationsInput' })
     t.field('dqObjectsId', { type: 'NullableIntFieldUpdateOperationsInput' })
     t.field('proErrors', {
       type: 'ProErrorsStoreUncheckedUpdateManyWithoutScoreNestedInput',
@@ -8210,6 +8379,7 @@ export const ScoreUncheckedUpdateManyWithoutShooterInput = inputObjectType({
   name: 'ScoreUncheckedUpdateManyWithoutShooterInput',
   definition(t) {
     t.field('id', { type: 'IntFieldUpdateOperationsInput' })
+    t.field('createAt', { type: 'DateTimeFieldUpdateOperationsInput' })
     t.field('alphas', { type: 'IntFieldUpdateOperationsInput' })
     t.field('charlies', { type: 'IntFieldUpdateOperationsInput' })
     t.field('deltas', { type: 'IntFieldUpdateOperationsInput' })
@@ -8219,9 +8389,11 @@ export const ScoreUncheckedUpdateManyWithoutShooterInput = inputObjectType({
     t.field('time', { type: 'FloatFieldUpdateOperationsInput' })
     t.field('proErrorCount', { type: 'IntFieldUpdateOperationsInput' })
     t.field('scorelistId', { type: 'IntFieldUpdateOperationsInput' })
-    t.field('hitFactor', { type: 'DecimalFieldUpdateOperationsInput' })
+    t.field('score', { type: 'IntFieldUpdateOperationsInput' })
+    t.field('hitFactor', { type: 'FloatFieldUpdateOperationsInput' })
     t.field('state', { type: 'EnumScoreStateFieldUpdateOperationsInput' })
     t.field('round', { type: 'IntFieldUpdateOperationsInput' })
+    t.field('accuracy', { type: 'NullableFloatFieldUpdateOperationsInput' })
     t.field('dqObjectsId', { type: 'NullableIntFieldUpdateOperationsInput' })
   },
 })
@@ -8450,6 +8622,7 @@ export const ScoreCreateManyScorelistInput = inputObjectType({
   name: 'ScoreCreateManyScorelistInput',
   definition(t) {
     t.field('id', { type: 'Int' })
+    t.field('createAt', { type: 'DateTime' })
     t.field('alphas', { type: 'Int' })
     t.field('charlies', { type: 'Int' })
     t.field('deltas', { type: 'Int' })
@@ -8459,9 +8632,11 @@ export const ScoreCreateManyScorelistInput = inputObjectType({
     t.field('time', { type: 'Float' })
     t.field('proErrorCount', { type: 'Int' })
     t.nonNull.field('shooterId', { type: 'Int' })
-    t.field('hitFactor', { type: 'Decimal' })
+    t.field('score', { type: 'Int' })
+    t.field('hitFactor', { type: 'Float' })
     t.field('state', { type: 'ScoreState' })
     t.nonNull.field('round', { type: 'Int' })
+    t.field('accuracy', { type: 'Float' })
     t.field('dqObjectsId', { type: 'Int' })
   },
 })
@@ -8472,6 +8647,7 @@ export const ScoreUpdateWithoutScorelistInput = inputObjectType({
   },
   name: 'ScoreUpdateWithoutScorelistInput',
   definition(t) {
+    t.field('createAt', { type: 'DateTimeFieldUpdateOperationsInput' })
     t.field('alphas', { type: 'IntFieldUpdateOperationsInput' })
     t.field('charlies', { type: 'IntFieldUpdateOperationsInput' })
     t.field('deltas', { type: 'IntFieldUpdateOperationsInput' })
@@ -8480,9 +8656,11 @@ export const ScoreUpdateWithoutScorelistInput = inputObjectType({
     t.field('poppers', { type: 'IntFieldUpdateOperationsInput' })
     t.field('time', { type: 'FloatFieldUpdateOperationsInput' })
     t.field('proErrorCount', { type: 'IntFieldUpdateOperationsInput' })
-    t.field('hitFactor', { type: 'DecimalFieldUpdateOperationsInput' })
+    t.field('score', { type: 'IntFieldUpdateOperationsInput' })
+    t.field('hitFactor', { type: 'FloatFieldUpdateOperationsInput' })
     t.field('state', { type: 'EnumScoreStateFieldUpdateOperationsInput' })
     t.field('round', { type: 'IntFieldUpdateOperationsInput' })
+    t.field('accuracy', { type: 'NullableFloatFieldUpdateOperationsInput' })
     t.field('shooter', {
       type: 'ShooterUpdateOneRequiredWithoutScoreNestedInput',
     })
@@ -8500,6 +8678,7 @@ export const ScoreUncheckedUpdateWithoutScorelistInput = inputObjectType({
   name: 'ScoreUncheckedUpdateWithoutScorelistInput',
   definition(t) {
     t.field('id', { type: 'IntFieldUpdateOperationsInput' })
+    t.field('createAt', { type: 'DateTimeFieldUpdateOperationsInput' })
     t.field('alphas', { type: 'IntFieldUpdateOperationsInput' })
     t.field('charlies', { type: 'IntFieldUpdateOperationsInput' })
     t.field('deltas', { type: 'IntFieldUpdateOperationsInput' })
@@ -8509,9 +8688,11 @@ export const ScoreUncheckedUpdateWithoutScorelistInput = inputObjectType({
     t.field('time', { type: 'FloatFieldUpdateOperationsInput' })
     t.field('proErrorCount', { type: 'IntFieldUpdateOperationsInput' })
     t.field('shooterId', { type: 'IntFieldUpdateOperationsInput' })
-    t.field('hitFactor', { type: 'DecimalFieldUpdateOperationsInput' })
+    t.field('score', { type: 'IntFieldUpdateOperationsInput' })
+    t.field('hitFactor', { type: 'FloatFieldUpdateOperationsInput' })
     t.field('state', { type: 'EnumScoreStateFieldUpdateOperationsInput' })
     t.field('round', { type: 'IntFieldUpdateOperationsInput' })
+    t.field('accuracy', { type: 'NullableFloatFieldUpdateOperationsInput' })
     t.field('dqObjectsId', { type: 'NullableIntFieldUpdateOperationsInput' })
     t.field('proErrors', {
       type: 'ProErrorsStoreUncheckedUpdateManyWithoutScoreNestedInput',
@@ -8526,6 +8707,7 @@ export const ScoreUncheckedUpdateManyWithoutScorelistInput = inputObjectType({
   name: 'ScoreUncheckedUpdateManyWithoutScorelistInput',
   definition(t) {
     t.field('id', { type: 'IntFieldUpdateOperationsInput' })
+    t.field('createAt', { type: 'DateTimeFieldUpdateOperationsInput' })
     t.field('alphas', { type: 'IntFieldUpdateOperationsInput' })
     t.field('charlies', { type: 'IntFieldUpdateOperationsInput' })
     t.field('deltas', { type: 'IntFieldUpdateOperationsInput' })
@@ -8535,9 +8717,11 @@ export const ScoreUncheckedUpdateManyWithoutScorelistInput = inputObjectType({
     t.field('time', { type: 'FloatFieldUpdateOperationsInput' })
     t.field('proErrorCount', { type: 'IntFieldUpdateOperationsInput' })
     t.field('shooterId', { type: 'IntFieldUpdateOperationsInput' })
-    t.field('hitFactor', { type: 'DecimalFieldUpdateOperationsInput' })
+    t.field('score', { type: 'IntFieldUpdateOperationsInput' })
+    t.field('hitFactor', { type: 'FloatFieldUpdateOperationsInput' })
     t.field('state', { type: 'EnumScoreStateFieldUpdateOperationsInput' })
     t.field('round', { type: 'IntFieldUpdateOperationsInput' })
+    t.field('accuracy', { type: 'NullableFloatFieldUpdateOperationsInput' })
     t.field('dqObjectsId', { type: 'NullableIntFieldUpdateOperationsInput' })
   },
 })
@@ -8648,6 +8832,7 @@ export const ScoreCreateManyDqReasonInput = inputObjectType({
   name: 'ScoreCreateManyDqReasonInput',
   definition(t) {
     t.field('id', { type: 'Int' })
+    t.field('createAt', { type: 'DateTime' })
     t.field('alphas', { type: 'Int' })
     t.field('charlies', { type: 'Int' })
     t.field('deltas', { type: 'Int' })
@@ -8658,9 +8843,11 @@ export const ScoreCreateManyDqReasonInput = inputObjectType({
     t.field('proErrorCount', { type: 'Int' })
     t.nonNull.field('scorelistId', { type: 'Int' })
     t.nonNull.field('shooterId', { type: 'Int' })
-    t.field('hitFactor', { type: 'Decimal' })
+    t.field('score', { type: 'Int' })
+    t.field('hitFactor', { type: 'Float' })
     t.field('state', { type: 'ScoreState' })
     t.nonNull.field('round', { type: 'Int' })
+    t.field('accuracy', { type: 'Float' })
   },
 })
 
@@ -8670,6 +8857,7 @@ export const ScoreUpdateWithoutDqReasonInput = inputObjectType({
   },
   name: 'ScoreUpdateWithoutDqReasonInput',
   definition(t) {
+    t.field('createAt', { type: 'DateTimeFieldUpdateOperationsInput' })
     t.field('alphas', { type: 'IntFieldUpdateOperationsInput' })
     t.field('charlies', { type: 'IntFieldUpdateOperationsInput' })
     t.field('deltas', { type: 'IntFieldUpdateOperationsInput' })
@@ -8678,9 +8866,11 @@ export const ScoreUpdateWithoutDqReasonInput = inputObjectType({
     t.field('poppers', { type: 'IntFieldUpdateOperationsInput' })
     t.field('time', { type: 'FloatFieldUpdateOperationsInput' })
     t.field('proErrorCount', { type: 'IntFieldUpdateOperationsInput' })
-    t.field('hitFactor', { type: 'DecimalFieldUpdateOperationsInput' })
+    t.field('score', { type: 'IntFieldUpdateOperationsInput' })
+    t.field('hitFactor', { type: 'FloatFieldUpdateOperationsInput' })
     t.field('state', { type: 'EnumScoreStateFieldUpdateOperationsInput' })
     t.field('round', { type: 'IntFieldUpdateOperationsInput' })
+    t.field('accuracy', { type: 'NullableFloatFieldUpdateOperationsInput' })
     t.field('shooter', {
       type: 'ShooterUpdateOneRequiredWithoutScoreNestedInput',
     })
@@ -8700,6 +8890,7 @@ export const ScoreUncheckedUpdateWithoutDqReasonInput = inputObjectType({
   name: 'ScoreUncheckedUpdateWithoutDqReasonInput',
   definition(t) {
     t.field('id', { type: 'IntFieldUpdateOperationsInput' })
+    t.field('createAt', { type: 'DateTimeFieldUpdateOperationsInput' })
     t.field('alphas', { type: 'IntFieldUpdateOperationsInput' })
     t.field('charlies', { type: 'IntFieldUpdateOperationsInput' })
     t.field('deltas', { type: 'IntFieldUpdateOperationsInput' })
@@ -8710,9 +8901,11 @@ export const ScoreUncheckedUpdateWithoutDqReasonInput = inputObjectType({
     t.field('proErrorCount', { type: 'IntFieldUpdateOperationsInput' })
     t.field('scorelistId', { type: 'IntFieldUpdateOperationsInput' })
     t.field('shooterId', { type: 'IntFieldUpdateOperationsInput' })
-    t.field('hitFactor', { type: 'DecimalFieldUpdateOperationsInput' })
+    t.field('score', { type: 'IntFieldUpdateOperationsInput' })
+    t.field('hitFactor', { type: 'FloatFieldUpdateOperationsInput' })
     t.field('state', { type: 'EnumScoreStateFieldUpdateOperationsInput' })
     t.field('round', { type: 'IntFieldUpdateOperationsInput' })
+    t.field('accuracy', { type: 'NullableFloatFieldUpdateOperationsInput' })
     t.field('proErrors', {
       type: 'ProErrorsStoreUncheckedUpdateManyWithoutScoreNestedInput',
     })
@@ -8726,6 +8919,7 @@ export const ScoreUncheckedUpdateManyWithoutDqReasonInput = inputObjectType({
   name: 'ScoreUncheckedUpdateManyWithoutDqReasonInput',
   definition(t) {
     t.field('id', { type: 'IntFieldUpdateOperationsInput' })
+    t.field('createAt', { type: 'DateTimeFieldUpdateOperationsInput' })
     t.field('alphas', { type: 'IntFieldUpdateOperationsInput' })
     t.field('charlies', { type: 'IntFieldUpdateOperationsInput' })
     t.field('deltas', { type: 'IntFieldUpdateOperationsInput' })
@@ -8736,9 +8930,11 @@ export const ScoreUncheckedUpdateManyWithoutDqReasonInput = inputObjectType({
     t.field('proErrorCount', { type: 'IntFieldUpdateOperationsInput' })
     t.field('scorelistId', { type: 'IntFieldUpdateOperationsInput' })
     t.field('shooterId', { type: 'IntFieldUpdateOperationsInput' })
-    t.field('hitFactor', { type: 'DecimalFieldUpdateOperationsInput' })
+    t.field('score', { type: 'IntFieldUpdateOperationsInput' })
+    t.field('hitFactor', { type: 'FloatFieldUpdateOperationsInput' })
     t.field('state', { type: 'EnumScoreStateFieldUpdateOperationsInput' })
     t.field('round', { type: 'IntFieldUpdateOperationsInput' })
+    t.field('accuracy', { type: 'NullableFloatFieldUpdateOperationsInput' })
   },
 })
 
@@ -9488,6 +9684,7 @@ export const ScoreCountAggregateOutputType = objectType({
   name: 'ScoreCountAggregateOutputType',
   definition(t) {
     t.field('id', { type: 'Int' })
+    t.field('createAt', { type: 'Int' })
     t.field('alphas', { type: 'Int' })
     t.field('charlies', { type: 'Int' })
     t.field('deltas', { type: 'Int' })
@@ -9498,9 +9695,11 @@ export const ScoreCountAggregateOutputType = objectType({
     t.field('proErrorCount', { type: 'Int' })
     t.field('scorelistId', { type: 'Int' })
     t.field('shooterId', { type: 'Int' })
+    t.field('score', { type: 'Int' })
     t.field('hitFactor', { type: 'Int' })
     t.field('state', { type: 'Int' })
     t.field('round', { type: 'Int' })
+    t.field('accuracy', { type: 'Int' })
     t.field('dqObjectsId', { type: 'Int' })
     t.field('_all', { type: 'Int' })
   },
@@ -9523,8 +9722,10 @@ export const ScoreAvgAggregateOutputType = objectType({
     t.nullable.field('proErrorCount', { type: 'Float' })
     t.nullable.field('scorelistId', { type: 'Float' })
     t.nullable.field('shooterId', { type: 'Float' })
-    t.nullable.field('hitFactor', { type: 'Decimal' })
+    t.nullable.field('score', { type: 'Float' })
+    t.nullable.field('hitFactor', { type: 'Float' })
     t.nullable.field('round', { type: 'Float' })
+    t.nullable.field('accuracy', { type: 'Float' })
     t.nullable.field('dqObjectsId', { type: 'Float' })
   },
 })
@@ -9546,8 +9747,10 @@ export const ScoreSumAggregateOutputType = objectType({
     t.nullable.field('proErrorCount', { type: 'Int' })
     t.nullable.field('scorelistId', { type: 'Int' })
     t.nullable.field('shooterId', { type: 'Int' })
-    t.nullable.field('hitFactor', { type: 'Decimal' })
+    t.nullable.field('score', { type: 'Int' })
+    t.nullable.field('hitFactor', { type: 'Float' })
     t.nullable.field('round', { type: 'Int' })
+    t.nullable.field('accuracy', { type: 'Float' })
     t.nullable.field('dqObjectsId', { type: 'Int' })
   },
 })
@@ -9559,6 +9762,7 @@ export const ScoreMinAggregateOutputType = objectType({
   name: 'ScoreMinAggregateOutputType',
   definition(t) {
     t.nullable.field('id', { type: 'Int' })
+    t.nullable.field('createAt', { type: 'DateTime' })
     t.nullable.field('alphas', { type: 'Int' })
     t.nullable.field('charlies', { type: 'Int' })
     t.nullable.field('deltas', { type: 'Int' })
@@ -9569,9 +9773,11 @@ export const ScoreMinAggregateOutputType = objectType({
     t.nullable.field('proErrorCount', { type: 'Int' })
     t.nullable.field('scorelistId', { type: 'Int' })
     t.nullable.field('shooterId', { type: 'Int' })
-    t.nullable.field('hitFactor', { type: 'Decimal' })
+    t.nullable.field('score', { type: 'Int' })
+    t.nullable.field('hitFactor', { type: 'Float' })
     t.nullable.field('state', { type: 'ScoreState' })
     t.nullable.field('round', { type: 'Int' })
+    t.nullable.field('accuracy', { type: 'Float' })
     t.nullable.field('dqObjectsId', { type: 'Int' })
   },
 })
@@ -9583,6 +9789,7 @@ export const ScoreMaxAggregateOutputType = objectType({
   name: 'ScoreMaxAggregateOutputType',
   definition(t) {
     t.nullable.field('id', { type: 'Int' })
+    t.nullable.field('createAt', { type: 'DateTime' })
     t.nullable.field('alphas', { type: 'Int' })
     t.nullable.field('charlies', { type: 'Int' })
     t.nullable.field('deltas', { type: 'Int' })
@@ -9593,9 +9800,11 @@ export const ScoreMaxAggregateOutputType = objectType({
     t.nullable.field('proErrorCount', { type: 'Int' })
     t.nullable.field('scorelistId', { type: 'Int' })
     t.nullable.field('shooterId', { type: 'Int' })
-    t.nullable.field('hitFactor', { type: 'Decimal' })
+    t.nullable.field('score', { type: 'Int' })
+    t.nullable.field('hitFactor', { type: 'Float' })
     t.nullable.field('state', { type: 'ScoreState' })
     t.nullable.field('round', { type: 'Int' })
+    t.nullable.field('accuracy', { type: 'Float' })
     t.nullable.field('dqObjectsId', { type: 'Int' })
   },
 })
