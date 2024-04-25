@@ -6,11 +6,8 @@
 
 */
 -- AlterTable
-ALTER TABLE "Score" ALTER COLUMN "hitFactor" SET DEFAULT Remove this line from sql while migration,
+ALTER TABLE "Score"
 ALTER COLUMN "hitFactor" SET DATA TYPE DOUBLE PRECISION,
 ALTER COLUMN "score" SET DATA TYPE INTEGER;
 
 -- AlterTable
-ALTER TABLE "Stage" ALTER COLUMN "minRounds" SET DEFAULT Remove this line from sql while migration,
-ALTER COLUMN "maxScore" SET DEFAULT Remove this line from sql while migration,
-ALTER COLUMN "stageType" SET DEFAULT Remove this line from sql while migration;

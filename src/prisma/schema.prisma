@@ -19,6 +19,8 @@ model Shooter {
     stage    Stage[]
     score    Score[]
     email    String
+    Ranking  Ranking[]
+    Rating   Rating[]
 }
 
 enum StageType {
@@ -158,4 +160,22 @@ model Image {
     id        String  @id @unique @default(cuid())
     imagePath String
     Stage     Stage[]
+}
+
+model Ranking {
+    id        Int      @id @unique @default(autoincrement())
+    shooter   Shooter  @relation(fields: [shooterId], references: [id])
+    shooterId Int
+    rank      Int?
+    updatedAt DateTime @default(now()) @updatedAt
+    createAt  DateTime @default(now())
+}
+
+model Rating {
+    id        Int      @id @unique @default(autoincrement())
+    shooter   Shooter  @relation(fields: [shooterId], references: [id])
+    shooterId Int
+    rating    Float?
+    updatedAt DateTime @default(now()) @updatedAt
+    createAt  DateTime @default(now())
 }
