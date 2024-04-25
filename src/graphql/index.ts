@@ -6,3 +6,4 @@ export * from "./StageTag";
 export * from "./Scoreboard";
 export * from "./Scorelist";
 export * from "./Score";
+export * from "./Ranking";
