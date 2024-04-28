@@ -3,7 +3,7 @@ import { objectType } from "nexus";
 export const DqObjectObjectType = objectType({
 	name: "DqObject",
 	definition(t) {
-		t.int("id");
+		t.implements("Node");
 		t.string("index", {
 			description: "the index on the rulebooks",
 		});
