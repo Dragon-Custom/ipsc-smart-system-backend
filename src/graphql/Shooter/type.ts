@@ -9,8 +9,12 @@ export const DivisionEnum = enumType({
 
 export const ShooterType = objectType({
 	name: "Shooter",
+	nonNullDefaults: {
+		input: true,
+		output: false,
+	},
 	definition(t) {
-		t.int("id");
+		t.implements("Node");
 		t.dateTime("createAt");
 		t.string("name");
 		t.field("division", {

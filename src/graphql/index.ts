@@ -1,3 +1,4 @@
+export * from "./global";
 export * from "./Shooter";
 export * from "./StageTag";
 export * from "./Stage";

@@ -3,7 +3,7 @@ import { objectType } from "nexus";
 export const ScorelistObject = objectType({
 	name: "Scorelist",
 	definition(t) {
-		t.int("id");
+		t.implements("Node");
 		t.dateTime("createAt");
 		t.dateTime("lastUpdate");
 		t.field("stage", {
