@@ -33,14 +33,14 @@ enum StageType {
 model Stage {
     id              Int          @id @unique @default(autoincrement())
     createAt        DateTime?    @default(now())
-    image           Image        @relation(fields: [imageId], references: [id])
+    image           Image        @relation(fields: [imageId], references: [id], onDelete: Cascade)
     name            String
     description     String?
     papers          Int
     poppers         Int
     noshoots        Int
     gunCondition    Int
-    designer        Shooter      @relation(fields: [shooterId], references: [id])
+    designer        Shooter      @relation(fields: [shooterId], references: [id], onDelete: Cascade)
     shooterId       Int
     //unit: minutes
     walkthroughTime Decimal
@@ -83,9 +83,9 @@ model Scorelist {
     id           Int         @id @unique @default(autoincrement())
     createAt     DateTime    @default(now())
     lastUpdate   DateTime    @default(now()) @updatedAt
-    stage        Stage?      @relation(fields: [stageId], references: [id])
+    stage        Stage?      @relation(fields: [stageId], references: [id], onDelete: Cascade)
     scores       Score[]
-    scoreboard   Scoreboard? @relation(fields: [scoreboardId], references: [id])
+    scoreboard   Scoreboard? @relation(fields: [scoreboardId], references: [id], onDelete: Cascade)
     scoreboardId Int?
     stageId      Int?
     rounds       Int         @default(0)
@@ -101,7 +101,7 @@ enum ScoreState {
 model Score {
     id            Int              @id @unique @default(autoincrement())
     createAt      DateTime         @default(now())
-    shooter       Shooter          @relation(fields: [shooterId], references: [id], onUpdate: Cascade)
+    shooter       Shooter          @relation(fields: [shooterId], references: [id], onUpdate: Cascade, onDelete: Cascade)
     alphas        Int              @default(0)
     charlies      Int              @default(0)
     deltas        Int              @default(0)
@@ -111,7 +111,7 @@ model Score {
     time          Float            @default(0)
     proErrors     ProErrorsStore[]
     proErrorCount Int              @default(0)
-    scorelist     Scorelist        @relation(fields: [scorelistId], references: [id], onUpdate: Cascade)
+    scorelist     Scorelist        @relation(fields: [scorelistId], references: [id], onUpdate: Cascade, onDelete: Cascade)
     scorelistId   Int
     shooterId     Int
     score         Int              @default(dbgenerated("Remove this line from sql while migration"))
@@ -135,7 +135,7 @@ model ProErrorsStore {
     id                Int             @id @unique @default(autoincrement())
     count             Int
     proError          ProErrorObjects @relation(fields: [proErrorObjectsId], references: [id])
-    score             Score?          @relation(fields: [scoreId], references: [id])
+    score             Score?          @relation(fields: [scoreId], references: [id], onDelete: Cascade)
     scoreId           Int?
     proErrorObjectsId Int
 }
@@ -164,7 +164,7 @@ model Image {
 
 model Ranking {
     id        Int      @id @unique @default(autoincrement())
-    shooter   Shooter  @relation(fields: [shooterId], references: [id])
+    shooter   Shooter  @relation(fields: [shooterId], references: [id], onDelete: Cascade)
     shooterId Int
     rank      Int?
     updatedAt DateTime @default(now()) @updatedAt
@@ -173,7 +173,7 @@ model Ranking {
 
 model Rating {
     id        Int      @id @unique @default(autoincrement())
-    shooter   Shooter  @relation(fields: [shooterId], references: [id])
+    shooter   Shooter  @relation(fields: [shooterId], references: [id], onDelete: Cascade)
     shooterId Int
     rating    Float?
     updatedAt DateTime @default(now()) @updatedAt
