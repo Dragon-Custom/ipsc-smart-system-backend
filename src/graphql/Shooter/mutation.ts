@@ -24,7 +24,7 @@ export const UpdateShooterShooterInputType = inputObjectType({
 });
 
 export const ShooterMuataion = extendType({
-	type: "Mutation", 
+	type: "Mutation",
 	definition(t) {
 		t.nonNull.field("createShooter", {
 			type: "Shooter",
@@ -67,7 +67,7 @@ export const ShooterMuataion = extendType({
 			},
 		});
 		t.nonNull.boolean("deleteShooter", {
-			deprecation: "delete shooter, return true if success",
+			description: "delete shooter, return true if success",
 			args: {
 				id: nonNull("Int"),
 			},
