@@ -11,16 +11,23 @@ generator nexusPrisma {
     provider = "nexus-prisma"
 }
 
+enum Division {
+    Standard
+    Open
+    Production
+    ProductionOptics
+}
+
 model Shooter {
-    id       Int       @id @unique @default(autoincrement())
-    createAt DateTime? @default(now())
-    name     String
-    division Division
-    stage    Stage[]
-    score    Score[]
-    email    String
-    Ranking  Ranking[]
-    Rating   Rating[]
+    id            Int       @id @unique @default(autoincrement())
+    createAt      DateTime? @default(now())
+    name          String
+    division      Division
+    designedStage Stage[]
+    scores        Score[]
+    email         String
+    rankings      Ranking[]
+    ratings       Rating[]
 }
 
 enum StageType {
@@ -40,11 +47,11 @@ model Stage {
     poppers         Int
     noshoots        Int
     gunCondition    Int
-    designer        Shooter      @relation(fields: [shooterId], references: [id], onDelete: Cascade)
-    shooterId       Int
+    designer        Shooter      @relation(fields: [designerId], references: [id], onDelete: Cascade)
+    designerId      Int
     //unit: minutes
     walkthroughTime Decimal
-    Scorelist       Scorelist[]
+    scorelists      Scorelist[]
     // the calculated field
     minRounds       Int          @default(dbgenerated("Remove this line from sql while migration"))
     // the calculated field
@@ -80,15 +87,15 @@ model Scoreboard {
 }
 
 model Scorelist {
-    id           Int         @id @unique @default(autoincrement())
-    createAt     DateTime    @default(now())
-    lastUpdate   DateTime    @default(now()) @updatedAt
-    stage        Stage?      @relation(fields: [stageId], references: [id], onDelete: Cascade)
+    id           Int        @id @unique @default(autoincrement())
+    createAt     DateTime   @default(now())
+    lastUpdate   DateTime   @default(now()) @updatedAt
+    stage        Stage      @relation(fields: [stageId], references: [id], onDelete: Cascade)
+    stageId      Int
     scores       Score[]
-    scoreboard   Scoreboard? @relation(fields: [scoreboardId], references: [id], onDelete: Cascade)
-    scoreboardId Int?
-    stageId      Int?
-    rounds       Int         @default(0)
+    scoreboard   Scoreboard @relation(fields: [scoreboardId], references: [id], onDelete: Cascade)
+    scoreboardId Int
+    rounds       Int        @default(0)
 }
 
 enum ScoreState {
@@ -117,13 +124,13 @@ model Score {
     score         Int              @default(dbgenerated("Remove this line from sql while migration"))
     hitFactor     Float            @default(dbgenerated("Remove this line from sql while migration"))
     state         ScoreState       @default(DidNotScore)
-    dqReason      DqObjects?       @relation(fields: [dqObjectsId], references: [id])
+    dqReason      DqObject?        @relation(fields: [dqObjectId], references: [id])
     round         Int
     accuracy      Float?           @default(0)
-    dqObjectsId   Int?
+    dqObjectId    Int?
 }
 
-model ProErrorObjects {
+model ProErrorObject {
     id             Int              @id @unique @default(autoincrement())
     index          String           @unique
     title          String
@@ -132,34 +139,27 @@ model ProErrorObjects {
 }
 
 model ProErrorsStore {
-    id                Int             @id @unique @default(autoincrement())
-    count             Int
-    proError          ProErrorObjects @relation(fields: [proErrorObjectsId], references: [id])
-    score             Score?          @relation(fields: [scoreId], references: [id], onDelete: Cascade)
-    scoreId           Int?
-    proErrorObjectsId Int
+    id               Int            @id @unique @default(autoincrement())
+    count            Int
+    proError         ProErrorObject @relation(fields: [proErrorObjectId], references: [id])
+    score            Score          @relation(fields: [scoreId], references: [id], onDelete: Cascade)
+    scoreId          Int
+    proErrorObjectId Int
 }
 
-model DqObjects {
+model DqObject {
     id          Int     @id @unique @default(autoincrement())
     index       String  @unique
     category    String
     title       String
     description String
-    Score       Score[]
-}
-
-enum Division {
-    Standard
-    Open
-    Production
-    ProductionOptics
+    scores      Score[]
 }
 
 model Image {
     id        String  @id @unique @default(cuid())
     imagePath String
-    Stage     Stage[]
+    stages     Stage[]
 }
 
 model Ranking {
