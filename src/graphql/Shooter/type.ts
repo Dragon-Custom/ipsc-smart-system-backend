@@ -17,7 +17,6 @@ export const ShooterType = objectType({
 			type: "Division",
 		});
 		t.string("email");
-		//TODO: relation
 		t.nullable.list.field("designedStage", {
 			type: "Stage",
 		});
