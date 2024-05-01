@@ -28,6 +28,7 @@ export const StageTagQuery = extendType({
 				}
 				return ctx.prisma.stageTag.findMany({
 					where,
+					...ctx.select,
 				});
 			},
 		});
@@ -41,6 +42,7 @@ export const StageTagQuery = extendType({
 					where: {
 						id: args.id,
 					},
+					...ctx.select,
 				});
 			},
 		});

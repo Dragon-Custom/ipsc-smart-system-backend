@@ -7,7 +7,7 @@ export const imageMutation = extendType({
 	type: "Mutation",
 	definition(t) {
 		t.field("uploadImage", {
-			type: "String",
+			type: "ID",
 			args: {
 				image: nonNull(arg({ type: "File" })),
 			},

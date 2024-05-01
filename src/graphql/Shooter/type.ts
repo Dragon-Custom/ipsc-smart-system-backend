@@ -23,9 +23,6 @@ export const ShooterType = objectType({
 		t.string("email");
 		t.list.field("designedStage", {
 			type: "Stage",
-			resolve(src) {
-				return src.designedStage;
-			},
 		});
 		t.nullable.list.field("scores", {
 			type: "Score",

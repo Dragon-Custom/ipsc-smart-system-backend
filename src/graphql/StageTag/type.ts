@@ -10,3 +10,13 @@ export const StageTag = objectType({
 		});
 	},
 });
+
+export const TagOnStage = objectType({
+	name: "TagOnStage",
+	definition(t) {
+		t.implements("Node");
+		t.field("tag", {
+			type: "StageTag",
+		});
+	},
+});

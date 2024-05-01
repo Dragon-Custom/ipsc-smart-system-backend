@@ -8,7 +8,7 @@ export const StageTypeEnum = enumType({
 export const StageObject = objectType({
 	name: "Stage",
 	definition(t) {
-		t.int("id");
+		t.implements("Node");
 		t.dateTime("createAt");
 		t.field("image", {
 			type: "Image",
@@ -35,7 +35,7 @@ export const StageObject = objectType({
 			type: "StageType",
 		});
 		t.nullable.list.field("tags", {
-			type: "StageTag",
+			type: "TagOnStage",
 		});
 	},
 });

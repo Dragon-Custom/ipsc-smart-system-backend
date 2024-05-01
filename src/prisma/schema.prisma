@@ -50,7 +50,7 @@ model Stage {
     designer        Shooter      @relation(fields: [designerId], references: [id], onDelete: Cascade)
     designerId      Int
     //unit: minutes
-    walkthroughTime Decimal
+    walkthroughTime Float
     scorelists      Scorelist[]
     // the calculated field
     minRounds       Int          @default(dbgenerated("Remove this line from sql while migration"))
