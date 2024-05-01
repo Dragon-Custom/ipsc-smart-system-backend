@@ -94,7 +94,7 @@ export const StageMutation = extendType({
 				id: nonNull("Int"),
 				stage: "UpdateStageInput",
 			},
-			resolve(src, args, ctx) {
+			async resolve(src, args, ctx) {
 				const updateData: Prisma.StageUpdateArgs["data"] = {};
 				if (args.stage?.name) {
 					updateData.name = args.stage.name;
@@ -144,13 +144,35 @@ export const StageMutation = extendType({
 					};
 				}
 
-				return ctx.prisma.stage.update({
-					where: {
-						id: args.id,
-					},
-					data: updateData,
-					...ctx.select,
-				});1;
+				try {
+					return await ctx.prisma.stage.update({
+						where: {
+							id: args.id,
+						},
+						data: updateData,
+						...ctx.select,
+					});
+				} catch (error) {
+					return null;
+				}
+			},
+		});
+		t.field("deleteStage", {
+			type: "Stage",
+			args: {
+				id: nonNull("Int"),
+			},
+			async resolve(src, args, ctx) {
+				try {
+					return await ctx.prisma.stage.delete({
+						where: {
+							id: args.id,
+						},
+						...ctx.select,
+					});
+				} catch (error) {
+					return null;
+				}
 			},
 		});
 	},
