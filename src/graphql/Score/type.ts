@@ -8,7 +8,7 @@ export const ScoreStateEnum = enumType({
 export const ScoreObject = objectType({
 	name: "Score",
 	definition(t) {
-		t.int("id");
+		t.implements("Node");
 		t.dateTime("createAt");
 		t.field("shooter", {
 			type: "Shooter",
@@ -39,6 +39,64 @@ export const ScoreObject = objectType({
 		t.float("accuracy");
 		t.field("state", {
 			type: "ScoreState",
+		});
+
+		t.float("roundPrecentage", {
+			async resolve(src, args, ctx) {
+				const score  = (await ctx.prisma.score.findUnique({
+					where: {
+						id: src.id,
+					},
+					select: {
+						round: true,
+						scorelistId: true,
+						score: true,
+					},
+				}));
+				if (!score)
+					return 0;
+				const maxScore = await ctx.prisma.score.findFirst({
+					where: {
+						round: score.round,
+						scorelistId: score.scorelistId,
+					},
+					orderBy: {
+						hitFactor: "desc",
+					},
+				});
+				if (!maxScore)
+					return 0;
+				const precentage = (score.score / maxScore.score) * 100;
+				return precentage;
+			},
+		});
+
+		t.float("overallPrecentage", {
+			async resolve(src, args, ctx) {
+				const score  = (await ctx.prisma.score.findUnique({
+					where: {
+						id: src.id,
+					},
+					select: {
+						scorelistId: true,
+						score: true,
+					},
+				}));
+				if (!score)
+					return 0;
+				const maxScore = await ctx.prisma.score.findFirst({
+					where: {
+						scorelistId: score.scorelistId,
+					},
+					orderBy: {
+						hitFactor: "desc",
+					},
+				});
+				if (!maxScore)
+					return 0;
+				const precentage = (score.score / maxScore.score) * 100;
+				return precentage;
+			},
 		});
 	},
 });
