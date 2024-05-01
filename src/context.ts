@@ -1,4 +1,5 @@
 import { Prisma, PrismaClient } from "@prisma/client";
+import { YogaInitialContext } from "graphql-yoga";
 export let prisma = new PrismaClient();
 
 export function updatePrisma(newPrisma: PrismaClient) {
@@ -15,7 +16,7 @@ const subscribeList: SubscribeList[] = [];
 prisma.$use(async (params, next) => {
 	// Manipulate params here
 	const result = await next(params);
-	console.log(result, params);
+	// console.log(result, params);
 
 	subscribeList.forEach((subInfo) => {
 		if (
@@ -42,14 +43,19 @@ function unsubscribe(index: number) {
 	delete subscribeList[index];
 }
 
-export interface Context {
+export interface Context extends YogaInitialContext {
 	prisma: PrismaClient;
     subscribe: typeof subscribe;
     unsubscribe: typeof unsubscribe;
-    userId?: number; // 1
+	userId?: number; // 1
+	select: {
+		select: { [id: string]: boolean }
+	}
 }
 
 export const context = (/* { req }: { req: Request } */): Context => {
+	// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+	//@ts-expect-error
 	return {
 		prisma,
 		subscribe,
