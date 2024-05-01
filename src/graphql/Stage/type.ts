@@ -21,10 +21,8 @@ export const StageObject = objectType({
 		t.int("gunCondition");
 		t.field("designer", {
 			type: "Shooter",
-			resolve(src) {
-				return src.designer;
-			},
 		});
+		t.int("designerId");
 		t.float("walkthroughTime", {
 			description: "unit: minutes",
 		});

@@ -23,6 +23,7 @@ export const ProErrorObjectQuery = extendType({
 					where: {
 						id: args.id,
 					},
+					...ctx.select,
 				});
 			},
 		});
@@ -53,6 +54,7 @@ export const ProErrorObjectQuery = extendType({
 					where: {
 						...where,
 					},
+					...ctx.select,
 				});
 			},
 		});

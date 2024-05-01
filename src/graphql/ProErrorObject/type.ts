@@ -7,7 +7,7 @@ export const ProErrorObjectObject = objectType({
 		t.string("index");
 		t.string("title");
 		t.string("description");
-		t.nullable.list.field("proErrorsStore", {
+		t.list.field("proErrorsStore", {
 			type: "ProErrorStore",
 		});
 	},

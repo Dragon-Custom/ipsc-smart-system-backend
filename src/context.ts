@@ -48,9 +48,8 @@ export interface Context extends YogaInitialContext {
     subscribe: typeof subscribe;
     unsubscribe: typeof unsubscribe;
 	userId?: number; // 1
-	select: {
-		select: { [id: string]: boolean }
-	}
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	select: any;
 }
 
 export const context = (/* { req }: { req: Request } */): Context => {

@@ -23,6 +23,7 @@ export const DQObjectQuery = extendType({
 					where: {
 						id: args.id,
 					},
+					...ctx.select,
 				});
 			},
 		});
@@ -61,6 +62,7 @@ export const DQObjectQuery = extendType({
 					where: {
 						...where,
 					},
+					...ctx.select,
 				});
 			},
 		});

@@ -39,6 +39,7 @@ export const ShooterMuataion = extendType({
 						email: args.shooter.email,
 						name: args.shooter.name,
 					},
+					...ctx.select,
 				});
 			},
 		});
@@ -55,11 +56,10 @@ export const ShooterMuataion = extendType({
 						where: {
 							id: args.id,
 						},
-						// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-						//@ts-expect-error
 						data: {
 							...args.shooter,
 						},
+						...ctx.select,
 					});
 				} catch (e) {
 					return null;
@@ -77,6 +77,7 @@ export const ShooterMuataion = extendType({
 						where: {
 							id: args.id,
 						},
+						...ctx.select,
 					});
 					return true;
 				} catch (e) {

@@ -31,6 +31,7 @@ export const ShooterQuery = extendType({
 				}
 				return ctx.prisma.shooter.findMany({
 					where,
+					...ctx.select,
 				});
 			},
 		});
@@ -44,6 +45,7 @@ export const ShooterQuery = extendType({
 					where: {
 						id: args.id,
 					},
+					...ctx.select,
 				});
 			},
 		});
