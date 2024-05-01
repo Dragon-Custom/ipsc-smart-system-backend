@@ -6,8 +6,11 @@ export function updatePrisma(newPrisma: PrismaClient) {
 	prisma = newPrisma;
 }
 
+
+type SubscribeFn = (prisma:PrismaClient, prismaModel: Prisma.ModelName, prismaAction: Prisma.PrismaAction, params: Prisma.MiddlewareParams) => void;
+
 interface SubscribeList {
-	cb: () => void;
+	cb: SubscribeFn;
     model: Prisma.ModelName;
     action: Prisma.PrismaAction[];
 }
@@ -23,23 +26,23 @@ prisma.$use(async (params, next) => {
 			subInfo.action.includes(params.action) &&
             subInfo.model == params.model
 		) {
-			subInfo.cb();
+			subInfo.cb(prisma, params.model, params.action, params);
 		}
 	});
 	// See results here
 	return result;
 });
 
-function subscribe(
+export function subscribe(
 	model: Prisma.ModelName,
 	action: Prisma.PrismaAction[],
-	cb: () => void,
+	cb: SubscribeFn,
 ): number {
 	const index = subscribeList.length;
 	subscribeList[subscribeList.length] = { cb, model, action };
 	return index;
 }
-function unsubscribe(index: number) {
+export function unsubscribe(index: number) {
 	delete subscribeList[index];
 }
 
