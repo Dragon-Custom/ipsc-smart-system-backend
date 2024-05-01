@@ -13,7 +13,6 @@ export const StageObject = objectType({
 		t.field("image", {
 			type: "Image",
 		}); 
-		t.int("imageId");
 		t.string("name");
 		t.nullable.string("description");
 		t.int("papers");
@@ -22,8 +21,10 @@ export const StageObject = objectType({
 		t.int("gunCondition");
 		t.field("designer", {
 			type: "Shooter",
+			resolve(src) {
+				return src.designer;
+			},
 		});
-		t.int("designerId");
 		t.float("walkthroughTime", {
 			description: "unit: minutes",
 		});

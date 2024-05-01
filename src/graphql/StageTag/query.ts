@@ -1,5 +1,5 @@
 import { Prisma } from "@prisma/client";
-import { inputObjectType, nonNull, queryType } from "nexus";
+import { extendType, inputObjectType, nonNull } from "nexus";
 
 export const StageTagsFilterInput = inputObjectType({
 	name: "StageTagsFilterInput",
@@ -8,7 +8,8 @@ export const StageTagsFilterInput = inputObjectType({
 	},
 });
 
-export const StageTagQuery = queryType({
+export const StageTagQuery = extendType({
+	type: "Query",
 	definition(t) {
 		t.list.field("stageTags", {
 			type: "StageTag",
