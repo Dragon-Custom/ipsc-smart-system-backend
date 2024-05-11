@@ -16,7 +16,7 @@ export const FileOutput = scalarType({
 export const ImageObjectType = objectType({
 	name: "Image",
 	definition(t) {
-		t.id("id");
+		t.nonNull.id("id");
 		t.nullable.list.field("stages", {
 			type: "Stage",
 		});

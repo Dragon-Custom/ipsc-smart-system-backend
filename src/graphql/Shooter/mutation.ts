@@ -66,22 +66,22 @@ export const ShooterMuataion = extendType({
 				}
 			},
 		});
-		t.nonNull.boolean("deleteShooter", {
+		t.nullable.field("deleteShooter", {
+			type: "Shooter",
 			description: "delete shooter, return true if success",
 			args: {
 				id: nonNull("Int"),
 			},
 			async resolve(src, args, ctx) {
 				try {
-					await ctx.prisma.shooter.delete({
+					return await ctx.prisma.shooter.delete({
 						where: {
 							id: args.id,
 						},
 						...ctx.select,
 					});
-					return true;
 				} catch (e) {
-					return false;
+					return null;
 				}
 			},
 		});

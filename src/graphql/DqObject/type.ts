@@ -4,12 +4,12 @@ export const DqObjectObjectType = objectType({
 	name: "DqObject",
 	definition(t) {
 		t.implements("Node");
-		t.string("index", {
+		t.nonNull.string("index", {
 			description: "the index on the rulebooks",
 		});
-		t.string("category");
-		t.string("title");
-		t.string("description");
+		t.nonNull.string("category");
+		t.nonNull.string("title");
+		t.nonNull.string("description");
 		t.nullable.list.field("scores", {
 			type: "Score",
 		});

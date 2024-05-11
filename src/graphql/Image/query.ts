@@ -14,7 +14,6 @@ export const imageQuery = extendType({
 					where: {
 						id: args.id,
 					},
-					...ctx.select,
 				}));
 				if (!image)
 					return null;

@@ -48,5 +48,25 @@ export const ScorelistMutation = extendType({
 				});
 			},
 		});
+		t.field("addRoundsToScorelist", {
+			type: "Scorelist",
+			args: {
+				id: nonNull("Int"),
+				rounds: "Int",
+			},
+			resolve: (src, args, ctx) => {
+				return ctx.prisma.scorelist.update({
+					where: {
+						id: args.id,
+					},
+					data: {
+						rounds: {
+							increment: args.rounds ?? 1,
+						},
+					},
+					...ctx.select,
+				});
+			},
+		});
 	},
 });

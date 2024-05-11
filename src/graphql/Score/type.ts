@@ -9,39 +9,39 @@ export const ScoreObject = objectType({
 	name: "Score",
 	definition(t) {
 		t.implements("Node");
-		t.dateTime("createAt");
-		t.field("shooter", {
+		t.nonNull.dateTime("createAt");
+		t.nonNull.field("shooter", {
 			type: "Shooter",
 		});
-		t.int("shooterId");
-		t.int("alphas");
-		t.int("charlies");
-		t.int("deltas");
-		t.int("misses");
-		t.int("noshoots");
-		t.int("poppers");
-		t.float("time");
+		t.nonNull.int("shooterId");
+		t.nonNull.int("alphas");
+		t.nonNull.int("charlies");
+		t.nonNull.int("deltas");
+		t.nonNull.int("misses");
+		t.nonNull.int("noshoots");
+		t.nonNull.int("poppers");
+		t.nonNull.float("time");
 		t.nullable.list.field("proErrors", {
 			type: "ProErrorStore",
 		});
-		t.int("proErrorCount");
-		t.field("scorelist", {
+		t.nonNull.int("proErrorCount");
+		t.nonNull.field("scorelist", {
 			type: "Scorelist",
 		});
-		t.int("scorelistId");
-		t.int("score");
-		t.float("hitFactor");
+		t.nonNull.int("scorelistId");
+		t.nonNull.int("score");
+		t.nonNull.float("hitFactor");
 		t.nullable.field("dqReason", {
 			type: "DqObject",
 		});
-		t.int("dqObjectId");
-		t.int("round");
-		t.float("accuracy");
-		t.field("state", {
+		t.nullable.int("dqObjectId");
+		t.nonNull.int("round");
+		t.nonNull.float("accuracy");
+		t.nonNull.field("state", {
 			type: "ScoreState",
 		});
 
-		t.float("roundPrecentage", {
+		t.nonNull.float("roundPrecentage", {
 			async resolve(src, args, ctx) {
 				const score  = (await ctx.prisma.score.findUnique({
 					where: {
@@ -67,11 +67,12 @@ export const ScoreObject = objectType({
 				if (!maxScore)
 					return 0;
 				const precentage = (score.score / maxScore.score) * 100;
+				if (isNaN(precentage) ||  !isFinite(precentage))
+					return 0;
 				return precentage;
 			},
 		});
-
-		t.float("overallPrecentage", {
+		t.nonNull.float("overallPrecentage", {
 			async resolve(src, args, ctx) {
 				const score  = (await ctx.prisma.score.findUnique({
 					where: {
@@ -95,6 +96,8 @@ export const ScoreObject = objectType({
 				if (!maxScore)
 					return 0;
 				const precentage = (score.score / maxScore.score) * 100;
+				if (isNaN(precentage) ||  !isFinite(precentage))
+					return 0;
 				return precentage;
 			},
 		});

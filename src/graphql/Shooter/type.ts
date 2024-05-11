@@ -15,22 +15,22 @@ export const ShooterType = objectType({
 	},
 	definition(t) {
 		t.implements("Node");
-		t.dateTime("createAt");
-		t.string("name");
-		t.field("division", {
+		t.nonNull.dateTime("createAt");
+		t.nonNull.string("name");
+		t.nonNull.field("division", {
 			type: "Division",
 		});
-		t.string("email");
+		t.nonNull.string("email");
 		t.list.field("designedStage", {
 			type: "Stage",
 		});
-		t.nullable.list.field("scores", {
+		t.list.field("scores", {
 			type: "Score",
 		});
-		t.nullable.list.field("rankings", {
+		t.list.field("rankings", {
 			type: "Ranking",
 		});
-		t.nullable.list.field("ratings", {
+		t.list.field("ratings", {
 			type: "Rating",
 		});
 	},

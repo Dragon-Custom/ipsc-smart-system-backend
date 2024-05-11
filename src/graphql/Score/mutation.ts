@@ -1,5 +1,6 @@
 import { Prisma, ScoreState } from "@prisma/client";
 import { extendType, inputObjectType, nonNull } from "nexus";
+import { prisma } from "../../context";
 
 export const UpdateScoreProErrorInputType = inputObjectType({
 	name: "UpdateScoreProErrorInput",
@@ -197,6 +198,102 @@ export const ScoreMutation = extendType({
 					console.log(error);
 					return null;
 				}
+			},
+		});
+		t.boolean("copyShootersFromRoundToRound", {
+			args: {
+				scorelistId: nonNull("Int"),
+				srcRound: nonNull("Int"),
+				destRound: nonNull("Int"),
+			},
+			async resolve(src, args, ctx) {
+				if (args.srcRound === args.destRound)
+					return true;
+				try {
+					const srcScores = await ctx.prisma.score.findMany({
+						where: {
+							scorelistId: args.scorelistId,
+							round: args.srcRound,
+						},
+					});
+					for (const srcScore of srcScores) {
+						await ctx.prisma.score.create({
+							data: {
+								shooter: {
+									connect: {
+										id: srcScore.shooterId,
+									},
+								},
+								scorelist: {
+									connect: {
+										id: args.scorelistId,
+									},
+								},
+								round: args.destRound,
+							},
+						});
+					}
+					return true;
+				} catch (error) {
+					console.log(error);
+					return false;
+				}
+			},
+		});
+		t.boolean("swapScoresId", {
+			args: {
+				srcId: nonNull("Int"),
+				destId: nonNull("Int"),
+			},
+			async resolve(src, args, ctx) {
+				return await new Promise((resolve, reject) => { 
+					ctx.prisma.$transaction(async(prisma) => {
+						const maxId = (await prisma.score.findFirst({
+							orderBy: {
+								id: "desc",
+							},
+							select: {
+								id: true,
+							},
+						}))?.id;
+						if (!maxId) {
+							resolve(false);
+							return false;
+						}
+						await prisma.score.update({
+							where: {
+								id: args.srcId,
+							},
+							data: {
+								id: {
+									set: maxId + 1,
+								},
+							},
+						});
+						await prisma.score.update({
+							where: {
+								id: args.destId,
+							},
+							data: {
+								id: {
+									set: args.srcId,
+								},
+							},
+						});
+						await prisma.score.update({
+							where: {
+								id: maxId + 1,
+							},
+							data: {
+								id: {
+									set: args.destId,
+								},
+							},
+						});
+						resolve(true);
+						return true;
+					}).catch(reject);
+				});
 			},
 		});
 	},

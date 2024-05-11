@@ -4,11 +4,11 @@ export const ProErrorStoreObject = objectType({
 	name: "ProErrorStore",
 	definition(t) {
 		t.implements("Node");
-		t.int("count");
-		t.field("proError", {
+		t.nonNull.int("count");
+		t.nonNull.field("proError", {
 			type: "ProErrorObject",
 		});
-		t.field("score", {
+		t.nonNull.field("score", {
 			type: "Score",
 		});
 	},

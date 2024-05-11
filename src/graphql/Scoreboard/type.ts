@@ -8,9 +8,9 @@ export const ScoreboardObject = objectType({
 	},
 	definition(t) {
 		t.implements("Node");
-		t.dateTime("createAt");
-		t.dateTime("lastUpdate");
-		t.string("name");
+		t.nonNull.dateTime("createAt");
+		t.nonNull.dateTime("lastUpdate");
+		t.nonNull.string("name");
 		t.nullable.list.field("scorelists", {
 			type: "Scorelist",
 		});

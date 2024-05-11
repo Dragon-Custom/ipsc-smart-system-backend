@@ -34,7 +34,6 @@ export const imageMutation = extendType({
 					data: {
 						imagePath: filePath,
 					},
-					...ctx.select,
 				});
 				return filename;
 			},
