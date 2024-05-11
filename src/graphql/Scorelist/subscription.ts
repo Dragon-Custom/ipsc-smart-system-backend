@@ -1,23 +1,21 @@
 import { extendType } from "nexus";
+import { subscribe } from "../../context";
 
 export const ScorelistSubscription = extendType({
 	type: "Subscription",
 	definition(t) {
-		t.boolean("subscriptScorelistChange", {
-			subscribe(src, args, ctx) {
-				return (async function*() {
+		t.boolean("scorelistsChange", {
+			subscribe() {
+				return (async function* () {
 					while (true) {
-						await new Promise((resolve) => {
-							ctx.subscribe("Scorelist", [
-								"create",
-								"update",
-								"delete",
-								"createMany",
-								"deleteMany",
-								"updateMany",
-								"upsert",
-							], () => resolve(null));
-						});
+						await new Promise(res => subscribe("Scorelist", [
+							"create",
+							"createMany",
+							"update",
+							"updateMany",
+							"delete",
+							"deleteMany",
+						], res));
 						yield true;
 					}
 				})();

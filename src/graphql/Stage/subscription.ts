@@ -1,23 +1,21 @@
 import { extendType } from "nexus";
+import { subscribe } from "../../context";
 
 export const StageSubscription = extendType({
 	type: "Subscription",
 	definition(t) {
-		t.boolean("subscriptStagesChange", {
-			subscribe(src, args, ctx) {
-				return (async function*() {
+		t.boolean("stagesChange", {
+			subscribe() {
+				return (async function* () {
 					while (true) {
-						await new Promise((resolve) => {
-							ctx.subscribe("Stage", [
-								"create",
-								"update",
-								"delete",
-								"createMany",
-								"deleteMany",
-								"updateMany",
-								"upsert",
-							], () => resolve(null));
-						});
+						await new Promise(res => subscribe("Stage", [
+							"create",
+							"createMany",
+							"update",
+							"updateMany",
+							"delete",
+							"deleteMany",
+						], res));
 						yield true;
 					}
 				})();

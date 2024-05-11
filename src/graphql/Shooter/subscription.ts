@@ -1,23 +1,21 @@
 import { extendType } from "nexus";
+import { subscribe } from "../../context";
 
 export const ShooterSubscription = extendType({
 	type: "Subscription",
 	definition(t) {
-		t.boolean("subscriptShootersChange", {
-			subscribe(src, args, ctx) {
-				return (async function*() {
+		t.boolean("shootersChange", {
+			subscribe() {
+				return (async function* () {
 					while (true) {
-						await new Promise((resolve) => {
-							ctx.subscribe("Shooter", [
-								"create",
-								"update",
-								"delete",
-								"createMany",
-								"deleteMany",
-								"updateMany",
-								"upsert",
-							], () => resolve(null));
-						});
+						await new Promise(res => subscribe("Shooter", [
+							"create",
+							"createMany",
+							"update",
+							"updateMany",
+							"delete",
+							"deleteMany",
+						], res));
 						yield true;
 					}
 				})();

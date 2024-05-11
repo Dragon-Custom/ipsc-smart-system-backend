@@ -1,175 +1,104 @@
-import { extendType, intArg, nonNull } from "nexus";
+import { enumType, objectType } from "nexus";
 
-export const ScoreExtend = extendType({
-	type: "Score",
-	definition(t) {
-		t.float("roundPrecentage", {
-			async resolve(src, arg, ctx) {
-				const Highest = await ctx.prisma.score.findFirstOrThrow({
-					orderBy: {
-						hitFactor: "desc",
-					},
-					where: {
-						round: src.round,
-						scorelistId: src.scorelistId,
-					},
-					select: {
-						hitFactor: true,
-					},
-				});
-				const high = Highest.hitFactor;
-				if (high == 0)
-					return 0;
-				return (1 - (Math.abs(Highest.hitFactor) - src.hitFactor) / Math.abs(Highest.hitFactor)) * 100;
-			},
-		});
-		t.float("scorelistOverallPrecentage", {
-			async resolve(src, arg, ctx) {
-				const Highest = await ctx.prisma.score.findFirstOrThrow({
-					orderBy: {
-						hitFactor: "desc",
-					},
-					where: {
-						scorelistId: src.scorelistId,
-					},
-					select: {
-						hitFactor: true,
-					},
-				});
-				const high = Highest.hitFactor;
-				if (high == 0)
-					return 0;
-				return (1 - (Highest.hitFactor - src.hitFactor) / Highest.hitFactor) * 100;
-			},
-		});
-	},
+export const ScoreStateEnum = enumType({
+	name: "ScoreState",
+	members: ["DidNotScore", "DidNotFinish", "DQ", "Scored"],
 });
 
-export const ScoreMutation = extendType({
-	type: "Mutation",
+export const ScoreObject = objectType({
+	name: "Score",
 	definition(t) {
-		t.boolean("swapId", {
-			args: {
-				id1: nonNull(intArg()),
-				id2: nonNull(intArg()),
-			},
-			async resolve(src, args, ctx) {
-				const biggestId =  (await ctx.prisma.score.findFirstOrThrow({
-					orderBy: {
-						id: "desc",
-					},
-					select: {
-						id: true,
-					},
-				})).id;
-				try {
-					await ctx.prisma.$transaction([
-						ctx.prisma.score.update({
-							where: {
-								id: args.id1,
-							},
-							data: {
-								id: {
-									set: biggestId + 1,
-								},
-							},
-						}),
-						ctx.prisma.score.update({
-							where: {
-								id: args.id2,
-							},
-							data: {
-								id: {
-									set: args.id1,
-								},
-							},
-						}),
-						ctx.prisma.score.update({
-							where: {
-								id: biggestId + 1,
-							},
-							data: {
-								id: {
-									set: args.id2,
-								},
-							},
-						}),
-					], {
-						isolationLevel: "Serializable",
-					});
-				} catch (e) {
-					return false;
-				}
-				return true;
-			},
+		t.implements("Node");
+		t.nonNull.dateTime("createAt");
+		t.nonNull.field("shooter", {
+			type: "Shooter",
 		});
-		t.boolean("copyShootersFromRoundToRound", {
-			args: {
-				scorelistId: nonNull(intArg()),
-				fromRound: nonNull(intArg()),
-				toRound: nonNull(intArg()),
-			},
-			async resolve(src, args, ctx) {
-				const srcScores = (await ctx.prisma.score.findMany({
-					where: {
-						scorelistId: args.scorelistId,
-						round: args.fromRound,
-					},
-					select: {
-						shooterId: true,
-					},
-				}));
-				for (const v of srcScores) {
+		t.nonNull.int("shooterId");
+		t.nonNull.int("alphas");
+		t.nonNull.int("charlies");
+		t.nonNull.int("deltas");
+		t.nonNull.int("misses");
+		t.nonNull.int("noshoots");
+		t.nonNull.int("poppers");
+		t.nonNull.float("time");
+		t.nullable.list.field("proErrors", {
+			type: "ProErrorStore",
+		});
+		t.nonNull.int("proErrorCount");
+		t.nonNull.field("scorelist", {
+			type: "Scorelist",
+		});
+		t.nonNull.int("scorelistId");
+		t.nonNull.int("score");
+		t.nonNull.float("hitFactor");
+		t.nullable.field("dqReason", {
+			type: "DqObject",
+		});
+		t.nullable.int("dqObjectId");
+		t.nonNull.int("round");
+		t.nonNull.float("accuracy");
+		t.nonNull.field("state", {
+			type: "ScoreState",
+		});
 
-					await ctx.prisma.score.create({
-						data: {
-							round: args.toRound,
-							shooter: {
-								connect: {
-									id: v.shooterId,
-								},
-							},
-							scorelist: {
-								connect: {
-									id: args.scorelistId,
-								},
-							},
-						},
-					});
-				}
-				return true;
-			},
-		});
-		t.float("updateAccuracy", {
-			args: {
-				scoreId: nonNull(intArg()),
-			},
+		t.nonNull.float("roundPrecentage", {
 			async resolve(src, args, ctx) {
-				const score = (await ctx.prisma.score.findUniqueOrThrow({
+				const score  = (await ctx.prisma.score.findUnique({
 					where: {
-						id: args.scoreId,
+						id: src.id,
 					},
 					select: {
-						scorelist: {
-							include: {
-								stage: true,
-							},
-						},
+						round: true,
+						scorelistId: true,
 						score: true,
 					},
 				}));
-				const acc = (score.score / (score.scorelist.stage?.maxScore ?? 1))*100;
-				await ctx.prisma.score.update({
+				if (!score)
+					return 0;
+				const maxScore = await ctx.prisma.score.findFirst({
 					where: {
-						id: args.scoreId,
+						round: score.round,
+						scorelistId: score.scorelistId,
 					},
-					data: {
-						accuracy: {
-							set: acc,
-						},
+					orderBy: {
+						hitFactor: "desc",
 					},
 				});
-				return acc;
+				if (!maxScore)
+					return 0;
+				const precentage = (score.score / maxScore.score) * 100;
+				if (isNaN(precentage) ||  !isFinite(precentage))
+					return 0;
+				return precentage;
+			},
+		});
+		t.nonNull.float("overallPrecentage", {
+			async resolve(src, args, ctx) {
+				const score  = (await ctx.prisma.score.findUnique({
+					where: {
+						id: src.id,
+					},
+					select: {
+						scorelistId: true,
+						score: true,
+					},
+				}));
+				if (!score)
+					return 0;
+				const maxScore = await ctx.prisma.score.findFirst({
+					where: {
+						scorelistId: score.scorelistId,
+					},
+					orderBy: {
+						hitFactor: "desc",
+					},
+				});
+				if (!maxScore)
+					return 0;
+				const precentage = (score.score / maxScore.score) * 100;
+				if (isNaN(precentage) ||  !isFinite(precentage))
+					return 0;
+				return precentage;
 			},
 		});
 	},
