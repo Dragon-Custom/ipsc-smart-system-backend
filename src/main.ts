@@ -6,6 +6,7 @@ import { context } from "./context";
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { useGraphQLSSE } from "@graphql-yoga/plugin-graphql-sse";
+import "dotenv/config";
 
 // Create a Yoga instance with a GraphQL schema.
 const yoga = createYoga({
