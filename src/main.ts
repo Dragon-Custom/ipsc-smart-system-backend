@@ -23,6 +23,12 @@ const yoga = createYoga({
 			endpoint: "/graphql/",
 		}),
 	],
+	cors: {
+		origin: process.env.FRONTEND_URL,
+		credentials: true,
+		allowedHeaders: ["X-Custom-Header"],
+		methods: ["POST"],
+	},
 	// multipart: false,
 });
 
