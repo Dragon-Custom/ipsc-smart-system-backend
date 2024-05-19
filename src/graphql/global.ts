@@ -124,4 +124,4 @@ setInterval(async () => {
 	} catch (error) {
 		console.error(error);
 	}
-}, 1000 * 60 * (parseInt(process.env.RERANKING_INTERVAL ?? "5")));
+}, 1000 * 60 * (parseFloat(process.env.RERANKING_INTERVAL ?? "5")));
