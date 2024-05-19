@@ -37,9 +37,9 @@ if (process.env.USE_HTTPS === "true") {
 	// Pass it into a server to hook into request handlers.
 	server = createHTTPSServer(
 		{
-			cert: readFileSync(join(__dirname, "../", process.env.CERT_PATH ?? "")),
-			key: readFileSync(join(__dirname, "../", process.env.KEY_PATH ?? "")),
-			ca: readFileSync(join(__dirname, "../", process.env.CA_CERT_PATH ?? "")),
+			cert: readFileSync(join(process.cwd(), process.env.CERT_PATH ?? "")),
+			key: readFileSync(join(process.cwd(), process.env.KEY_PATH ?? "")),
+			ca: readFileSync(join(process.cwd(), process.env.CA_CERT_PATH ?? "")),
 		},
 		yoga,
 	);
