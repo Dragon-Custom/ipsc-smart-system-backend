@@ -1,3 +1,0 @@
--- AlterTable
-ALTER TABLE "Ranking" ALTER COLUMN "rank" DROP NOT NULL,
-ALTER COLUMN "rating" DROP NOT NULL;
