@@ -1,6 +1,5 @@
 import { Prisma, ScoreState } from "@prisma/client";
 import { extendType, inputObjectType, nonNull } from "nexus";
-import { prisma } from "../../context";
 
 export const UpdateScoreProErrorInputType = inputObjectType({
 	name: "UpdateScoreProErrorInput",
@@ -106,6 +105,7 @@ export const ScoreMutation = extendType({
 				}); 
 				if (!maxScore)
 					return null;
+
 				return await ctx.prisma.$transaction(async (prisma) => {
 					const tempScore = await prisma.score.update({
 						where: {
@@ -113,13 +113,14 @@ export const ScoreMutation = extendType({
 						},
 						data,
 					});
+
 					return await prisma.score.update({
 						where: {
 							id: args.id,
 						},
 						data: { 
 							accuracy: {
-								set: (tempScore.score / maxScore.scorelist.stage.maxScore) * 100,
+								set: ((tempScore.score + (tempScore.proErrorCount * 10)) / maxScore.scorelist.stage.maxScore) * 100,
 							},
 						},
 						...ctx.select,
