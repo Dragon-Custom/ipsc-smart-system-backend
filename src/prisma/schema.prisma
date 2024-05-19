@@ -83,7 +83,7 @@ model Scoreboard {
     id         Int         @id @unique @default(autoincrement())
     createAt   DateTime    @default(now())
     lastUpdate DateTime    @default(now()) @updatedAt
-    namedawawd       String
+    name       String
     scorelists Scorelist[]
 }
 
