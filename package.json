@@ -2,14 +2,15 @@
 	"name": "ipsc-smart-system-backend",
 	"version": "1.0.0",
 	"description": "",
-	"main": "index.js",
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1",
-		"dev": "ts-node-dev --inspect --transpile-only --no-notify --exit-child src/main.ts",
+		"dev": "set NODE_ENV=development && ts-node-dev --inspect --transpile-only --no-notify --exit-child src/main.ts",
 		"prisma:gen": "prisma generate",
 		"gql:gen": "npx ts-node --transpile-only src/schema.ts",
 		"sdk:gen": "genql --schema build/schema.graphql --output build/sdk",
-		"gen": "npm run prisma:gen && npm run gql:gen && npm run sdk:gen"
+		"gen": "npm run prisma:gen && npm run gql:gen && npm run sdk:gen",
+		"build": "tsc -p tsconfig.json",
+		"start": "set NODE_ENV=production && node build/server/src/main.js"
 	},
 	"prisma": {
 		"schema": "src/prisma/schema.prisma"

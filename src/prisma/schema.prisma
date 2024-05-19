@@ -1,5 +1,6 @@
 datasource db {
     url      = env("POSTGRE_CONNECTION_STRING")
+    shadowDatabaseUrl = env("POSTGRE_DEV_CONNECTION_STRING")
     provider = "postgresql"
 }
 
@@ -82,7 +83,7 @@ model Scoreboard {
     id         Int         @id @unique @default(autoincrement())
     createAt   DateTime    @default(now())
     lastUpdate DateTime    @default(now()) @updatedAt
-    name       String
+    namedawawd       String
     scorelists Scorelist[]
 }
 
