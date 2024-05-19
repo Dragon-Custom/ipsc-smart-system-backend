@@ -4,3 +4,4 @@ build
 ssl
 
 storage
+.vscode/.server-controller-port.log

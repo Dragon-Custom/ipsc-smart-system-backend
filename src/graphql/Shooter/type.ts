@@ -27,10 +27,10 @@ export const ShooterType = objectType({
 		t.list.field("scores", {
 			type: "Score",
 		});
-		t.list.field("rankings", {
+		t.nullable.list.field("rankings", {
 			type: "Ranking",
 		});
-		t.list.field("ratings", {
+		t.nullable.list.field("ratings", {
 			type: "Rating",
 		});
 	},

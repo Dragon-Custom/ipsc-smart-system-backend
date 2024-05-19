@@ -11,3 +11,4 @@ export * from "./ProErrorStore";
 export * from "./Image";
 export * from "./Ranking";
 export * from "./Rating";
+export * from "./ShooterStatistic";

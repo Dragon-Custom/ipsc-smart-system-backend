@@ -166,16 +166,18 @@ model Ranking {
     id        Int      @id @unique @default(autoincrement())
     shooter   Shooter  @relation(fields: [shooterId], references: [id], onDelete: Cascade)
     shooterId Int
-    rank      Int?
+    rank      Int
     updatedAt DateTime @default(now()) @updatedAt
     createAt  DateTime @default(now())
+    tick      Int      //to indentify the time of update
 }
 
 model Rating {
     id        Int      @id @unique @default(autoincrement())
     shooter   Shooter  @relation(fields: [shooterId], references: [id], onDelete: Cascade)
     shooterId Int
-    rating    Float?
+    rating    Float
     updatedAt DateTime @default(now()) @updatedAt
     createAt  DateTime @default(now())
+    tick      Int      //to indentify the time of update
 }
