@@ -10,7 +10,7 @@
 		"sdk:gen": "genql --schema build/schema.graphql --output build/sdk",
 		"gen": "npm run prisma:gen && npm run gql:gen && npm run sdk:gen",
 		"build": "tsc -p tsconfig.json",
-		"start": "set NODE_ENV=production && node build/server/src/main.js"
+		"start": "set NODE_ENV=production && node build/server/main.js"
 	},
 	"prisma": {
 		"schema": "src/prisma/schema.prisma"
