@@ -104,13 +104,14 @@ setInterval(async () => {
 			createAt: "desc",
 		},
 	}))?.tick ?? 0;
-	for (const r in ratings) {
+	const sortedRating = ratings.sort((a, b) => b.rating - a.rating);
+	for (const r in sortedRating) {
 		await prisma.ranking.create({
 			data: {
-				rank: ratings.length -parseInt(r),
+				rank: parseInt(r),
 				shooter: {
 					connect: {
-						id: ratings[r].shooterId,
+						id: sortedRating[r].shooterId,
 					},
 				},
 				tick: currentRankingTick + 1,
