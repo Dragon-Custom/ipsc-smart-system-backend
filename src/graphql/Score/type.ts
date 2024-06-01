@@ -50,11 +50,12 @@ export const ScoreObject = objectType({
 					select: {
 						round: true,
 						scorelistId: true,
-						score: true,
+						hitFactor: true,
 					},
 				}));
 				if (!score)
 					return 0;
+				console.log(score);
 				const maxScore = await ctx.prisma.score.findFirst({
 					where: {
 						round: score.round,
@@ -63,10 +64,13 @@ export const ScoreObject = objectType({
 					orderBy: {
 						hitFactor: "desc",
 					},
+					select: {
+						hitFactor: true,
+					},
 				});
 				if (!maxScore)
 					return 0;
-				const percentage = (score.score / maxScore.score) * 100;
+				const percentage = (score.hitFactor / maxScore.hitFactor) * 100;
 				if (isNaN(percentage) ||  !isFinite(percentage))
 					return 0;
 				return percentage;
@@ -80,7 +84,7 @@ export const ScoreObject = objectType({
 					},
 					select: {
 						scorelistId: true,
-						score: true,
+						hitFactor: true,
 					},
 				}));
 				if (!score)
@@ -92,10 +96,13 @@ export const ScoreObject = objectType({
 					orderBy: {
 						hitFactor: "desc",
 					},
+					select: {
+						hitFactor: true,
+					},
 				});
 				if (!maxScore)
 					return 0;
-				const percentage = (score.score / maxScore.score) * 100;
+				const percentage = (score.hitFactor / maxScore.hitFactor) * 100;
 				if (isNaN(percentage) ||  !isFinite(percentage))
 					return 0;
 				return percentage;
