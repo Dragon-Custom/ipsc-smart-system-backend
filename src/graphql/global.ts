@@ -108,7 +108,7 @@ setInterval(async () => {
 	for (const r in sortedRating) {
 		await prisma.ranking.create({
 			data: {
-				rank: parseInt(r),
+				rank: parseInt(r) + 1,
 				shooter: {
 					connect: {
 						id: sortedRating[r].shooterId,
