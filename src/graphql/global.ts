@@ -35,93 +35,87 @@ setInterval(async () => {
 
 
 
-	try {
-		console.log("Re-ranking scores");
-		// #region rating
-		const shooterIds = (await prisma.shooter.findMany({
-			select: {
-				id: true,
+	console.log("Re-ranking scores");
+	// #region rating
+	const shooterIds = (await prisma.shooter.findMany({
+		select: {
+			id: true,
+		},
+	}));
+	const currentRatingTick = (await prisma.rating.findFirst({
+		orderBy: {
+			createAt: "desc",
+		},
+		select: {
+			tick: true,
+		},
+	}))?.tick ?? 0;
+	for (const v of shooterIds) {
+		const statis = await prisma.score.aggregate({
+			where: {
+				shooterId: v.id,
 			},
-		}));
-		const currentRatingTick = (await prisma.rating.findFirst({
-			orderBy: {
-				createAt: "desc",
+			_avg: {
+				accuracy: true,
+				hitFactor: true,
 			},
-			select: {
-				tick: true,
+			_sum: {
+				score: true,
+				time: true,
 			},
-		}))?.tick ?? 0;
-		for (const v of shooterIds) {
-			const statis = await prisma.score.aggregate({
-				where: {
-					shooterId: v.id,
-				},
-				_avg: {
-					accuracy: true,
-					hitFactor: true,
-				},
-				_sum: {
-					score: true,
-					time: true,
-				},
-				_count: {
-					_all: true,
-				},
-			});
-			//R = (avg_acc)*(avg_hitfactor)*(sum_score/sum_time)
-			//ver2. s = sum of score, t = sum of  time, k = s/t, a = avg acc, h= avg hit factor, f rating(k) = ak^2+hk
-			// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-			//@ts-expect-error
-			const factor = statis._sum.score / statis._sum.time;
-			// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-			//@ts-expect-error
-			const rating = (statis._avg.accuracy * 0.01 * factor * factor) + (factor * statis._avg.hitFactor);
-			console.log(`Update rating for shooterId: ${v.id}`);
-			await prisma.rating.create({
-				data: {
-					rating: rating ?? 0,
-					shooter: {
-						connect: {
-							id: v.id,
-						},
-					},
-					tick: currentRatingTick + 1,
-				},
-			});
-		}
-		// #endregion
-		// #region ranking
-		const ratings = await prisma.rating.findMany({
-			orderBy: [
-				{
-					createAt: "desc",
-				},
-				{
-					rating: "desc",
-				},
-			],
-			distinct: "shooterId",
+			_count: {
+				_all: true,
+			},
 		});
-		const currentRankingTick = (await prisma.ranking.findFirst({
-			orderBy: {
+		//R = (avg_acc)*(avg_hitfactor)*(sum_score/sum_time)
+		//ver2. s = sum of score, t = sum of  time, k = s/t, a = avg acc, h= avg hit factor, f rating(k) = ak^2+hk
+		const factor = (statis._sum.score ?? 1) / (statis._sum.time ?? 1);
+		let rating = ((statis._avg.accuracy ?? 0) * 0.01 * factor * factor) + (factor * (statis._avg.hitFactor ?? 0));
+		if (isNaN(rating))
+			rating = 0;
+		console.log(`Update rating for shooterId: ${v.id}, rating: ${rating}`);
+		await prisma.rating.create({
+			data: {
+				rating: rating,
+				shooter: {
+					connect: {
+						id: v.id,
+					},
+				},
+				tick: currentRatingTick + 1,
+			},
+		});
+	}
+	// #endregion
+	// #region ranking
+	const ratings = await prisma.rating.findMany({
+		orderBy: [
+			{
 				createAt: "desc",
 			},
-		}))?.tick ?? 0;
-		for (const r in ratings) {
-			await prisma.ranking.create({
-				data: {
-					rank: ratings.length -parseInt(r),
-					shooter: {
-						connect: {
-							id: ratings[r].shooterId,
-						},
+			{
+				rating: "desc",
+			},
+		],
+		distinct: "shooterId",
+	});
+	const currentRankingTick = (await prisma.ranking.findFirst({
+		orderBy: {
+			createAt: "desc",
+		},
+	}))?.tick ?? 0;
+	for (const r in ratings) {
+		await prisma.ranking.create({
+			data: {
+				rank: ratings.length -parseInt(r),
+				shooter: {
+					connect: {
+						id: ratings[r].shooterId,
 					},
-					tick: currentRankingTick + 1,
 				},
-			});
-		}
-		// #endregion
-	} catch (error) {
-		console.error(error);
+				tick: currentRankingTick + 1,
+			},
+		});
 	}
+	// #endregion
 }, 1000 * 60 * (parseFloat(process.env.RERANKING_INTERVAL ?? "5")));
