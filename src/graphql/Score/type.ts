@@ -41,7 +41,7 @@ export const ScoreObject = objectType({
 			type: "ScoreState",
 		});
 
-		t.nonNull.float("roundPrecentage", {
+		t.nonNull.float("roundPercentage", {
 			async resolve(src, args, ctx) {
 				const score  = (await ctx.prisma.score.findUnique({
 					where: {
@@ -72,7 +72,7 @@ export const ScoreObject = objectType({
 				return precentage;
 			},
 		});
-		t.nonNull.float("overallPrecentage", {
+		t.nonNull.float("overallPercentage", {
 			async resolve(src, args, ctx) {
 				const score  = (await ctx.prisma.score.findUnique({
 					where: {
