@@ -66,10 +66,10 @@ export const ScoreObject = objectType({
 				});
 				if (!maxScore)
 					return 0;
-				const precentage = (score.score / maxScore.score) * 100;
-				if (isNaN(precentage) ||  !isFinite(precentage))
+				const percentage = (score.score / maxScore.score) * 100;
+				if (isNaN(percentage) ||  !isFinite(percentage))
 					return 0;
-				return precentage;
+				return percentage;
 			},
 		});
 		t.nonNull.float("overallPercentage", {
@@ -95,10 +95,10 @@ export const ScoreObject = objectType({
 				});
 				if (!maxScore)
 					return 0;
-				const precentage = (score.score / maxScore.score) * 100;
-				if (isNaN(precentage) ||  !isFinite(precentage))
+				const percentage = (score.score / maxScore.score) * 100;
+				if (isNaN(percentage) ||  !isFinite(percentage))
 					return 0;
-				return precentage;
+				return percentage;
 			},
 		});
 	},
