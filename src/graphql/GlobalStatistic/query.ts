@@ -2,7 +2,7 @@ import { extendType, inputObjectType } from "nexus";
 import { Prisma } from "@prisma/client";
 
 
-export const GlobalSwatisticQueryFilterInputType = inputObjectType({
+export const GlobalStatisticQueryFilterInputType = inputObjectType({
 	name: "GlobalStatisticFilterInputType",
 	definition(t) {
 		t.list.int("scoreboardId");
