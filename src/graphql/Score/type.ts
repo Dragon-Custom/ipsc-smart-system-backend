@@ -55,7 +55,6 @@ export const ScoreObject = objectType({
 				}));
 				if (!score)
 					return 0;
-				console.log(score);
 				const maxScore = await ctx.prisma.score.findFirst({
 					where: {
 						round: score.round,
