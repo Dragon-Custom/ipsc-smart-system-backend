@@ -29,7 +29,7 @@ model Shooter {
     email         String
     rankings      Ranking[]
     ratings       Rating[]
-    ELO           Elo[]
+    elo           Elo[]
 }
 
 enum StageType {
