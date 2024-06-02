@@ -57,10 +57,15 @@ export enum LogLevel {
 }
 let logger = log4js.getLogger();
 
-const LOG_LEVEL = LogLevel.TRACE;
+const LOG_LEVEL = process.env.LOG_LEVEL || LogLevel.INFO;
 
 log4js.configure({
 	appenders: {
+		"stdout-filtered": {
+			type: "logLevelFilter",
+			level: LOG_LEVEL,
+			appender: "stdout",
+		},
 		stdout: {
 			type: "stdout",
 		},
@@ -73,18 +78,15 @@ log4js.configure({
 			base: "logs/category/",
 			property: "categoryName",
 			extension: ".log",
-			
 		},
 	},
 	categories: {
 		default: {
-			appenders: ["stdout", "global", "multiCategory"],
-			level: LOG_LEVEL,
+			appenders: ["stdout-filtered", "global", "multiCategory"],
+			level: LogLevel.TRACE,
 		},
 	},
 });
-
-logger.level = LOG_LEVEL;
 
 export function log(level: LogLevel, message: string, category?: string) {
 	logger = log4js.getLogger(category);

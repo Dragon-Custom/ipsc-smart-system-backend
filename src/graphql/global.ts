@@ -2,7 +2,7 @@ import { interfaceType } from "nexus";
 import { LogLevel, prisma } from "../context";
 import { sqltag } from "@prisma/client/runtime/library";
 import { updateElo } from "./Elo";
-import { log } from "console";
+import { log } from "../context";
 
 const LOG_CAT = "Rating Ranking ELO Updater";
 
