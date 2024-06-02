@@ -2,7 +2,7 @@ import { createServer as createHTTPSServer } from "node:https";
 import { createServer as createHTTPServer } from "node:http";
 import { createYoga } from "graphql-yoga";
 import { schema } from "./schema";
-import { context } from "./context";
+import { LogLevel, context, log } from "./context";
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { useGraphQLSSE } from "@graphql-yoga/plugin-graphql-sse";
@@ -13,10 +13,10 @@ const yoga = createYoga({
 	schema,
 	context,
 	logging: {
-		debug: console.log,
-		error: console.log,
-		info: console.log,
-		warn: console.log,
+		debug: msg => log(LogLevel.DEBUG, msg, "GraphQL Yoga"),
+		error: msg => log(LogLevel.ERROR, msg, "GraphQL Yoga"),
+		info: msg => log(LogLevel.INFO, msg, "GraphQL Yoga"),
+		warn: msg => log(LogLevel.WARN, msg, "GraphQL Yoga"),
 	},
 	plugins: [
 		useGraphQLSSE({
@@ -51,7 +51,9 @@ if (process.env.USE_HTTPS === "true") {
 }
 // Start the server and you're done!
 server.listen(process.env.PORT, () => {
-	console.info(
+	log(
+		LogLevel.INFO,
 		`Server is running on ${process.env.USE_HTTPS === "true" ? "https" : "http"}://localhost:${process.env.PORT}/graphql`,
+		"Web Server",
 	);
 });

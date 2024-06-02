@@ -1,11 +1,13 @@
 import { extendType } from "nexus";
-import { subscribe } from "../../context";
+import { LogLevel, subscribe } from "../../context";
+
+const LOG_CAT = "Scoreboard";
 
 export const ScoreboardSubscription = extendType({
 	type: "Subscription",
 	definition(t) {
 		t.boolean("scoreboardsChange", {
-			subscribe() {
+			subscribe(src, args, ctx) {
 				return (async function* () {
 					while (true) {
 						await new Promise(res => subscribe("Scoreboard", [
@@ -16,6 +18,7 @@ export const ScoreboardSubscription = extendType({
 							"delete",
 							"deleteMany",
 						], res));
+						ctx.log(LogLevel.INFO, "Scoreboard subscription triggered", LOG_CAT);
 						yield true;
 					}
 				})();

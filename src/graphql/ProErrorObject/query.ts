@@ -1,6 +1,8 @@
 import { Prisma } from "@prisma/client";
 import { extendType, inputObjectType, nonNull } from "nexus";
+import { LogLevel } from "../../context";
 
+const LOG_CAT = "Pro Error Object";
 
 export const ProErrorObjectsFilterInputType = inputObjectType({
 	name: "ProErrorObjectsFilterInput",
@@ -18,13 +20,16 @@ export const ProErrorObjectQuery = extendType({
 			args: {
 				id: nonNull("Int"),
 			},
-			resolve(src, args, ctx) {
-				return ctx.prisma.proErrorObject.findUnique({
+			async resolve(src, args, ctx) {
+				ctx.log(LogLevel.INFO, `Qureying proErrorObject with id ${args.id}`, LOG_CAT);
+				const result = await ctx.prisma.proErrorObject.findUnique({
 					where: {
 						id: args.id,
 					},
 					...ctx.select,
 				});
+				ctx.log(LogLevel.DEBUG, `Result: ${JSON.stringify(result)}`, LOG_CAT);
+				return result;
 			},
 		});
 		t.list.field("proErrorObjects", {
@@ -32,7 +37,8 @@ export const ProErrorObjectQuery = extendType({
 			args: {
 				filter: "ProErrorObjectsFilterInput",
 			},
-			resolve(src, args, ctx) {
+			async resolve(src, args, ctx) {
+				ctx.log(LogLevel.INFO, `Qureying proErrorObjects with filter ${JSON.stringify(args.filter)}`, LOG_CAT);
 				let where: Prisma.ProErrorObjectWhereInput = {}; 
 				if (args.filter?.id) {
 					where = {
@@ -50,12 +56,14 @@ export const ProErrorObjectQuery = extendType({
 						},
 					};
 				}
-				return ctx.prisma.proErrorObject.findMany({
+				const result = await ctx.prisma.proErrorObject.findMany({
 					where: {
 						...where,
 					},
 					...ctx.select,
 				});
+				ctx.log(LogLevel.TRACE, `Result: ${JSON.stringify(result)}`, LOG_CAT);
+				return result;
 			},
 		});
 	},

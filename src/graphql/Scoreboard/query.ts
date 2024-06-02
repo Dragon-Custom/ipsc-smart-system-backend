@@ -1,14 +1,20 @@
 import { extendType, nonNull } from "nexus";
+import { LogLevel } from "../../context";
+
+const LOG_CAT = "Scoreboard";
 
 export const ScoreboardQuery = extendType({
 	type: "Query",
 	definition(t) {
 		t.nonNull.list.field("scoreboards", {
 			type: "Scoreboard",
-			resolve(src, args, ctx)  {
-				return ctx.prisma.scoreboard.findMany({
+			async resolve(src, args, ctx) {
+				ctx.log(LogLevel.INFO, "Qureying scoreboards", LOG_CAT);
+				const scoreboards = await ctx.prisma.scoreboard.findMany({
 					...ctx.select,
 				});
+				ctx.log(LogLevel.TRACE, `Result: ${JSON.stringify(scoreboards)}`, LOG_CAT);
+				return scoreboards;
 			},
 		});
 		t.nullable.field("scoreboard", {
@@ -16,13 +22,16 @@ export const ScoreboardQuery = extendType({
 			args: {
 				id: nonNull("Int"),
 			},
-			resolve(src, args, ctx)  {
-				return ctx.prisma.scoreboard.findUnique({
+			async resolve(src, args, ctx)  {
+				ctx.log(LogLevel.INFO, `Qureying scoreboard by id ${args.id}`, LOG_CAT);
+				const scoreboard = await ctx.prisma.scoreboard.findUnique({
 					where: {
 						id: args.id,
 					},
 					...ctx.select,
 				});
+				ctx.log(LogLevel.TRACE, `Result: ${JSON.stringify(scoreboard)}`, LOG_CAT);
+				return scoreboard;
 			},
 		});
 	},

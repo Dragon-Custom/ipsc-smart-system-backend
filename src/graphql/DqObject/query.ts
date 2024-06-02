@@ -1,5 +1,8 @@
 import { Prisma } from "@prisma/client";
 import { extendType, inputObjectType, nonNull } from "nexus";
+import { LogLevel } from "../../context";
+
+const LOG_CAT = "Dq Object";
 
 export const DqObjectsFilterInput = inputObjectType({
 	name: "DqObjectsFilterInput",
@@ -18,13 +21,16 @@ export const DQObjectQuery = extendType({
 			args: {
 				id: nonNull("Int"),
 			},
-			resolve(src, args, ctx) {
-				return ctx.prisma.dqObject.findUnique({
+			async resolve(src, args, ctx) {
+				ctx.log(LogLevel.INFO, `Querying dqObject with id ${args.id}` ,LOG_CAT);
+				const result = await ctx.prisma.dqObject.findUnique({
 					where: {
 						id: args.id,
 					},
 					...ctx.select,
 				});
+				ctx.log(LogLevel.TRACE, `Result: ${JSON.stringify(result)}`, LOG_CAT);
+				return result;
 			},
 		});
 		t.list.field("dqObjects", {
@@ -32,7 +38,8 @@ export const DQObjectQuery = extendType({
 			args: {
 				filter: "DqObjectsFilterInput",
 			},
-			resolve(src, args, ctx) {
+			async resolve(src, args, ctx) {
+				ctx.log(LogLevel.INFO, `Querying dqObjects with filter ${JSON.stringify(args.filter)}` ,LOG_CAT);
 				let where: Prisma.DqObjectWhereInput = {}; 
 				if (args.filter?.category) {
 					where = {
@@ -58,12 +65,14 @@ export const DQObjectQuery = extendType({
 						},
 					};
 				}
-				return ctx.prisma.dqObject.findMany({
+				const result = await ctx.prisma.dqObject.findMany({
 					where: {
 						...where,
 					},
 					...ctx.select,
 				});
+				ctx.log(LogLevel.TRACE, `Result: ${JSON.stringify(result)}`, LOG_CAT);
+				return result;
 			},
 		});
 	},

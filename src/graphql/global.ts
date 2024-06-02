@@ -1,7 +1,10 @@
 import { interfaceType } from "nexus";
-import { prisma } from "../context";
+import { LogLevel, prisma } from "../context";
 import { sqltag } from "@prisma/client/runtime/library";
 import { updateElo } from "./Elo";
+import { log } from "console";
+
+const LOG_CAT = "Rating Ranking ELO Updater";
 
 export const NodeObject = interfaceType({
 	name: "Node",
@@ -26,18 +29,18 @@ setInterval(async () => {
 	FROM
     	public."Score" f;
 	`))[0].md5;
-	console.log("previousSum", previousSum, "currentSum", checksum);
+	log(LogLevel.DEBUG, `Previous checksum: ${previousSum}, Current checksum: ${checksum}`, LOG_CAT);
 	if (previousSum == checksum) {
 		previousSum = checksum;
-		console.log("No change in scores, skip re-ranking");
+		log(LogLevel.DEBUG, "No changes detected, skipping re-ranking", LOG_CAT);
 		return;
 	}
 	previousSum = checksum;
 
 
-
-	console.log("Re-ranking scores");
+	log(LogLevel.INFO, "Checksum changed, start re-ranking", LOG_CAT);
 	// #region rating
+	log(LogLevel.DEBUG, "Start re-rating", LOG_CAT);
 	const shooterIds = (await prisma.shooter.findMany({
 		select: {
 			id: true,
@@ -74,7 +77,7 @@ setInterval(async () => {
 		let rating = ((statis._avg.accuracy ?? 0) * 0.01 * factor * factor) + (factor * (statis._avg.hitFactor ?? 0));
 		if (isNaN(rating))
 			rating = 0;
-		console.log(`Update rating for shooterId: ${v.id}, rating: ${rating}`);
+		log(LogLevel.DEBUG, `Update rating for shooterId: ${v.id}, rating: ${rating}`, LOG_CAT);
 		await prisma.rating.create({
 			data: {
 				rating: rating,
@@ -89,6 +92,7 @@ setInterval(async () => {
 	}
 	// #endregion
 	// #region ranking
+	log(LogLevel.DEBUG, "Start re-ranking", LOG_CAT);
 	const ratings = await prisma.elo.findMany({
 		orderBy: [
 			{
@@ -107,6 +111,7 @@ setInterval(async () => {
 	}))?.tick ?? 0;
 	const sortedRating = ratings.sort((a, b) => b.elo - a.elo);
 	for (const r in sortedRating) {
+		log(LogLevel.DEBUG, `Update ranking for shooterId: ${sortedRating[r].shooterId}, rank: ${parseInt(r) + 1}`, LOG_CAT);
 		await prisma.ranking.create({
 			data: {
 				rank: parseInt(r) + 1,

@@ -20,7 +20,6 @@ const subscribeList: SubscribeList[] = [];
 prisma.$use(async (params, next) => {
 	// Manipulate params here
 	const result = await next(params);
-	// console.log(result, params);
 
 	subscribeList.forEach((subInfo) => {
 		if (
@@ -87,7 +86,7 @@ log4js.configure({
 
 logger.level = LOG_LEVEL;
 
-function log(level: LogLevel, message: string, category?: string) {
+export function log(level: LogLevel, message: string, category?: string) {
 	logger = log4js.getLogger(category);
 	logger[level](message);
 }

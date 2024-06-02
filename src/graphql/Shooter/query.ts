@@ -1,7 +1,9 @@
 import { Prisma } from "@prisma/client";
 import { extendType, inputObjectType, intArg, nonNull } from "nexus";
+import { LogLevel } from "../../context";
 
 
+const LOG_CAT = "Shooter";
 
 
 export const ShootersFilterInputType = inputObjectType({
@@ -19,7 +21,8 @@ export const ShooterQuery = extendType({
 			args: {
 				filter: "ShootersFilter",
 			},
-			resolve(src, args, ctx) {
+			async resolve(src, args, ctx) {
+				ctx.log(LogLevel.INFO, `Qureying shooters with filter ${JSON.stringify(args.filter)}`, LOG_CAT);
 				let where: Prisma.ShooterWhereInput = {};
 				if (args.filter?.id) {
 					where = {
@@ -29,10 +32,12 @@ export const ShooterQuery = extendType({
 						},
 					};
 				}
-				return ctx.prisma.shooter.findMany({
+				const result = await ctx.prisma.shooter.findMany({
 					where,
 					...ctx.select,
 				});
+				ctx.log(LogLevel.TRACE, `Result: ${JSON.stringify(result)}`, LOG_CAT);
+				return result;
 			},
 		});
 		t.nullable.field("shooter", {
@@ -40,13 +45,16 @@ export const ShooterQuery = extendType({
 			args: {
 				id: nonNull(intArg()),
 			},
-			resolve(src, args, ctx) {
-				return ctx.prisma.shooter.findUnique({
+			async resolve(src, args, ctx) {
+				ctx.log(LogLevel.INFO, `Qureying shooter with id ${args.id}`, LOG_CAT);
+				const result = await ctx.prisma.shooter.findUnique({
 					where: {
 						id: args.id,
 					},
 					...ctx.select,
 				});
+				ctx.log(LogLevel.TRACE, `Result: ${JSON.stringify(result)}`, LOG_CAT);
+				return result;
 			},
 		});
 	},

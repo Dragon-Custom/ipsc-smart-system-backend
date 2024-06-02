@@ -2,6 +2,9 @@ import { mkdir } from "fs/promises";
 import Jimp from "jimp";
 import { arg, extendType, nonNull } from "nexus";
 import path from "path";
+import { LogLevel } from "../../context";
+
+const LOG_CAT = "Image";
 
 export const imageMutation = extendType({
 	type: "Mutation",
@@ -12,6 +15,7 @@ export const imageMutation = extendType({
 				image: nonNull(arg({ type: "File" })),
 			},
 			async resolve(src, arg, ctx) {
+				ctx.log(LogLevel.INFO, "Uploading image", LOG_CAT);
 				const storePath = path.join(__dirname, "../../../", process.env.IMAGE_STORAGE_PATH ?? "image");
 				await mkdir(storePath, {
 					recursive: true,
@@ -32,6 +36,7 @@ export const imageMutation = extendType({
 						imagePath: filePath,
 					},
 				});
+				ctx.log(LogLevel.TRACE, `Image uploaded and store with id ${filename}`, LOG_CAT);
 				return filename;
 			},
 		});

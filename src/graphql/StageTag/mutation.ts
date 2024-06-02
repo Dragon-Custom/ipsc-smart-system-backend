@@ -1,4 +1,7 @@
 import { inputObjectType, mutationType, nonNull } from "nexus";
+import { LogLevel } from "../../context";
+
+const LOG_CAT = "Stage Tag";
 
 export const CreateStageTagInputType = inputObjectType({
 	name: "CreateStageTagInput",
@@ -25,6 +28,7 @@ export const StageTagMutation = mutationType({
 				stageTag: nonNull("CreateStageTagInput"),
 			},
 			resolve(src, args, ctx) {
+				ctx.log(LogLevel.INFO, `Creating stage tag with data: ${JSON.stringify(args.stageTag)}`, LOG_CAT);
 				return ctx.prisma.stageTag.create({
 					data: {
 						title: args.stageTag.title,
@@ -41,6 +45,7 @@ export const StageTagMutation = mutationType({
 				stageTag: nonNull("UpdateStageTagInput"),
 			},
 			async resolve(src, args, ctx) {
+				ctx.log(LogLevel.INFO, `Updating stage tag by id: ${args.id} with data: ${JSON.stringify(args.stageTag)}`, LOG_CAT);
 				try {
 					return await ctx.prisma.stageTag.update({
 						where: {
@@ -53,6 +58,7 @@ export const StageTagMutation = mutationType({
 						},
 					});
 				} catch (e) {
+					ctx.log(LogLevel.ERROR, `Error updating stage tag: ${e}`, LOG_CAT);
 					return null;
 				}
 			},
@@ -62,6 +68,7 @@ export const StageTagMutation = mutationType({
 				id: nonNull("Int"),
 			},
 			async resolve(src, args, ctx) {
+				ctx.log(LogLevel.INFO, `Deleting stage tag by id: ${args.id}`, LOG_CAT);
 				try {
 					await ctx.prisma.stageTag.delete({
 						where: {
@@ -70,6 +77,7 @@ export const StageTagMutation = mutationType({
 					});
 					return true;
 				} catch (e) {
+					ctx.log(LogLevel.ERROR, `Error deleting stage tag: ${e}`, LOG_CAT);
 					return false;
 				}
 			},
