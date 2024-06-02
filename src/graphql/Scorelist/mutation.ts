@@ -1,4 +1,7 @@
 import { extendType, inputObjectType, nonNull } from "nexus";
+import { LogLevel } from "../../context";
+
+const LOG_CAT = "Scorelist";
 
 export const CreateScorelistInputType = inputObjectType({
 	name: "CreateScorelistInput",
@@ -16,8 +19,9 @@ export const ScorelistMutation = extendType({
 			args: {
 				scorelist: nonNull("CreateScorelistInput"),
 			},
-			resolve: (src, args, ctx) => {
-				return ctx.prisma.scorelist.create({
+			async resolve(src, args, ctx) {
+				ctx.log(LogLevel.INFO, `Creating scorelist with data: ${JSON.stringify(args.scorelist)}`, LOG_CAT);
+				return await ctx.prisma.scorelist.create({
 					data: {
 						scoreboard: {
 							connect: {
@@ -40,6 +44,7 @@ export const ScorelistMutation = extendType({
 				id: nonNull("Int"),
 			},
 			resolve: (src, args, ctx) => {
+				ctx.log(LogLevel.INFO, `Deleting scorelist with id: ${args.id}`, LOG_CAT);
 				return ctx.prisma.scorelist.delete({
 					where: {
 						id: args.id,
@@ -55,6 +60,7 @@ export const ScorelistMutation = extendType({
 				rounds: "Int",
 			},
 			resolve: (src, args, ctx) => {
+				ctx.log(LogLevel.INFO, `Adding ${args.rounds ?? 1} rounds to scorelist with id: ${args.id}`, LOG_CAT);
 				return ctx.prisma.scorelist.update({
 					where: {
 						id: args.id,

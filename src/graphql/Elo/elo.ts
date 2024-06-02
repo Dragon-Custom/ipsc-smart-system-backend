@@ -1,5 +1,7 @@
 import { MultiElo } from "multi-elo";
-import { prisma } from "../../context";
+import { log, LogLevel, prisma } from "../../context";
+
+const LOG_CAT = "ELO System";
 
 export type ShooterId = number;
 export type ShooterRank = number;
@@ -8,6 +10,7 @@ export type Elo = number;
 export type ShooterElo = Record<ShooterId, Elo>;
 
 export function calculateElo(shooterElos: ShooterElo[], ranks: ShooterRank[]): ShooterElo[] {
+	log(LogLevel.DEBUG, `Calculating elo, shooterElos: ${JSON.stringify(shooterElos)}, ranks: ${JSON.stringify(ranks)}`, LOG_CAT);
 	const elo = new MultiElo({ k: 64, d: 800, verbose: false});
 
 	const elos = shooterElos.map((elo) => {
@@ -23,6 +26,7 @@ export function calculateElo(shooterElos: ShooterElo[], ranks: ShooterRank[]): S
 
 
 export async function updateElo(/* scorelistId: number, round: number */) {
+	log(LogLevel.INFO, "Updating elo", LOG_CAT);
 	const scores = await prisma.score.findMany({
 		where: {
 			// scorelistId: scorelistId,
@@ -71,6 +75,7 @@ export async function updateElo(/* scorelistId: number, round: number */) {
 			},
 		}))?.tick || 0;
 		for (const i in newElos) {
+			log(LogLevel.DEBUG, `Shooter ${newElos[i][0]} elo: ${newElos[i][1]}`, LOG_CAT);
 			await prisma.elo.create({
 				data: {
 					tick: currentTick + 1,
@@ -84,7 +89,9 @@ export async function updateElo(/* scorelistId: number, round: number */) {
 			});
 		}
 		return;
+	} else {
+		log(LogLevel.WARN, "Not enough scores (less than 2) to calculate elo", LOG_CAT);
+		return;
 	}
-	return;
 }
 

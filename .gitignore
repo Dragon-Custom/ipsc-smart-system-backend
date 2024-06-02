@@ -6,4 +6,4 @@ ssl
 storage
 .vscode
 
-.vscode
+*.log

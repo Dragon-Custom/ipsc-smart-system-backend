@@ -1,6 +1,8 @@
 import { Prisma } from "@prisma/client";
 import { extendType, inputObjectType, nonNull } from "nexus";
+import { LogLevel } from "../../context";
 
+const LOG_CAT = "Stage";
 
 export const CreateStageInputType = inputObjectType({
 	name: "CreateStageInput",
@@ -59,6 +61,7 @@ export const StageMutation = extendType({
 				stage: nonNull("CreateStageInput"),
 			},
 			resolve(src, args, ctx) {
+				ctx.log(LogLevel.INFO, `Creating stage with data: ${JSON.stringify(args.stage)}`, LOG_CAT);
 				return ctx.prisma.stage.create({
 					data: {
 						name: args.stage.name,
@@ -95,6 +98,7 @@ export const StageMutation = extendType({
 				stage: "UpdateStageInput",
 			},
 			async resolve(src, args, ctx) {
+				ctx.log(LogLevel.INFO, `Updating stage by id: ${args.id} with data: ${JSON.stringify(args.stage)}`, LOG_CAT);
 				const updateData: Prisma.StageUpdateArgs["data"] = {};
 				if (args.stage?.name) {
 					updateData.name = args.stage.name;
@@ -153,16 +157,18 @@ export const StageMutation = extendType({
 						...ctx.select,
 					});
 				} catch (error) {
+					ctx.log(LogLevel.ERROR, `Error updating stage: ${error}`, LOG_CAT);
 					return null;
 				}
 			},
 		});
-		t.field("deleteStage", {
+		t.nullable.field("deleteStage", {
 			type: "Stage",
 			args: {
 				id: nonNull("Int"),
 			},
 			async resolve(src, args, ctx) {
+				ctx.log(LogLevel.INFO, `Deleting stage by id: ${args.id}`, LOG_CAT);
 				try {
 					return await ctx.prisma.stage.delete({
 						where: {
@@ -171,6 +177,7 @@ export const StageMutation = extendType({
 						...ctx.select,
 					});
 				} catch (error) {
+					ctx.log(LogLevel.ERROR, `Error deleting stage: ${error}`, LOG_CAT);
 					return null;
 				}
 			},

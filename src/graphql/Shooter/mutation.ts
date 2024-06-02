@@ -1,6 +1,7 @@
 import { extendType, inputObjectType, nonNull } from "nexus";
+import { LogLevel } from "../../context";
 
-
+const LOG_CAT = "Shooter";
 
 export const CreateShooterShooterInputType = inputObjectType({
 	name: "CreateShooterShooterInput",
@@ -33,7 +34,7 @@ export const ShooterMuataion = extendType({
 				shooter: nonNull("CreateShooterShooterInput"),
 			},
 			async resolve(src, args, ctx) {
-				
+				ctx.log(LogLevel.INFO, `Creating shooter with data: ${JSON.stringify(args.shooter)}`, LOG_CAT);
 				const result = await ctx.prisma.shooter.create({
 					data: {
 						division: args.shooter.division,
@@ -72,6 +73,7 @@ export const ShooterMuataion = extendType({
 				shooter: "UpdateShooterShooterInput",
 			},
 			async resolve(src, args, ctx) {
+				ctx.log(LogLevel.INFO, `Updating shooter with id: ${args.id} and data: ${JSON.stringify(args.shooter)}`, LOG_CAT);
 				try {
 					return ctx.prisma.shooter.update({
 						where: {
@@ -83,6 +85,7 @@ export const ShooterMuataion = extendType({
 						...ctx.select,
 					});
 				} catch (e) {
+					ctx.log(LogLevel.ERROR, `Error updating shooter with id: ${args.id} and data: ${JSON.stringify(args.shooter)}, error: ${e}`, LOG_CAT);
 					return null;
 				}
 			},
@@ -94,6 +97,7 @@ export const ShooterMuataion = extendType({
 				id: nonNull("Int"),
 			},
 			async resolve(src, args, ctx) {
+				ctx.log(LogLevel.INFO, `Deleting shooter with id: ${args.id}`, LOG_CAT);
 				try {
 					return await ctx.prisma.shooter.delete({
 						where: {
@@ -102,6 +106,7 @@ export const ShooterMuataion = extendType({
 						...ctx.select,
 					});
 				} catch (e) {
+					ctx.log(LogLevel.ERROR, `Error deleting shooter with id: ${args.id}, error: ${e}`, LOG_CAT);
 					return null;
 				}
 			},

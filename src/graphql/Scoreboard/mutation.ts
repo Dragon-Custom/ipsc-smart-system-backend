@@ -1,4 +1,7 @@
 import { extendType, nonNull } from "nexus";
+import { LogLevel } from "../../context";
+
+const LOG_CAT = "Scoreboard";
 
 export const ScoreboardMutation = extendType({
 	type: "Mutation",
@@ -9,6 +12,7 @@ export const ScoreboardMutation = extendType({
 				name: nonNull("String"),
 			},
 			resolve(src, args, ctx) {
+				ctx.log(LogLevel.INFO, `Creating scoreboard with name ${args.name}`, LOG_CAT);
 				return ctx.prisma.scoreboard.create({
 					data: {
 						name: args.name,
@@ -24,6 +28,7 @@ export const ScoreboardMutation = extendType({
 				name: nonNull("String"),
 			},
 			async resolve(src, args, ctx) {
+				ctx.log(LogLevel.INFO, `Updating scoreboard with id ${args.id} and name ${args.name}`, LOG_CAT);
 				try {
 					return await ctx.prisma.scoreboard.update({
 						where: {
@@ -35,6 +40,7 @@ export const ScoreboardMutation = extendType({
 						...ctx.select,
 					});
 				} catch (error) {
+					ctx.log(LogLevel.ERROR, `Error while updating scoreboard: ${error}`, LOG_CAT);
 					return null;
 				}
 			},
@@ -45,6 +51,7 @@ export const ScoreboardMutation = extendType({
 				id: nonNull("Int"),
 			},
 			async resolve(src, args, ctx) {
+				ctx.log(LogLevel.INFO, `Deleting scoreboard with id ${args.id}`, LOG_CAT);
 				try {
 					return await ctx.prisma.scoreboard.delete({
 						where: {
@@ -53,6 +60,7 @@ export const ScoreboardMutation = extendType({
 						...ctx.select,
 					});
 				} catch (error) {
+					ctx.log(LogLevel.ERROR, `Error while deleting scoreboard: ${error}`, LOG_CAT);
 					return null;
 				}
 			},

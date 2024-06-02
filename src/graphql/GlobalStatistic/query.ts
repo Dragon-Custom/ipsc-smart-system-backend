@@ -1,6 +1,8 @@
 import { extendType, inputObjectType } from "nexus";
 import { Prisma } from "@prisma/client";
+import { LogLevel } from "../../context";
 
+const LOG_CAT = "Global Statistic";
 
 export const GlobalStatisticQueryFilterInputType = inputObjectType({
 	name: "GlobalStatisticFilterInputType",
@@ -21,7 +23,7 @@ export const GlobalStatisticQuery = extendType({
 			},
 			resolve: async (src, args, ctx) => {
 				let searchQuery: Prisma.ScoreWhereInput = {};
-				
+				ctx.log(LogLevel.INFO, `Querying globalStatistic with filter ${JSON.stringify(args.filter)}`, LOG_CAT);
 				if (args.filter?.scoreboardId) {
 					searchQuery = {
 						...searchQuery,
@@ -94,7 +96,7 @@ export const GlobalStatisticQuery = extendType({
 				});
 
 
-				return {
+				const result = {
 					shootersTotal: shooterTotal,
 					runsTotal: scores.length,
 					stagesTotal: stageTotal,
@@ -111,6 +113,8 @@ export const GlobalStatisticQuery = extendType({
 					popperTotal: agg._sum.poppers,
 					proErrorTotal: agg._sum.proErrorCount,
 				};
+				ctx.log(LogLevel.TRACE, `Result: ${JSON.stringify(result)}`, LOG_CAT);
+				return result;
 			},
 		});
 	},

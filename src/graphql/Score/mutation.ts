@@ -1,6 +1,9 @@
 import { Prisma, ScoreState } from "@prisma/client";
 import { extendType, inputObjectType, nonNull } from "nexus";
 import { ShooterElo, ShooterId, ShooterRank, calculateElo, updateElo } from "../Elo";
+import { LogLevel } from "../../context";
+
+const LOG_CAT = "Score";
 
 export const UpdateScoreProErrorInputType = inputObjectType({
 	name: "UpdateScoreProErrorInput",
@@ -38,6 +41,7 @@ export const ScoreMutation = extendType({
 				round: nonNull("Int"),
 			},
 			resolve(src, args, ctx) {
+				ctx.log(LogLevel.INFO, `Creating empty score with shooterId: ${args.shooterId}, scorelistId: ${args.scorelistId}, round: ${args.round}`, LOG_CAT);
 				return ctx.prisma.score.create({
 					data: {
 						shooter: {
@@ -63,6 +67,7 @@ export const ScoreMutation = extendType({
 				score: "UpdateScoreInput",
 			},
 			async resolve(src, args, ctx) {
+				ctx.log(LogLevel.INFO, `Updating score with id: ${args.id}, score: ${JSON.stringify(args.score)}`, LOG_CAT);
 				const data: Prisma.ScoreUpdateArgs["data"] = {};
 				if (args.score?.alphas) data.alphas = args.score.alphas;
 				if (args.score?.charlies) data.charlies = args.score.charlies;
@@ -138,6 +143,7 @@ export const ScoreMutation = extendType({
 				id: nonNull("Int"),
 			},
 			async resolve(src, args, ctx) {
+				ctx.log(LogLevel.INFO, `Setting score with id: ${args.id} as DNF`, LOG_CAT);
 				try {
 					return await ctx.prisma.score.update({
 						where: {
@@ -151,7 +157,7 @@ export const ScoreMutation = extendType({
 						...ctx.select,
 					});
 				} catch (error) {
-					console.log(error);
+					ctx.log(LogLevel.ERROR, error as string, LOG_CAT);
 					return null;
 				}
 			},
@@ -163,6 +169,7 @@ export const ScoreMutation = extendType({
 				dqReasonId: nonNull("Int"),
 			},
 			async resolve(src, args, ctx) {
+				ctx.log(LogLevel.INFO, `Setting score with id: ${args.id} as DQ with reason id: ${args.dqReasonId}`, LOG_CAT);
 				try {
 					return await ctx.prisma.score.update({
 						where: {
@@ -181,7 +188,7 @@ export const ScoreMutation = extendType({
 						...ctx.select,
 					});
 				} catch (error) {
-					console.log(error);
+					ctx.log(LogLevel.ERROR, error as string, LOG_CAT);
 					return null;
 				}
 			},
@@ -192,6 +199,7 @@ export const ScoreMutation = extendType({
 				id: nonNull("Int"),
 			},
 			async resolve(src, args, ctx) {
+				ctx.log(LogLevel.INFO, `Deleting score with id: ${args.id}`, LOG_CAT);
 				try {
 					return await ctx.prisma.score.delete({
 						where: {
@@ -200,7 +208,7 @@ export const ScoreMutation = extendType({
 						...ctx.select,
 					});
 				} catch (error) {
-					console.log(error);
+					ctx.log(LogLevel.ERROR, error as string, LOG_CAT);
 					return null;
 				}
 			},
@@ -212,6 +220,7 @@ export const ScoreMutation = extendType({
 				destRound: nonNull("Int"),
 			},
 			async resolve(src, args, ctx) {
+				ctx.log(LogLevel.INFO, `Copying shooters from round ${args.srcRound} to round ${args.destRound} with scorelistId: ${args.scorelistId}`, LOG_CAT);
 				if (args.srcRound === args.destRound)
 					return true;
 				try {
@@ -240,7 +249,7 @@ export const ScoreMutation = extendType({
 					}
 					return true;
 				} catch (error) {
-					console.log(error);
+					ctx.log(LogLevel.ERROR, error as string, LOG_CAT);
 					return false;
 				}
 			},
@@ -252,6 +261,7 @@ export const ScoreMutation = extendType({
 			},
 			async resolve(src, args, ctx) {
 				return await new Promise((resolve, reject) => { 
+					ctx.log(LogLevel.INFO, `Swapping scores with id ${args.srcId} and ${args.destId}`, LOG_CAT);
 					ctx.prisma.$transaction(async(prisma) => {
 						const maxId = (await prisma.score.findFirst({
 							orderBy: {

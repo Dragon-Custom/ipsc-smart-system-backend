@@ -1,11 +1,12 @@
 import { extendType } from "nexus";
-import { subscribe } from "../../context";
+import { LogLevel, subscribe } from "../../context";
+const LOG_CAT = "Stage";
 
 export const StageSubscription = extendType({
 	type: "Subscription",
 	definition(t) {
 		t.boolean("stagesChange", {
-			subscribe() {
+			subscribe(src, args, ctx) {
 				return (async function* () {
 					while (true) {
 						await new Promise(res => subscribe("Stage", [
@@ -16,6 +17,7 @@ export const StageSubscription = extendType({
 							"delete",
 							"deleteMany",
 						], res));
+						ctx.log(LogLevel.INFO, "Stage subscription triggered", LOG_CAT);
 						yield true;
 					}
 				})();

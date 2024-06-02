@@ -1,4 +1,6 @@
 import { extendType, inputObjectType, nonNull } from "nexus";
+import { LogLevel } from "../../context";
+const LOG_CAT = "Stage";
 
 export const StageFilterInputType = inputObjectType({
 	name: "StageFilterInput",
@@ -21,13 +23,16 @@ export const StageQuery = extendType({
 			args: {
 				id: nonNull("Int"),
 			},
-			resolve(src, args, ctx) {
-				return ctx.prisma.stage.findUnique({
+			async resolve(src, args, ctx) {
+				ctx.log(LogLevel.INFO, `Querying stage with id ${args.id}`, LOG_CAT);
+				const result = await ctx.prisma.stage.findUnique({
 					where: {
 						id: args.id,
 					},
 					...ctx.select,
 				});
+				ctx.log(LogLevel.TRACE, `Result: ${JSON.stringify(result)}`, LOG_CAT);
+				return result;
 			},
 		});
 		t.nonNull.list.field("stages", {
@@ -35,10 +40,13 @@ export const StageQuery = extendType({
 			args: {
 				filter: "StageFilterInput",
 			},
-			resolve(src, args, ctx) {
-				return ctx.prisma.stage.findMany({
+			async resolve(src, args, ctx) {
+				ctx.log(LogLevel.INFO, `Querying stages with filter ${JSON.stringify(args.filter)}`, LOG_CAT);
+				const result = await ctx.prisma.stage.findMany({
 					...ctx.select,
 				});
+				ctx.log(LogLevel.TRACE, `Result: ${JSON.stringify(result)}`, LOG_CAT);
+				return result;
 			},
 		});
 	},
