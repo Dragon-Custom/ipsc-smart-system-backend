@@ -1,6 +1,6 @@
 import { Prisma, ScoreState } from "@prisma/client";
 import { extendType, inputObjectType, nonNull } from "nexus";
-import { ShooterElo, ShooterId, ShooterRank, calculateElo } from "../Elo";
+import { ShooterElo, ShooterId, ShooterRank, calculateElo, updateElo } from "../Elo";
 
 export const UpdateScoreProErrorInputType = inputObjectType({
 	name: "UpdateScoreProErrorInput",
@@ -127,65 +127,7 @@ export const ScoreMutation = extendType({
 						...ctx.select,
 					});
 
-					//#region elo
-					const scores = await prisma.score.findMany({
-						where: {
-							scorelistId: tempScore.scorelistId,
-							round: tempScore.round,
-							state: {
-								notIn: ["DidNotScore"],
-							},
-						},
-					});
-					if (scores.length > 1) {
-						const sumOfHitFactors: typeof scores = [];
-
-						for (const score of scores) {
-							const dubplicatedScore = sumOfHitFactors.findIndex((s) => s.shooterId === score.shooterId);
-							if (dubplicatedScore > -1) {
-								sumOfHitFactors[dubplicatedScore].hitFactor += score.hitFactor;
-							} else {
-								sumOfHitFactors.push(score);
-							}
-						}
-						const orderedScores: Record<ShooterId, ShooterRank>[] = sumOfHitFactors.sort((a, b) => b.hitFactor - a.hitFactor).map((score, i) => [score.shooterId, i + 1]);
-						const elos: ShooterElo[] = [];
-						for (const i in orderedScores) {
-							const shooterElo = await prisma.elo.findFirst({
-								where: {
-									shooterId: orderedScores[i][0],
-								},
-								orderBy: {
-									createAt: "desc",
-								},
-							});
-							elos.push([orderedScores[i][0], shooterElo?.elo || parseInt(process.env.INIT_ELO || "1000")]);
-						}
-						const ranks = orderedScores.map((score, i) => i + 1);
-						const newElos = calculateElo(elos, ranks);
-						const currentTick = (await prisma.elo.findFirst({
-							orderBy: {
-								tick: "desc",
-							},
-							select: {
-								tick: true,
-							},
-						}))?.tick || 0;
-						for (const i in newElos) {
-							await prisma.elo.create({
-								data: {
-									tick: currentTick + 1,
-									elo: newElos[i][1],
-									shooter: {
-										connect: {
-											id:  newElos[i][0],
-										},
-									},
-								},
-							});
-						}
-					}
-					//#endregion
+					await updateElo();
 					return returnResult;
 				});
 			},

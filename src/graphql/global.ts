@@ -1,6 +1,7 @@
 import { interfaceType } from "nexus";
 import { prisma } from "../context";
 import { sqltag } from "@prisma/client/runtime/library";
+import { updateElo } from "./Elo";
 
 export const NodeObject = interfaceType({
 	name: "Node",
@@ -119,4 +120,6 @@ setInterval(async () => {
 		});
 	}
 	// #endregion
+	await updateElo();
+
 }, 1000 * 60 * (parseFloat(process.env.RERANKING_INTERVAL ?? "5")));
