@@ -29,7 +29,7 @@ model Shooter {
     email         String
     rankings      Ranking[]
     ratings       Rating[]
-    ELO           ELO[]
+    ELO           Elo[]
 }
 
 enum StageType {
@@ -184,7 +184,7 @@ model Rating {
     tick      Int //to indentify the time of update
 }
 
-model ELO {
+model Elo {
     id        Int      @id @unique @default(autoincrement())
     shooter   Shooter  @relation(fields: [shooterId], references: [id], onDelete: Cascade)
     shooterId Int
