@@ -11,7 +11,7 @@ export type ShooterElo = Record<ShooterId, Elo>;
 
 export function calculateElo(shooterElos: ShooterElo[], ranks: ShooterRank[]): ShooterElo[] {
 	log(LogLevel.DEBUG, `Calculating elo, shooterElos: ${JSON.stringify(shooterElos)}, ranks: ${JSON.stringify(ranks)}`, LOG_CAT);
-	const elo = new MultiElo({ k: 64, d: 800, verbose: false});
+	const elo = new MultiElo();
 
 	const elos = shooterElos.map((elo) => {
 		return elo[1];

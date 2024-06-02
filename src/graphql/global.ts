@@ -124,5 +124,4 @@ setInterval(async () => {
 		});
 	}
 	// #endregion
-
 }, 1000 * 60 * (parseFloat(process.env.RERANKING_INTERVAL ?? "5")));
