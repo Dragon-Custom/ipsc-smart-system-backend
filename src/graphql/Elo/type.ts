@@ -7,7 +7,6 @@ export const EloType = objectType({
 		t.nonNull.field("shooter", {
 			type: "Shooter",
 		});
-		t.nonNull.int("shooterId");
 		t.nonNull.float("elo");
 		t.nonNull.dateTime("updatedAt");
 		t.nonNull.dateTime("createAt");
