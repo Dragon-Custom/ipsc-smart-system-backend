@@ -28,7 +28,7 @@ export const ProErrorObjectQuery = extendType({
 					},
 					...ctx.select,
 				});
-				ctx.log(LogLevel.DEBUG, `Result: ${JSON.stringify(result)}`, LOG_CAT);
+				ctx.log(LogLevel.TRACE, `Result: ${JSON.stringify(result)}`, LOG_CAT);
 				return result;
 			},
 		});
