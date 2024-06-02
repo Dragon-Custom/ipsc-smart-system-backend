@@ -88,13 +88,13 @@ setInterval(async () => {
 	}
 	// #endregion
 	// #region ranking
-	const ratings = await prisma.rating.findMany({
+	const ratings = await prisma.elo.findMany({
 		orderBy: [
 			{
 				createAt: "desc",
 			},
 			{
-				rating: "desc",
+				elo: "desc",
 			},
 		],
 		distinct: "shooterId",
@@ -104,7 +104,7 @@ setInterval(async () => {
 			createAt: "desc",
 		},
 	}))?.tick ?? 0;
-	const sortedRating = ratings.sort((a, b) => b.rating - a.rating);
+	const sortedRating = ratings.sort((a, b) => b.elo - a.elo);
 	for (const r in sortedRating) {
 		await prisma.ranking.create({
 			data: {

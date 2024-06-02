@@ -32,8 +32,9 @@ export const ShooterMuataion = extendType({
 			args: {
 				shooter: nonNull("CreateShooterShooterInput"),
 			},
-			resolve(src, args, ctx) {
-				return ctx.prisma.shooter.create({
+			async resolve(src, args, ctx) {
+				
+				const result = await ctx.prisma.shooter.create({
 					data: {
 						division: args.shooter.division,
 						email: args.shooter.email,
@@ -41,6 +42,26 @@ export const ShooterMuataion = extendType({
 					},
 					...ctx.select,
 				});
+				const tick = (await ctx.prisma.elo.findFirst({
+					orderBy: {
+						tick: "desc",
+					},
+					select: {
+						tick: true,
+					},
+				}))?.tick || 0;
+				await ctx.prisma.elo.create({
+					data: {
+						shooter: {
+							connect: {
+								id: result.id,
+							},
+						},
+						elo: 1000,
+						tick: tick + 1,
+					},
+				});
+				return result;
 			},
 		});
 		t.nullable.field("updateShooter", {

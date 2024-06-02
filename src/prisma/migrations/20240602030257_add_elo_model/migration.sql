@@ -1,0 +1,20 @@
+-- AlterTable
+
+
+-- CreateTable
+CREATE TABLE "ELO" (
+    "id" SERIAL NOT NULL,
+    "shooterId" INTEGER NOT NULL,
+    "elo" DOUBLE PRECISION NOT NULL,
+    "updatedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "createAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "tick" INTEGER NOT NULL,
+
+    CONSTRAINT "ELO_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateIndex
+CREATE UNIQUE INDEX "ELO_id_key" ON "ELO"("id");
+
+-- AddForeignKey
+ALTER TABLE "ELO" ADD CONSTRAINT "ELO_shooterId_fkey" FOREIGN KEY ("shooterId") REFERENCES "Shooter"("id") ON DELETE CASCADE ON UPDATE CASCADE;
