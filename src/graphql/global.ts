@@ -1,7 +1,6 @@
 import { interfaceType } from "nexus";
 import { LogLevel, prisma } from "../context";
 import { sqltag } from "@prisma/client/runtime/library";
-import { updateElo } from "./Elo";
 import { log } from "../context";
 
 const LOG_CAT = "Rating Ranking ELO Updater";
@@ -125,6 +124,5 @@ setInterval(async () => {
 		});
 	}
 	// #endregion
-	await updateElo();
 
 }, 1000 * 60 * (parseFloat(process.env.RERANKING_INTERVAL ?? "5")));
