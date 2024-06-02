@@ -33,7 +33,7 @@ export const ShooterType = objectType({
 		t.nullable.list.field("ratings", {
 			type: "Rating",
 		});
-		t.nonNull.list.field("elo", {
+		t.nullable.list.field("elo", {
 			type: "Elo",
 		});
 	},
