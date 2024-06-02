@@ -83,7 +83,7 @@ log4js.configure({
 	categories: {
 		default: {
 			appenders: ["stdout-filtered", "global", "multiCategory"],
-			level: LogLevel.TRACE,
+			level: "ALL",
 		},
 	},
 });
