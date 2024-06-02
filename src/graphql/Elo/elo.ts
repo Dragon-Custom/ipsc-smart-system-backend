@@ -1,6 +1,5 @@
 import { MultiElo } from "multi-elo";
-import { LogLevel, prisma } from "../../context";
-import { log } from "console";
+import { log, LogLevel, prisma } from "../../context";
 
 const LOG_CAT = "ELO System";
 
