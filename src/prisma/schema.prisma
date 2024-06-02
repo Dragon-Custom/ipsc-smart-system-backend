@@ -1,7 +1,7 @@
 datasource db {
-    url      = env("POSTGRE_CONNECTION_STRING")
+    url               = env("POSTGRE_CONNECTION_STRING")
     shadowDatabaseUrl = env("POSTGRE_DEV_CONNECTION_STRING")
-    provider = "postgresql"
+    provider          = "postgresql"
 }
 
 generator client {
@@ -29,6 +29,7 @@ model Shooter {
     email         String
     rankings      Ranking[]
     ratings       Rating[]
+    ELO           ELO[]
 }
 
 enum StageType {
@@ -160,7 +161,7 @@ model DqObject {
 model Image {
     id        String  @id @unique @default(cuid())
     imagePath String
-    stages     Stage[]
+    stages    Stage[]
 }
 
 model Ranking {
@@ -170,7 +171,7 @@ model Ranking {
     rank      Int
     updatedAt DateTime @default(now()) @updatedAt
     createAt  DateTime @default(now())
-    tick      Int      //to indentify the time of update
+    tick      Int //to indentify the time of update
 }
 
 model Rating {
@@ -180,5 +181,15 @@ model Rating {
     rating    Float
     updatedAt DateTime @default(now()) @updatedAt
     createAt  DateTime @default(now())
-    tick      Int      //to indentify the time of update
+    tick      Int //to indentify the time of update
+}
+
+model ELO {
+    id        Int      @id @unique @default(autoincrement())
+    shooter   Shooter  @relation(fields: [shooterId], references: [id], onDelete: Cascade)
+    shooterId Int
+    elo       Float
+    updatedAt DateTime @default(now()) @updatedAt
+    createAt  DateTime @default(now())
+    tick      Int //to indentify the time of update
 }
