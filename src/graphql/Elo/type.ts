@@ -10,5 +10,6 @@ export const EloType = objectType({
 		t.nonNull.float("elo");
 		t.nonNull.dateTime("updatedAt");
 		t.nonNull.dateTime("createAt");
+		t.nonNull.int("tick");
 	},
 });

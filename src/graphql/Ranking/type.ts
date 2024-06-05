@@ -11,5 +11,6 @@ export const RankingObject = objectType({
 		t.nonNull.int("rank");
 		t.nonNull.dateTime("updatedAt");
 		t.nonNull.dateTime("createAt");
+		t.nonNull.int("tick");
 	},
 });

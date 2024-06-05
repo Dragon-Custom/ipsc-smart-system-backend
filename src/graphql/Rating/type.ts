@@ -11,5 +11,6 @@ export const RatingObject = objectType({
 		t.nonNull.float("rating");
 		t.nonNull.dateTime("updatedAt");
 		t.nonNull.dateTime("createAt");
+		t.nonNull.int("tick");
 	},
 });
