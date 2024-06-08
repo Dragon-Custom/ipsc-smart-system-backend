@@ -6,7 +6,7 @@ export const Team = objectType({
 		t.implements("Node");
 		t.string("name");
 		t.dateTime("createAt");
-		t.nonNull.list.field("shooters", {
+		t.nullable.list.field("shooters", {
 			type: "Shooter",
 		});
 	},
