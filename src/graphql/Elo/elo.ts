@@ -17,7 +17,7 @@ export type ShooterElo = {
 
 export function calculateElo(shooter: ShooterElo[]): Omit<ShooterElo, "score">[] {
 	log(LogLevel.DEBUG, `Calculating elo, shooterElos: ${JSON.stringify(shooter)}`, LOG_CAT);
-	const elo = new MultiElo({s: 20, k: 32, d: 10, verbose: true});
+	const elo = new MultiElo({s: 7, k: 24, d: 1000, verbose: true});
 	
 	const sortedShooter = shooter.sort((a, b) => b.score - a.score);
 	const shooterElos: Elo[] = sortedShooter.map((shooter) => shooter.elo);
