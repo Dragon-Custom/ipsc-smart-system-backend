@@ -21,5 +21,14 @@ export const TeamQuery = extendType({
 				});
 			},
 		});
+		t.nonNull.list.field("teams", {
+			type: "Team",
+			resolve(root, args, ctx) {
+				ctx.log(LogLevel.INFO, "Querying all teams", LOG_CAT);
+				return ctx.prisma.team.findMany({
+					...ctx.select,
+				});
+			},
+		});
 	},
 });
