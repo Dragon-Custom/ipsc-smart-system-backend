@@ -14,3 +14,4 @@ export * from "./Rating";
 export * from "./ShooterStatistic";
 export * from "./GlobalStatistic";
 export * from "./Elo";
+export * from "./Team";
