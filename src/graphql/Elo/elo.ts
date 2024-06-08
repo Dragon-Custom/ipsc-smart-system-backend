@@ -63,18 +63,21 @@ export async function updateElo(/* scorelistId: number, round: number */) {
 					tick: "desc",
 				},
 			});
-			const rating = await prisma.rating.findFirst({
+			const score = await prisma.score.aggregate({
 				where: {
 					shooterId: shooter.id,
 				},
-				orderBy: {
-					tick: "desc",
+				_sum: {
+					hitFactor: true,
+				},
+				_avg: {
+					accuracy: true,
 				},
 			});
 			elos.push({
 				shooterId: shooter.id,
 				elo: shooterElo?.elo || parseInt(process.env.INIT_ELO || "1000"),
-				score: rating?.rating || 0,
+				score: (score._avg.accuracy || 0) * (score._sum.hitFactor || 0),
 			});
 		}
 		const currentTick = (await prisma.elo.findFirst({
