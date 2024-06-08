@@ -17,15 +17,13 @@ export type ShooterElo = {
 
 export function calculateElo(shooter: ShooterElo[]): Omit<ShooterElo, "score">[] {
 	log(LogLevel.DEBUG, `Calculating elo, shooterElos: ${JSON.stringify(shooter)}`, LOG_CAT);
-	const elo = new MultiElo();
+	const elo = new MultiElo({s: 7, k: 24, d: 1000, verbose: true});
 	
 	const sortedShooter = shooter.sort((a, b) => b.score - a.score);
 	const shooterElos: Elo[] = sortedShooter.map((shooter) => shooter.elo);
-	const ranks = sortedShooter.map((shooter, i) => i + 1);
 	log(LogLevel.DEBUG, `Sorted shooter		: ${JSON.stringify(sortedShooter)}`, LOG_CAT);
 	log(LogLevel.DEBUG, `Shooter elos		: ${JSON.stringify(shooterElos)}`, LOG_CAT);
-	log(LogLevel.DEBUG, `Ranks				: ${JSON.stringify(ranks)}`, LOG_CAT);
-	const newElos = elo.getNewRatings(shooterElos, ranks);
+	const newElos = elo.getNewRatings(shooterElos);
 
 	return newElos.map((elo, index) => {
 		return {
@@ -40,8 +38,6 @@ export async function updateElo(/* scorelistId: number, round: number */) {
 	log(LogLevel.INFO, "Updating elo", LOG_CAT);
 	const scores = await prisma.score.findMany({
 		where: {
-			// scorelistId: scorelistId,
-			// round: round,
 			state: {
 				notIn: ["DidNotScore"],
 			},
@@ -52,54 +48,6 @@ export async function updateElo(/* scorelistId: number, round: number */) {
 		},
 	});
 	if (scores.length > 1) {
-		// const sumOfHitFactors: typeof scores = [];
-
-		// for (const score of scores) {
-		// 	const dubplicatedScore = sumOfHitFactors.findIndex((s) => s.shooterId === score.shooterId);
-		// 	if (dubplicatedScore > -1) {
-		// 		sumOfHitFactors[dubplicatedScore].hitFactor += score.hitFactor;
-		// 	} else {
-		// 		sumOfHitFactors.push(score);
-		// 	}
-		// }
-		// const orderedScores: Record<ShooterId, ShooterRank>[] = sumOfHitFactors.sort((a, b) => a.hitFactor - b.hitFactor).map((score, i) => [score.shooterId, i + 1]);
-		// const elos: ShooterElo[] = [];
-		// for (const i in orderedScores) {
-		// 	const shooterElo = await prisma.elo.findFirst({
-		// 		where: {
-		// 			shooterId: orderedScores[i][0],
-		// 		},
-		// 		orderBy: {
-		// 			createAt: "desc",
-		// 		},
-		// 	});
-		// 	elos.push([orderedScores[i][0], shooterElo?.elo || parseInt(process.env.INIT_ELO || "1000")]);
-		// }
-		// const ranks = orderedScores.map((score, i) => i + 1);
-		// const newElos = calculateElo(elos, ranks);
-		// const currentTick = (await prisma.elo.findFirst({
-		// 	orderBy: {
-		// 		tick: "desc",
-		// 	},
-		// 	select: {
-		// 		tick: true,
-		// 	},
-		// }))?.tick || 0;
-		// for (const i in newElos) {
-		// 	log(LogLevel.DEBUG, `Shooter ${newElos[i][0]} elo: ${newElos[i][1]}`, LOG_CAT);
-		// 	await prisma.elo.create({
-		// 		data: {
-		// 			tick: currentTick + 1,
-		// 			elo: newElos[i][1],
-		// 			shooter: {
-		// 				connect: {
-		// 					id:  newElos[i][0],
-		// 				},
-		// 			},
-		// 		},
-		// 	});
-		// }
-
 		const shooters = await prisma.shooter.findMany({
 			select: {
 				id: true,
@@ -146,7 +94,7 @@ export async function updateElo(/* scorelistId: number, round: number */) {
 					tick: currentTick + 1,
 					elo: elo.elo,
 					shooter: {
-						connect: {
+						connect: {	
 							id: elo.shooterId,
 						},
 					},

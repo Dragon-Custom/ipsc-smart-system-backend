@@ -57,3 +57,42 @@ server.listen(process.env.PORT, () => {
 		"Web Server",
 	);
 });
+
+import readline from "readline";
+import { updateElo } from "./graphql";
+
+const rl = readline.createInterface({ input: process.stdin, output: process.stdout });
+const prompt = (query) => new Promise((resolve) => rl.question(query, resolve));
+
+// Usage inside aync function do not need closure demo only
+(async() => {
+	try {
+		// eslint-disable-next-line no-constant-condition
+		while (true) {
+			const command = await prompt("");
+			switch (command) {
+			case "help":
+				console.log(`
+				help - Display this message
+				elo - Update Elo ratings
+				exit - Exit program
+			`);
+				break;
+			case "elo":
+				updateElo();
+				break;
+			case "exit":
+				process.exit(0);
+				break;
+			default:
+				console.log("Invalid command");
+				break;
+			}
+		}
+	} catch (e) {
+		console.error("Unable to prompt", e);
+	}
+})();
+
+// When done reading prompt, exit program 
+rl.on("close", () => process.exit(0));
