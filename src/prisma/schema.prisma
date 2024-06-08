@@ -23,7 +23,7 @@ model Team {
     id       Int       @id @unique @default(autoincrement())
     createAt DateTime  @default(now())
     name     String
-    shooter  Shooter[]
+    shooters  Shooter[]
 }
 
 model Shooter {
