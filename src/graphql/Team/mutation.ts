@@ -53,5 +53,20 @@ export const TeamMutation = extendType({
 				});
 			},
 		});
+		t.field("deleteTeam", {
+			type: "Team",
+			args: {
+				id: nonNull("Int"),
+			},
+			resolve: async (src, args, ctx) => {
+				ctx.log(LogLevel.INFO, `Deleting team by id ${args.id}`, LOG_CAT);
+				return await ctx.prisma.team.delete({
+					where: {
+						id: args.id,
+					},
+					...ctx.select,
+				});
+			},
+		});
 	},
 });
