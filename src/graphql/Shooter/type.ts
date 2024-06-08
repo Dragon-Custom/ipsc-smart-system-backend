@@ -36,5 +36,8 @@ export const ShooterType = objectType({
 		t.nullable.list.field("elo", {
 			type: "Elo",
 		});
+		t.nullable.field("team", {
+			type: "Team",
+		});
 	},
 });
