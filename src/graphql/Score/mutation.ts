@@ -1,6 +1,6 @@
 import { Prisma, ScoreState } from "@prisma/client";
 import { extendType, inputObjectType, nonNull } from "nexus";
-import { ShooterElo, ShooterId, ShooterRank, calculateElo, updateElo } from "../Elo";
+import { ShooterElo, ShooterId, ShooterScore, calculateElo, updateElo } from "../Elo";
 import { LogLevel } from "../../context";
 
 const LOG_CAT = "Score";

@@ -4,23 +4,34 @@ import { log, LogLevel, prisma } from "../../context";
 const LOG_CAT = "ELO System";
 
 export type ShooterId = number;
-export type ShooterRank = number;
+export type ShooterScore = number;
 export type Elo = number;
 
-export type ShooterElo = Record<ShooterId, Elo>;
+export type ShooterElo = {
+	shooterId: ShooterId;
+	elo: Elo;
+	score: ShooterScore;
+};
 
-export function calculateElo(shooterElos: ShooterElo[], ranks: ShooterRank[]): ShooterElo[] {
-	log(LogLevel.DEBUG, `Calculating elo, shooterElos: ${JSON.stringify(shooterElos)}, ranks: ${JSON.stringify(ranks)}`, LOG_CAT);
+
+
+export function calculateElo(shooter: ShooterElo[]): Omit<ShooterElo, "score">[] {
+	log(LogLevel.DEBUG, `Calculating elo, shooterElos: ${JSON.stringify(shooter)}`, LOG_CAT);
 	const elo = new MultiElo();
-
-	const elos = shooterElos.map((elo) => {
-		return elo[1];
-	});
-
-	const newElos = elo.getNewRatings(elos, ranks);
+	
+	const sortedShooter = shooter.sort((a, b) => b.score - a.score);
+	const shooterElos: Elo[] = sortedShooter.map((shooter) => shooter.elo);
+	const ranks = sortedShooter.map((shooter, i) => i + 1);
+	log(LogLevel.DEBUG, `Sorted shooter		: ${JSON.stringify(sortedShooter)}`, LOG_CAT);
+	log(LogLevel.DEBUG, `Shooter elos		: ${JSON.stringify(shooterElos)}`, LOG_CAT);
+	log(LogLevel.DEBUG, `Ranks				: ${JSON.stringify(ranks)}`, LOG_CAT);
+	const newElos = elo.getNewRatings(shooterElos, ranks);
 
 	return newElos.map((elo, index) => {
-		return [shooterElos[index][0], elo];
+		return {
+			elo: elo,
+			shooterId: sortedShooter[index].shooterId,
+		};
 	});
 }
 
@@ -89,46 +100,35 @@ export async function updateElo(/* scorelistId: number, round: number */) {
 		// 	});
 		// }
 
-		const shooterIds = await prisma.shooter.findMany({
+		const shooters = await prisma.shooter.findMany({
 			select: {
 				id: true,
 			},
 		});
-		const avgHitFactor: Record<ShooterId, number>[] = [];
-		for (const shooterId of shooterIds) {
-			const avg = await prisma.score.aggregate({
-				where: {
-					shooterId: shooterId.id,
-					state: {
-						notIn: ["DidNotScore"],
-					},
-				},
-				_avg: {
-					hitFactor: true,
-				},
-			});
-			avgHitFactor.push([shooterId.id, avg._avg.hitFactor || 0]);
-		}
-		const sortedAvgHitFactor = avgHitFactor.sort((a, b) => b[1]  - a[1]);
-		const ranks = sortedAvgHitFactor.map((score, i) => i + 1);
 		const elos: ShooterElo[] = [];
-
-		for (const shooterId in sortedAvgHitFactor) {
+		for (const shooter of shooters) {
 			const shooterElo = await prisma.elo.findFirst({
 				where: {
-					shooterId: sortedAvgHitFactor[shooterId][0],
+					shooterId: shooter.id,
 				},
 				orderBy: {
-					createAt: "desc",
+					tick: "desc",
 				},
 			});
-			elos.push([parseInt(shooterId), shooterElo?.elo || parseInt(process.env.INIT_ELO || "1000")]);
+			const rating = await prisma.rating.findFirst({
+				where: {
+					shooterId: shooter.id,
+				},
+				orderBy: {
+					tick: "desc",
+				},
+			});
+			elos.push({
+				shooterId: shooter.id,
+				elo: shooterElo?.elo || parseInt(process.env.INIT_ELO || "1000"),
+				score: rating?.rating || 0,
+			});
 		}
-		log(LogLevel.DEBUG, `sortedAvgHitFactor	: ${JSON.stringify(sortedAvgHitFactor)}`, LOG_CAT);
-		log(LogLevel.DEBUG, `ranks				: ${JSON.stringify(ranks)}`, LOG_CAT);
-		log(LogLevel.DEBUG, `elos				: ${JSON.stringify(elos)}`, LOG_CAT);
-		const newElos = calculateElo(elos, ranks);
-		log(LogLevel.DEBUG, `newElos			: ${JSON.stringify(newElos)}`, LOG_CAT);
 		const currentTick = (await prisma.elo.findFirst({
 			orderBy: {
 				tick: "desc",
@@ -137,20 +137,23 @@ export async function updateElo(/* scorelistId: number, round: number */) {
 				tick: true,
 			},
 		}))?.tick || 0;
-		for (const i in newElos) {
-			log(LogLevel.DEBUG, `Shooter ${sortedAvgHitFactor[i][0]} elo: ${newElos[i]}`, LOG_CAT);
+		log(LogLevel.DEBUG, `Original elos	: ${JSON.stringify(elos)}`, LOG_CAT);
+		const newElos = calculateElo(elos);
+		log(LogLevel.DEBUG, `New elos		: ${JSON.stringify(newElos)}`, LOG_CAT);
+		for (const elo of newElos) {
 			await prisma.elo.create({
 				data: {
 					tick: currentTick + 1,
-					elo: newElos[i][1],
+					elo: elo.elo,
 					shooter: {
 						connect: {
-							id:  sortedAvgHitFactor[i][0],
+							id: elo.shooterId,
 						},
 					},
 				},
 			});
 		}
+		
 		return;
 	} else {
 		log(LogLevel.WARN, "Not enough scores (less than 2) to calculate elo", LOG_CAT);
