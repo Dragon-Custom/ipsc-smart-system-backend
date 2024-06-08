@@ -19,6 +19,13 @@ enum Division {
     ProductionOptics
 }
 
+model Team {
+    id       Int       @id @unique @default(autoincrement())
+    createAt DateTime  @default(now())
+    name     String
+    shooter  Shooter[]
+}
+
 model Shooter {
     id            Int       @id @unique @default(autoincrement())
     createAt      DateTime? @default(now())
@@ -30,6 +37,8 @@ model Shooter {
     rankings      Ranking[]
     ratings       Rating[]
     elo           Elo[]
+    team          Team?     @relation(fields: [teamId], references: [id], onDelete: SetNull)
+    teamId        Int?
 }
 
 enum StageType {
