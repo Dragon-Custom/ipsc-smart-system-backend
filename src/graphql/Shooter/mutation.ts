@@ -1,5 +1,6 @@
 import { extendType, inputObjectType, nonNull } from "nexus";
 import { LogLevel } from "../../context";
+import { Prisma } from "@prisma/client";
 
 const LOG_CAT = "Shooter";
 
@@ -11,6 +12,7 @@ export const CreateShooterShooterInputType = inputObjectType({
 			type: "Division",
 		});
 		t.nonNull.string("email");
+		t.nullable.int("teamId");
 	},
 });
 export const UpdateShooterShooterInputType = inputObjectType({
@@ -21,6 +23,7 @@ export const UpdateShooterShooterInputType = inputObjectType({
 			type: "Division",
 		});
 		t.nullable.string("email");
+		t.nullable.int("teamId");
 	},
 });
 
@@ -35,11 +38,19 @@ export const ShooterMuataion = extendType({
 			},
 			async resolve(src, args, ctx) {
 				ctx.log(LogLevel.INFO, `Creating shooter with data: ${JSON.stringify(args.shooter)}`, LOG_CAT);
+				
+				const connectToTeam: Prisma.TeamCreateNestedOneWithoutShootersInput | undefined = {};
+				if (args.shooter.teamId) {
+					connectToTeam.connect = {
+						id: args.shooter.teamId,
+					};
+				}
 				const result = await ctx.prisma.shooter.create({
 					data: {
 						division: args.shooter.division,
 						email: args.shooter.email,
 						name: args.shooter.name,
+						team: connectToTeam,
 					},
 					...ctx.select,
 				});
@@ -58,7 +69,7 @@ export const ShooterMuataion = extendType({
 								id: result.id,
 							},
 						},
-						elo: 1000,
+						elo: parseInt(process.env.INIT_ELO || "1000"),
 						tick: tick + 1,
 					},
 				});
@@ -74,6 +85,14 @@ export const ShooterMuataion = extendType({
 			},
 			async resolve(src, args, ctx) {
 				ctx.log(LogLevel.INFO, `Updating shooter with id: ${args.id} and data: ${JSON.stringify(args.shooter)}`, LOG_CAT);
+				const connectToTeam: Prisma.TeamUpdateOneWithoutShootersNestedInput | undefined = {};
+				if (args.shooter?.teamId)
+					connectToTeam.connect = {
+						id: args.shooter.teamId,
+					};
+				else
+					connectToTeam.disconnect = true;
+				delete args.shooter?.teamId;
 				try {
 					return ctx.prisma.shooter.update({
 						where: {
@@ -81,6 +100,7 @@ export const ShooterMuataion = extendType({
 						},
 						data: {
 							...args.shooter,
+							team: connectToTeam,
 						},
 						...ctx.select,
 					});
