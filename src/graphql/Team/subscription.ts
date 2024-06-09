@@ -2,10 +2,10 @@ import { extendType } from "nexus";
 import { LogLevel, subscribe } from "../../context";
 const LOG_CAT = "Team";
 
-export const ShooterSubscription = extendType({
+export const TeamSubscription = extendType({
 	type: "Subscription",
 	definition(t) {
-		t.boolean("teamsSubscription", {
+		t.boolean("teamsChange", {
 			subscribe(src, args, ctx) {
 				return (async function* () {
 					while (true) {
