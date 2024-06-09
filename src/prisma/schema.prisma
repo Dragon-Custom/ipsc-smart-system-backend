@@ -21,9 +21,9 @@ enum Division {
 
 model Team {
     id       Int       @id @unique @default(autoincrement())
-    createAt DateTime  @default(now())
+    createAt DateTime? @default(now())
     name     String
-    shooters  Shooter[]
+    shooters Shooter[]
 }
 
 model Shooter {
