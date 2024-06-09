@@ -5,7 +5,7 @@ const LOG_CAT = "Team";
 export const ShooterSubscription = extendType({
 	type: "Subscription",
 	definition(t) {
-		t.boolean("teamsChange", {
+		t.boolean("teamsSubscription", {
 			subscribe(src, args, ctx) {
 				return (async function* () {
 					while (true) {
