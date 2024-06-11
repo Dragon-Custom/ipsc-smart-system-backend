@@ -36,7 +36,7 @@ model Shooter {
     email         String
     rankings      Ranking[]
     ratings       Rating[]
-    elos           Elo[]
+    elos          Elo[]
     team          Team?     @relation(fields: [teamId], references: [id], onDelete: SetNull)
     teamId        Int?
 }
