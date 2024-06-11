@@ -19,7 +19,7 @@ export const NodeObject = interfaceType({
 
 let previousSum = "";
 
-setInterval(async () => {
+export async function reevaluate() {
 	// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 	//@ts-expect-error
 	const checksum: string = (await prisma.$queryRaw(sqltag`
@@ -124,4 +124,8 @@ setInterval(async () => {
 		});
 	}
 	// #endregion
+}
+
+setInterval(async () => {
+	await reevaluate();
 }, 1000 * 60 * (parseFloat(process.env.RERANKING_INTERVAL ?? "5")));

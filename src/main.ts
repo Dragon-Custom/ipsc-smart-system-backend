@@ -59,7 +59,8 @@ server.listen(process.env.PORT, () => {
 });
 
 import readline from "readline";
-import { updateElo } from "./graphql";
+import { reevaluate, updateElo } from "./graphql";
+import { spawn } from "node:child_process";
 
 const rl = readline.createInterface({ input: process.stdin, output: process.stdout });
 const prompt = (query) => new Promise((resolve) => rl.question(query, resolve));
@@ -76,10 +77,17 @@ const prompt = (query) => new Promise((resolve) => rl.question(query, resolve));
 				help - Display this message
 				elo - Update Elo ratings
 				exit - Exit program
+				(ranking | rating)- Reevaluate ranking
 			`);
 				break;
 			case "elo":
 				updateElo();
+				break;
+			case "ranking":
+				reevaluate();
+				break;
+			case "rating":
+				reevaluate();
 				break;
 			case "exit":
 				process.exit(0);
