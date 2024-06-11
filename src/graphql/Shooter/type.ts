@@ -34,7 +34,7 @@ export const ShooterType = objectType({
 			resolve: async (src, args, ctx) => {
 				return (await ctx.prisma.ranking.findFirst({
 					where: {
-						id: src.id,
+						shooterId: src.id,
 					},
 					orderBy: {
 						tick: "desc",
