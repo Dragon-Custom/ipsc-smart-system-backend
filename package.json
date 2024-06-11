@@ -9,7 +9,7 @@
 		"gql:gen": "npx ts-node --transpile-only src/schema.ts",
 		"sdk:gen": "genql --schema build/schema.graphql --output build/sdk",
 		"gen": "npm run prisma:gen && npm run gql:gen && npm run sdk:gen",
-		"build": "tsc-silent -p tsconfig.json --suppress",
+		"build": "tsc-silent -p tsconfig.build.json --suppress",
 		"start": "set NODE_ENV=production && node build/server/main.js"
 	},
 	"prisma": {
