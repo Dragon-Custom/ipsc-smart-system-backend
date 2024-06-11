@@ -9,39 +9,39 @@ export const ScoreObject = objectType({
 	name: "Score",
 	definition(t) {
 		t.implements("Node");
-		t.nonNull.dateTime("createAt");
-		t.nonNull.field("shooter", {
+		t.dateTime("createAt");
+		t.nullable.field("shooter", {
 			type: "Shooter",
 		});
-		t.nonNull.int("shooterId");
-		t.nonNull.int("alphas");
-		t.nonNull.int("charlies");
-		t.nonNull.int("deltas");
-		t.nonNull.int("misses");
-		t.nonNull.int("noshoots");
-		t.nonNull.int("poppers");
-		t.nonNull.float("time");
+		t.int("shooterId");
+		t.int("alphas");
+		t.int("charlies");
+		t.int("deltas");
+		t.int("misses");
+		t.int("noshoots");
+		t.int("poppers");
+		t.float("time");
 		t.nullable.list.field("proErrors", {
 			type: "ProErrorStore",
 		});
-		t.nonNull.int("proErrorCount");
-		t.nonNull.field("scorelist", {
+		t.int("proErrorCount");
+		t.nullable.field("scorelist", {
 			type: "Scorelist",
 		});
-		t.nonNull.int("scorelistId");
-		t.nonNull.int("score");
-		t.nonNull.float("hitFactor");
+		t.int("scorelistId");
+		t.int("score");
+		t.float("hitFactor");
 		t.nullable.field("dqReason", {
 			type: "DqObject",
 		});
 		t.nullable.int("dqObjectId");
-		t.nonNull.int("round");
-		t.nonNull.float("accuracy");
-		t.nonNull.field("state", {
+		t.int("round");
+		t.float("accuracy");
+		t.field("state", {
 			type: "ScoreState",
 		});
 
-		t.nonNull.float("roundPercentage", {
+		t.nullable.float("roundPercentage", {
 			async resolve(src, args, ctx) {
 				const score  = (await ctx.prisma.score.findUnique({
 					where: {
@@ -75,7 +75,7 @@ export const ScoreObject = objectType({
 				return percentage;
 			},
 		});
-		t.nonNull.float("overallPercentage", {
+		t.nullable.float("overallPercentage", {
 			async resolve(src, args, ctx) {
 				const score  = (await ctx.prisma.score.findUnique({
 					where: {

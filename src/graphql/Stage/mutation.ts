@@ -34,7 +34,7 @@ export const UpdateStageInputType = inputObjectType({
 		output: false,
 	},
 	definition(t) {
-		t.id("id");
+		t.int("id");
 		t.string("name");
 		t.id("imageId");
 		t.string("description");

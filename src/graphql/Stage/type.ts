@@ -13,29 +13,29 @@ export const StageObject = objectType({
 	},
 	definition(t) {
 		t.implements("Node");
-		t.nonNull.dateTime("createAt");
-		t.nonNull.field("image", {
+		t.dateTime("createAt");
+		t.field("image", {
 			type: "Image",
 		}); 
-		t.nonNull.string("name");
+		t.string("name");
 		t.nullable.string("description");
-		t.nonNull.int("papers");
-		t.nonNull.int("poppers");
-		t.nonNull.int("noshoots");
-		t.nonNull.int("gunCondition");
-		t.nonNull.field("designer", {
+		t.int("papers");
+		t.int("poppers");
+		t.int("noshoots");
+		t.int("gunCondition");
+		t.field("designer", {
 			type: "Shooter",
 		});
-		t.nonNull.int("designerId");
-		t.nonNull.float("walkthroughTime", {
+		t.int("designerId");
+		t.float("walkthroughTime", {
 			description: "unit: minutes",
 		});
 		t.nullable.list.field("scorelists", {
 			type: "Scorelist",
 		});
-		t.nonNull.int("minRounds");
-		t.nonNull.int("maxScore");
-		t.nonNull.field("stageType", {
+		t.int("minRounds");
+		t.int("maxScore");
+		t.field("stageType", {
 			type: "StageType",
 		});
 		t.nullable.list.field("tags", {

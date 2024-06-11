@@ -1,4 +1,4 @@
-import { MultiElo } from "multi-elo";
+const { MultiElo } = require("multi-elo");
 import { log, LogLevel, prisma } from "../../context";
 
 const LOG_CAT = "ELO System";
@@ -23,7 +23,7 @@ export function calculateElo(shooter: ShooterElo[]): Omit<ShooterElo, "score">[]
 	const shooterElos: Elo[] = sortedShooter.map((shooter) => shooter.elo);
 	log(LogLevel.DEBUG, `Sorted shooter		: ${JSON.stringify(sortedShooter)}`, LOG_CAT);
 	log(LogLevel.DEBUG, `Shooter elos		: ${JSON.stringify(shooterElos)}`, LOG_CAT);
-	const newElos = elo.getNewRatings(shooterElos);
+	const newElos: number[] = elo.getNewRatings(shooterElos);
 
 	return newElos.map((elo, index) => {
 		return {

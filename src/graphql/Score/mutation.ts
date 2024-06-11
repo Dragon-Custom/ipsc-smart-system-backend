@@ -1,6 +1,6 @@
 import { Prisma, ScoreState } from "@prisma/client";
 import { extendType, inputObjectType, nonNull } from "nexus";
-import { ShooterElo, ShooterId, ShooterScore, calculateElo, updateElo } from "../Elo";
+import { updateElo } from "../Elo";
 import { LogLevel } from "../../context";
 
 const LOG_CAT = "Score";
@@ -33,7 +33,7 @@ export const UpdateScoreInputType = inputObjectType({
 export const ScoreMutation = extendType({
 	type: "Mutation",
 	definition(t) {
-		t.field("createEmptyScore", {
+		t.nullable.field("createEmptyScore", {
 			type: "Score",
 			args: {
 				shooterId: nonNull("Int"),
