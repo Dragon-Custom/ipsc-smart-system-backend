@@ -31,8 +31,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           artifacts: "server.zip"
-          prerelease: true
-          generateReleaseNotes: true
+          # prerelease: true
+          # generateReleaseNotes: true
           tag: ${{ github.ref_name }}
-          name: Release ${{ github.ref_name }}-${{github.sha}}
-          token: ${{ env.GITHUB_TOKEN }}
+          # name: Release ${{ github.ref_name }}-${{github.sha}}
+          # token: ${{ env.GITHUB_TOKEN }}
