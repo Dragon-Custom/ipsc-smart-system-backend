@@ -30,4 +30,4 @@ jobs:
           makeLatest: true
           generateReleaseNotes: true
           tag: ${{ github.ref_name }}
-          name: Release ${{ github.ref_name }}/${{github.workflow_ref}}
+          name: Release ${{ github.ref_name }}-${{github.sha}}
