@@ -14,7 +14,7 @@ export const StageObject = objectType({
 	definition(t) {
 		t.implements("Node");
 		t.nonNull.dateTime("createAt");
-		t.nonNull.field("image", {
+		t.nullable.field("image", {
 			type: "Image",
 		}); 
 		t.nonNull.string("name");
@@ -23,10 +23,10 @@ export const StageObject = objectType({
 		t.nonNull.int("poppers");
 		t.nonNull.int("noshoots");
 		t.nonNull.int("gunCondition");
-		t.nonNull.field("designer", {
+		t.nullable.field("designer", {
 			type: "Shooter",
 		});
-		t.nonNull.int("designerId");
+		t.nullable.int("designerId");
 		t.nonNull.float("walkthroughTime", {
 			description: "unit: minutes",
 		});
