@@ -36,4 +36,3 @@ jobs:
           tag: "latest-build"
           makeLatest: true
           generateReleaseNotes: true
-          artifacts: "build-server"
