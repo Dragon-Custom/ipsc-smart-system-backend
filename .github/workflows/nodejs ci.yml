@@ -33,6 +33,7 @@ jobs:
               build/*
       - uses: actions/upload-artifact@v4.3.3
         with:
-          path: build/
+          path: |
+                build/
                 package.json
                 package-lock.json
