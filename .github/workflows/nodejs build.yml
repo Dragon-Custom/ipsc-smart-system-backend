@@ -26,12 +26,11 @@ jobs:
       - run: npm run gen
       - run: npm run build
       - run: zip -r "server.zip" "build/" "package.json" "package-lock.json"
-      - name: "Upload Release Asset"
-        uses: ncipollo/release-action@v1
+      - name: Release
+        uses: softprops/action-gh-release@v2
         with:
-          artifacts: "server.zip"
-          # prerelease: true
-          # generateReleaseNotes: true
-          tag: ${{ github.ref_name }}
-          # name: Release ${{ github.ref_name }}-${{github.sha}}
-          # token: ${{ secrets.GITHUB_TOKEN }}
+          prerelease: true
+          tag_name: ${{ github.ref_name }}
+          name: ${{ github.ref_name }}/${{github.workflow_ref}}
+          generate_release_notes: true
+          files: server.zip
