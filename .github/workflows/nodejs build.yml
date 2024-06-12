@@ -78,13 +78,13 @@ jobs:
   release_prod:
     runs-on: ubuntu-20.04
     needs: [build, zip]
-    if: ${{ github.ref_name != 'main' }}
+    if: ${{ github.ref_name == 'main' }}
     steps:
       - name: Restore cached zip build
         uses: actions/cache/restore@v4
         with:
           path: server.zip
-          key: ${{env.CACHE_KEY}}-zip
+          key: zip-build-cache
       - name: Release
         uses: softprops/action-gh-release@v2
         with:
