@@ -7,12 +7,15 @@ permissions:
   contents: write
   issues: write
   pull-requests: write
+  packages: write
+  deployments: write
+  id-token: write
+  attestations: write
 
 jobs:
   build:
 
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v4
       - name: Use Node.js
@@ -24,10 +27,12 @@ jobs:
       - run: npm run build
       - run: zip -r "server.zip" "build/" "package.json" "package-lock.json"
       - uses: ncipollo/release-action@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           artifacts: "server.zip"
           prerelease: true
-          makeLatest: false
-          generateReleaseNotes: false
+          generateReleaseNotes: true
           tag: ${{ github.ref_name }}
           name: Release ${{ github.ref_name }}-${{github.sha}}
+          token: ${{ env.GITHUB_TOKEN }}
