@@ -26,7 +26,8 @@ jobs:
       - run: npm run gen
       - run: npm run build
       - run: zip -r "server.zip" "build/" "package.json" "package-lock.json"
-      - uses: ncipollo/release-action@v1
+      - name: "Upload Release Asset"
+        uses: ncipollo/release-action@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
