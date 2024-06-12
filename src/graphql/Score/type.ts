@@ -10,10 +10,10 @@ export const ScoreObject = objectType({
 	definition(t) {
 		t.implements("Node");
 		t.nonNull.dateTime("createAt");
-		t.nonNull.field("shooter", {
+		t.nullable.field("shooter", {
 			type: "Shooter",
 		});
-		t.nonNull.int("shooterId");
+		t.nullable.int("shooterId");
 		t.nonNull.int("alphas");
 		t.nonNull.int("charlies");
 		t.nonNull.int("deltas");
@@ -25,10 +25,10 @@ export const ScoreObject = objectType({
 			type: "ProErrorStore",
 		});
 		t.nonNull.int("proErrorCount");
-		t.nonNull.field("scorelist", {
+		t.nullable.field("scorelist", {
 			type: "Scorelist",
 		});
-		t.nonNull.int("scorelistId");
+		t.nullable.int("scorelistId");
 		t.nonNull.int("score");
 		t.nonNull.float("hitFactor");
 		t.nullable.field("dqReason", {
@@ -36,7 +36,7 @@ export const ScoreObject = objectType({
 		});
 		t.nullable.int("dqObjectId");
 		t.nonNull.int("round");
-		t.nonNull.float("accuracy");
+		t.nullable.float("accuracy");
 		t.nonNull.field("state", {
 			type: "ScoreState",
 		});

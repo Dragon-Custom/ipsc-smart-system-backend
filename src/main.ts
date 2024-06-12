@@ -60,10 +60,9 @@ server.listen(process.env.PORT, () => {
 
 import readline from "readline";
 import { reevaluate, updateElo } from "./graphql";
-import { spawn } from "node:child_process";
 
 const rl = readline.createInterface({ input: process.stdin, output: process.stdout });
-const prompt = (query) => new Promise((resolve) => rl.question(query, resolve));
+const prompt = (query: string) => new Promise((resolve) => rl.question(query, resolve));
 
 // Usage inside aync function do not need closure demo only
 (async() => {

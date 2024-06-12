@@ -4,13 +4,13 @@
 	"description": "",
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1",
-		"dev": "set NODE_ENV=development && ts-node-dev --inspect --transpile-only --no-notify --exit-child src/main.ts",
+		"dev": "cross-env NODE_ENV=development && ts-node-dev --inspect --transpile-only --no-notify --exit-child src/main.ts",
 		"prisma:gen": "prisma generate",
-		"gql:gen": "npx ts-node --transpile-only src/schema.ts",
-		"sdk:gen": "genql --schema build/schema.graphql --output build/sdk",
+		"gql:gen": "cross-env NODE_ENV=generate npx ts-node --transpile-only src/schema.ts",
+		"sdk:gen": "cross-env NODE_ENV=generate genql --schema build/schema.graphql --output build/sdk",
 		"gen": "npm run prisma:gen && npm run gql:gen && npm run sdk:gen",
 		"build": "tsc -p tsconfig.json",
-		"start": "set NODE_ENV=production && node build/server/main.js"
+		"start": "cross-env NODE_ENV=production node build/server/src/main.js"
 	},
 	"prisma": {
 		"schema": "src/prisma/schema.prisma"
@@ -41,6 +41,7 @@
 		"@genql/cli": "^6.3.3",
 		"@graphql-codegen/cli": "^5.0.2",
 		"@graphql-codegen/client-preset": "^4.2.5",
+		"cross-env": "^7.0.3",
 		"eslint": "^8.57.0",
 		"graphql": "^16.8.1",
 		"prisma": "^5.11.0",

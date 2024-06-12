@@ -1,4 +1,4 @@
-import { MultiElo } from "multi-elo";
+// import { MultiElo } from "multi-elo";
 import { log, LogLevel, prisma } from "../../context";
 
 const LOG_CAT = "ELO System";
@@ -15,7 +15,8 @@ export type ShooterElo = {
 
 
 
-export function calculateElo(shooter: ShooterElo[]): Omit<ShooterElo, "score">[] {
+export async function calculateElo(shooter: ShooterElo[]): Promise<Omit<ShooterElo, "score">[]> {
+	const { MultiElo } = await import("multi-elo");
 	log(LogLevel.DEBUG, `Calculating elo, shooterElos: ${JSON.stringify(shooter)}`, LOG_CAT);
 	const elo = new MultiElo({s: 7, k: 24, d: 1000, verbose: true});
 	
@@ -89,7 +90,7 @@ export async function updateElo(/* scorelistId: number, round: number */) {
 			},
 		}))?.tick || 0;
 		log(LogLevel.DEBUG, `Original elos	: ${JSON.stringify(elos)}`, LOG_CAT);
-		const newElos = calculateElo(elos);
+		const newElos = await calculateElo(elos);
 		log(LogLevel.DEBUG, `New elos		: ${JSON.stringify(newElos)}`, LOG_CAT);
 		for (const elo of newElos) {
 			await prisma.elo.create({
