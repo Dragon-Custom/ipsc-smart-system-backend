@@ -22,14 +22,6 @@ jobs:
       - run: npm ci
       - run: npm run gen
       - run: npm run build
-      - uses: "marvinpinto/action-automatic-releases@latest"
-        with:
-            repo_token: "${{ secrets.GITHUB_TOKEN }}"
-            automatic_release_tag: "latest"
-            prerelease: true
-            title: "Development Build"
-            files: |
-              build
       - uses: actions/upload-artifact@v4.3.3
         with:
           name: build-server
@@ -37,3 +29,11 @@ jobs:
                 build/
                 package.json
                 package-lock.json
+      - name: Create Release
+        uses: ncipollo/release-action@v1.14.0
+        with:
+          prerelease: true
+          tag: "latest-build"
+          makeLatest: true
+          generateReleaseNotes: true
+          artifacts: "build-server"
