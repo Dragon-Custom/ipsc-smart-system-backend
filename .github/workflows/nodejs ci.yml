@@ -34,3 +34,5 @@ jobs:
       - uses: actions/upload-artifact@v4.3.3
         with:
           path: build/
+                package.json
+                package-lock.json
