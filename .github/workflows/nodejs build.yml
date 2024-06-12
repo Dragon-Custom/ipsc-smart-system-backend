@@ -22,12 +22,10 @@ jobs:
       - run: npm ci
       - run: npm run gen
       - run: npm run build
-      - name: Upload Release
-        uses: ncipollo/release-action@v1.12.0
+      - run: zip -r "server.zip" "build/" "package.json" "package-lock.json"
+      - uses: softprops/action-gh-release@v1
+        if: startsWith(github.ref, 'refs/tags/')
         with:
-          artifacts: "release.zip"
-          token: ${{ secrets.GITHUB_TOKEN }}
-          path: |
-            build/
-            package.json
-            package-lock.json
+          files: server.zip
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
