@@ -12,14 +12,16 @@ permissions:
   id-token: write
   attestations: write
 
-env:
-  CACHE_PATH: build
-  CACHE_KEY: build-cache
 
 jobs:
   build:
     runs-on: ubuntu-20.04
     steps:
+      - name: Create cache for build
+        uses: actions/cache@v4
+        with:
+          path: build
+          key: build-cache
       - uses: actions/checkout@v4
       - name: Use Node.js
         uses: actions/setup-node@v4
@@ -32,8 +34,8 @@ jobs:
         id: cache-build
         uses: actions/cache@v2
         with:
-          path: ${{env.CACHE_PATH}}
-          key: ${{env.CACHE_KEY}}
+          path: build
+          key: build-cache
   zip:
     needs: [build]
     runs-on: ubuntu-20.04
@@ -41,14 +43,19 @@ jobs:
       - name: Restore cached build
         uses: actions/cache/restore@v4
         with:
-          path: ${{env.CACHE_PATH}}
-          key: ${{env.CACHE_KEY}}
+          path: build
+          key: build-cache
+      - name: Create cache for zip build
+        uses: actions/cache@v4
+        with:
+          path: server.zip
+          key: zip-build-cache
       - run: zip -r "server.zip" "build/" "package.json" "package-lock.json"
       - name: Cache ZIP build
         uses: actions/cache@v2
         with:
           path: server.zip
-          key: ${{env.CACHE_KEY}}-zip
+          key: zip-build-cache
   release_dev:
     runs-on: ubuntu-20.04
     needs: [build, zip]
@@ -58,7 +65,7 @@ jobs:
         uses: actions/cache/restore@v4
         with:
           path: server.zip
-          key: ${{env.CACHE_KEY}}-zip
+          key: zip-build-cache
       - name: Release
         uses: softprops/action-gh-release@v2
         with:
