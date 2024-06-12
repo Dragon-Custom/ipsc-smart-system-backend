@@ -27,7 +27,7 @@ jobs:
         with:
           artifacts: "server.zip"
           prerelease: true
-          makeLatest: true
-          generateReleaseNotes: true
+          makeLatest: false
+          generateReleaseNotes: false
           tag: ${{ github.ref_name }}
           name: Release ${{ github.ref_name }}-${{github.sha}}
