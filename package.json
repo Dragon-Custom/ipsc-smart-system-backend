@@ -9,7 +9,7 @@
 		"gql:gen": "cross-env NODE_ENV=generate npx ts-node --transpile-only src/schema.ts",
 		"sdk:gen": "cross-env NODE_ENV=generate genql --schema build/schema.graphql --output build/sdk",
 		"gen": "npm run prisma:gen && npm run gql:gen && npm run sdk:gen",
-		"build": "npm run gen && tsc -p tsconfig.json",
+		"build": "tsc -p tsconfig.json",
 		"start": "cross-env NODE_ENV=production node build/server/main.js"
 	},
 	"prisma": {
