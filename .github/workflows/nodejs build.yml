@@ -23,9 +23,10 @@ jobs:
       - run: npm run gen
       - run: npm run build
       - run: zip -r "server.zip" "build/" "package.json" "package-lock.json"
-      - uses: softprops/action-gh-release@v1
-        if: startsWith(github.ref, 'refs/tags/')
+      - uses: ncipollo/release-action@v1
         with:
-          files: server.zip
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          artifacts: "server.zip"
+          prerelease: true
+          makeLatest: true
+          generateReleaseNotes: true
+          tag: v${{ github.ref }}
