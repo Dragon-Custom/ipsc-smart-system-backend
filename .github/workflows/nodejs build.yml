@@ -14,7 +14,7 @@ permissions:
 
 jobs:
   build:
-
+    container: "build_container"
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v4
@@ -25,11 +25,38 @@ jobs:
       - run: npm ci
       - run: npm run gen
       - run: npm run build
+  zip:
+    needs: [build]
+    container: "build_container"
+    runs-on: ubuntu-20.04
+    steps:
       - run: zip -r "server.zip" "build/" "package.json" "package-lock.json"
+  release_dev:
+    container: "build_container"
+    runs-on: ubuntu-20.04
+    needs: [build, zip]
+    if: ${{ github.ref_name != 'main' }}
+    steps:
       - name: Release
         uses: softprops/action-gh-release@v2
         with:
           prerelease: true
+          tag_name: ${{ github.ref_name }}
+          name: ${{ github.ref_name }}/${{github.sha}}
+          generate_release_notes: true
+          files: server.zip
+          token: ${{ secrets.GITHUB_TOKEN }}
+  release_prod:
+    container: "build_container"
+    runs-on: ubuntu-20.04
+    needs: [build, zip]
+    if: ${{ github.ref_name != 'main' }}
+    steps:
+      - name: Release
+        uses: softprops/action-gh-release@v2
+        with:
+          prerelease: false
+          make_latest: true
           tag_name: ${{ github.ref_name }}
           name: ${{ github.ref_name }}/${{github.sha}}
           generate_release_notes: true
