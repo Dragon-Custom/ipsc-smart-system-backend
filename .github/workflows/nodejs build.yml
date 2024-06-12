@@ -12,9 +12,9 @@ permissions:
   id-token: write
   attestations: write
 
+
 jobs:
   build:
-    container: "build_container"
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v4
@@ -27,12 +27,10 @@ jobs:
       - run: npm run build
   zip:
     needs: [build]
-    container: "build_container"
     runs-on: ubuntu-20.04
     steps:
       - run: zip -r "server.zip" "build/" "package.json" "package-lock.json"
   release_dev:
-    container: "build_container"
     runs-on: ubuntu-20.04
     needs: [build, zip]
     if: ${{ github.ref_name != 'main' }}
@@ -47,7 +45,6 @@ jobs:
           files: server.zip
           token: ${{ secrets.GITHUB_TOKEN }}
   release_prod:
-    container: "build_container"
     runs-on: ubuntu-20.04
     needs: [build, zip]
     if: ${{ github.ref_name != 'main' }}
