@@ -29,4 +29,5 @@ jobs:
           prerelease: true
           makeLatest: true
           generateReleaseNotes: true
-          tag: ${{ github.ref_name }}/${{github.workflow_ref}}
+          tag: ${{ github.ref_name }}
+          name: Release ${{ github.ref_name }}/${{github.workflow_ref}}
