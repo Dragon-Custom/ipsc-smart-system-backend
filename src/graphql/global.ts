@@ -125,7 +125,9 @@ export async function reevaluate() {
 	}
 	// #endregion
 }
-
-setInterval(async () => {
-	await reevaluate();
-}, 1000 * 60 * (parseFloat(process.env.RERANKING_INTERVAL ?? "5")));
+console.log(process.env.NODE_ENV);
+if (process.env.NODE_ENV?.trim().toLowerCase() != "generate") {	
+	setInterval(async () => {
+		await reevaluate();
+	}, 1000 * 60 * (parseFloat(process.env.RERANKING_INTERVAL ?? "5")));
+}
