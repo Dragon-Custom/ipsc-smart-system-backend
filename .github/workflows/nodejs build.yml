@@ -12,6 +12,9 @@ permissions:
   id-token: write
   attestations: write
 
+env:
+  CACHE_PATH: build
+  CACHE_KEY: build-cache
 
 jobs:
   build:
@@ -25,16 +28,37 @@ jobs:
       - run: npm ci
       - run: npm run gen
       - run: npm run build
+      - name: Cache Build
+        id: cache-build
+        uses: actions/cache@v2
+        with:
+          path: ${{env.CACHE_PATH}}
+          key: ${{env.CACHE_KEY}}
   zip:
     needs: [build]
     runs-on: ubuntu-20.04
     steps:
+      - name: Restore cached build
+        uses: actions/cache/restore@v4
+        with:
+          path: ${{env.CACHE_PATH}}
+          key: ${{env.CACHE_KEY}}
       - run: zip -r "server.zip" "build/" "package.json" "package-lock.json"
+      - name: Cache ZIP build
+        uses: actions/cache@v2
+        with:
+          path: server.zip
+          key: ${{env.CACHE_KEY}}-zip
   release_dev:
     runs-on: ubuntu-20.04
     needs: [build, zip]
     if: ${{ github.ref_name != 'main' }}
     steps:
+      - name: Restore cached zip build
+        uses: actions/cache/restore@v4
+        with:
+          path: server.zip
+          key: ${{env.CACHE_KEY}}-zip
       - name: Release
         uses: softprops/action-gh-release@v2
         with:
@@ -49,6 +73,11 @@ jobs:
     needs: [build, zip]
     if: ${{ github.ref_name != 'main' }}
     steps:
+      - name: Restore cached zip build
+        uses: actions/cache/restore@v4
+        with:
+          path: server.zip
+          key: ${{env.CACHE_KEY}}-zip
       - name: Release
         uses: softprops/action-gh-release@v2
         with:
