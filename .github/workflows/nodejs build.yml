@@ -17,11 +17,6 @@ jobs:
   build:
     runs-on: ubuntu-20.04
     steps:
-      - name: Create cache for build
-        uses: actions/cache@v4
-        with:
-          path: build
-          key: build-cache
       - uses: actions/checkout@v4
       - name: Use Node.js
         uses: actions/setup-node@v4
@@ -35,7 +30,7 @@ jobs:
         uses: actions/cache@v2
         with:
           path: build
-          key: build-cache
+          key: ${{github.sha}}-cache
   zip:
     needs: [build]
     runs-on: ubuntu-20.04
@@ -45,19 +40,14 @@ jobs:
         uses: actions/cache/restore@v4
         with:
           path: build
-          key: build-cache
-      - name: Create cache for zip build
-        uses: actions/cache@v4
-        with:
-          path: server.zip
-          key: zip-build-cache
+          key: ${{github.sha}}-cache
       - run: ls
       - run: zip -r "server.zip" -v "build/" "package.json" "package-lock.json" "src/prisma/"
       - name: Cache
         uses: actions/cache@v4
         with:
           path: server.zip
-          key: zip-build-cache
+          key: ${{github.sha}}-build-cache
   release_dev:
     runs-on: ubuntu-20.04
     needs: [build, zip]
@@ -67,7 +57,7 @@ jobs:
         uses: actions/cache/restore@v4
         with:
           path: server.zip
-          key: zip-build-cache
+          key: ${{github.sha}}-build-cache
       - name: Release
         uses: softprops/action-gh-release@v2
         with:
@@ -86,7 +76,7 @@ jobs:
         uses: actions/cache/restore@v4
         with:
           path: server.zip
-          key: zip-build-cache
+          key: ${{github.sha}}-build-cache
       - name: Release
         uses: softprops/action-gh-release@v2
         with:
