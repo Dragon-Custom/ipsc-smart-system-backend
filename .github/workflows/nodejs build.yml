@@ -46,9 +46,14 @@ jobs:
         with:
           path: build
           key: build-cache
+      - name: Create cache for zip build
+        uses: actions/cache@v4
+        with:
+          path: server.zip
+          key: zip-build-cache
       - run: ls
       - run: zip -r "server.zip" -v "build/" "package.json" "package-lock.json" "src/prisma/"
-      - name: Create cache for zip build
+      - name: Cache
         uses: actions/cache@v4
         with:
           path: server.zip
