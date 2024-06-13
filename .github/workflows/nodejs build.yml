@@ -53,11 +53,6 @@ jobs:
         with:
           path: server.zip
           key: zip-build-cache
-      - name: Cache ZIP build
-        uses: actions/cache@v2
-        with:
-          path: server.zip
-          key: zip-build-cache
   release_dev:
     runs-on: ubuntu-20.04
     needs: [build, zip]
