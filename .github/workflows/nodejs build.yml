@@ -50,7 +50,7 @@ jobs:
         with:
           path: server.zip
           key: zip-build-cache
-      - run: zip -r "server.zip" "build/" "package.json" "package-lock.json"
+      - run: zip -r "server.zip" "build/" "package.json" "package-lock.json" "src/prisma/"
       - name: Cache ZIP build
         uses: actions/cache@v2
         with:
